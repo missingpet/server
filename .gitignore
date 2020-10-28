@@ -1,0 +1,8 @@
+.idea/
+db.sqlite3
+venv/
+migrations/
+.env
+.vscode/
+api/secret.py
+media/
