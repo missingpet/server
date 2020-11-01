@@ -134,7 +134,7 @@ class ConfirmPasswordResetAPIView(generics.GenericAPIView):
             if not PasswordResetTokenGenerator().check_token(user=user, token=token):
                 return Response({'error': 'Неверный токен.'}, status=status.HTTP_401_UNAUTHORIZED)
 
-            return Response({'success': 'some html template'}, status=status.HTTP_200_OK)
+            return Response({'success': 'Адрес электронной почты успешно подтверждён.'}, status=status.HTTP_200_OK)
 
         except DjangoUnicodeDecodeError:
             return Response({'error': 'Неверный токен.'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -185,7 +185,7 @@ class AnnouncementUpdateAPIView(generics.UpdateAPIView):
     pass
 
 
-class MapAnnouncementInfoListAPIView(generics.ListAPIView):
+class AnnouncementMapInfoListAPIView(generics.ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = MapAnnouncementInfoSerializer
 
