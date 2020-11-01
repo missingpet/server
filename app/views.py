@@ -1,4 +1,3 @@
-
 from rest_framework import generics, status, permissions
 from rest_framework.generics import get_object_or_404
 from .serializers import *
@@ -17,7 +16,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from .permissions import IsAnnouncementAuthor
 
 
-# -------------------------------------------------------- Auth --------------------------------------------------------
 class SignUpAPIView(generics.GenericAPIView):
     serializer_class = SignUpSerializer
 
@@ -151,11 +149,22 @@ class CompletePasswordResetAPIView(generics.GenericAPIView):
         return Response({'success': 'Пароль успешно сброшен.'}, status=status.HTTP_200_OK)
 
 
-# ---------------------------------------------------- Announcement ----------------------------------------------------
 class AnnouncementListAPIView(generics.ListAPIView):
-    permission_classes = (AllowAny,)
-    queryset = Announcement.objects.all()
-    serializer_class = AnnouncementSerializer
+    permission_classes = (IsAuthenticated,)
+    serializer_class = AnnouncementRetrieveSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Announcement.objects.all().exclude(user=user)
+
+
+class MyAnnouncementListAPIView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated, IsAnnouncementAuthor, )
+    serializer_class = AnnouncementRetrieveSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Announcement.objects.filter(user=user)
 
 
 class AnnouncementCreateAPIView(generics.CreateAPIView):
@@ -168,9 +177,17 @@ class AnnouncementCreateAPIView(generics.CreateAPIView):
 
 
 class AnnouncementDeleteAPIView(generics.DestroyAPIView):
-    permission_classes = (IsAuthenticated, IsAnnouncementAuthor,)
+    permission_classes = (IsAuthenticated, IsAnnouncementAuthor, )
     queryset = Announcement.objects.all()
 
 
 class AnnouncementUpdateAPIView(generics.UpdateAPIView):
     pass
+
+
+class MapAnnouncementInfoListAPIView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = MapAnnouncementInfoSerializer
+
+    def get_queryset(self):
+        return Announcement.objects.all().exclude(place__isnull=True)

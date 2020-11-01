@@ -10,7 +10,6 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 
-# -------------------------------------------------------- Auth --------------------------------------------------------
 class SignUpSerializer(serializers.ModelSerializer):
     password = serializers.CharField(min_length=6, max_length=60, write_only=True)
 
@@ -19,13 +18,8 @@ class SignUpSerializer(serializers.ModelSerializer):
         fields = ['email', 'username', 'photo', 'password']
 
     def validate(self, attrs):
-        email = attrs['email']
-        username = attrs['username']
-        photo = attrs['photo']
-
-        if photo:
-            if photo.size > 5242880:
-                raise serializers.ValidationError({'error': 'Размер изображения не должен превышать 5 мегабайт.'})
+        email = attrs.get('email',)
+        username = attrs.get('username',)
 
         if not username.isalnum():
             raise serializers.ValidationError(
@@ -46,12 +40,11 @@ class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(min_length=3, max_length=255)
     password = serializers.CharField(min_length=6, max_length=60, write_only=True)
     username = serializers.CharField(min_length=3, max_length=32, read_only=True)
-    photo = serializers.ImageField(read_only=True)
     tokens = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'username', 'photo', 'tokens']
+        fields = ['email', 'password', 'username', 'tokens']
 
     def get_tokens(self, current_user_instance):
         tokens = User.objects.get(email=current_user_instance['email']).tokens()
@@ -61,8 +54,8 @@ class LoginSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, attrs):
-        email = attrs.get('email', '')
-        password = attrs.get('password', '')
+        email = attrs.get('email',)
+        password = attrs.get('password',)
         user = auth.authenticate(email=email, password=password)
 
         if not user:
@@ -77,7 +70,6 @@ class LoginSerializer(serializers.ModelSerializer):
             'id': user.id,
             'email': user.email,
             'username': user.username,
-            'photo': user.photo,
             'tokens': user.tokens()
         }
 
@@ -88,7 +80,7 @@ class LogoutSerializer(serializers.Serializer):
     default_error_messages = {'error': 'Токен недействителен.'}
 
     def validate(self, attrs):
-        self.token = attrs['refresh']
+        self.token = attrs.get('refresh',)
         return attrs
 
     def save(self, **kwargs):
@@ -105,7 +97,7 @@ class RequestPasswordResetSerializer(serializers.Serializer):
         fields = ['email']
 
     def validate(self, attrs):
-        email = attrs['email']
+        email = attrs.get('email',)
 
         if not User.objects.filter(email=email).exists():
             raise ValidationError({'error': 'Неверный адрес электронной почты.'})
@@ -123,9 +115,9 @@ class CompletePasswordResetSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         try:
-            uidb64 = attrs['uidb64']
-            token = attrs['token']
-            password = attrs['password']
+            uidb64 = attrs.get('uidb64',)
+            token = attrs.get('token',)
+            password = attrs.get('password',)
 
             id = force_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(id=id)
@@ -142,8 +134,7 @@ class CompletePasswordResetSerializer(serializers.Serializer):
             raise AuthenticationFailed({'error': 'Что-то пошло не так.'})
 
 
-# ---------------------------------------------------- Announcement ----------------------------------------------------
-class AnnouncementSerializer(serializers.ModelSerializer):
+class AnnouncementRetrieveSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username', read_only=True)
 
     class Meta:
@@ -153,19 +144,16 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 
 class AnnouncementCreateSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username', read_only=True)
-    title = serializers.CharField(min_length=1, max_length=50)
     photo = serializers.ImageField(allow_null=True)
     announcement_type = serializers.IntegerField()
-    breed = serializers.CharField(min_length=1, max_length=50, allow_null=True)
-    age = serializers.IntegerField(allow_null=True)
+    animal_type = serializers.IntegerField()
     place = serializers.CharField(min_length=1, max_length=500, allow_null=True)
     latitude = serializers.FloatField(allow_null=True)
     longitude = serializers.FloatField(allow_null=True)
     description = serializers.CharField(min_length=1, max_length=500, allow_null=True)
-    contact_phone_number = serializers.CharField(min_length=11, max_length=12, allow_null=True)
+    contact_phone_number = serializers.CharField(min_length=11, max_length=12)
     created_at = serializers.DateTimeField(read_only=True)
     updated_at = serializers.DateTimeField(read_only=True)
-    at_home = serializers.BooleanField()
 
     class Meta:
         model = Announcement
@@ -173,13 +161,13 @@ class AnnouncementCreateSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
 
-        longitude = attrs['longitude']
-        latitude = attrs['latitude']
-        place = attrs['place']
-        photo = attrs['photo']
-        announcement_type = attrs['announcement_type']
-        age = attrs['age']
-        contact_phone_number = attrs['contact_phone_number']
+        longitude = attrs.get('longitude',)
+        latitude = attrs.get('latitude',)
+        place = attrs.get('place',)
+        photo = attrs.get('photo',)
+        announcement_type = attrs.get('announcement_type',)
+        animal_type = attrs.get('animal_type',)
+        contact_phone_number = attrs.get('contact_phone_number',)
 
         if place:
             if longitude < -180.0 or longitude > 180.0:
@@ -191,26 +179,30 @@ class AnnouncementCreateSerializer(serializers.ModelSerializer):
             attrs['latitude'] = None
             attrs['longitude'] = None
 
-        if age:
-            if age < 0:
-                raise ValidationError({'error': 'Возраст животного не может быть отрицательным.'})
-
-        if contact_phone_number:
-            if contact_phone_number.startswith('8'):
-                if len(contact_phone_number) != 11:
-                    raise ValidationError({'error': 'Неверный формат номера телефона.'})
-            elif contact_phone_number.startswith('+7'):
-                if len(contact_phone_number) != 12:
-                    raise ValidationError({'error': 'Неверный формат номера телефона.'})
-            else:
+        if contact_phone_number.startswith('8'):
+            if len(contact_phone_number) != 11:
                 raise ValidationError({'error': 'Неверный формат номера телефона.'})
+        elif contact_phone_number.startswith('+7'):
+            if len(contact_phone_number) != 12:
+                raise ValidationError({'error': 'Неверный формат номера телефона.'})
+        else:
+            raise ValidationError({'error': 'Неверный формат номера телефона.'})
 
         if photo:
             if photo.size > 5242880:
                 raise ValidationError({'error': 'Размер изображения не должен превышать 5 мегабайт.'})
 
-        if not announcement_type in (1, 2):
+        if announcement_type not in (1, 2):
             raise ValidationError({'error': 'Неверный тип объявления.'})
 
+        if animal_type not in (1, 2, 3):
+            raise ValidationError({'error': 'Неверный тип животного.'})
+
         return attrs
+
+
+class MapAnnouncementInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Announcement
+        fields = ['id', 'latitude', 'longitude']
 
