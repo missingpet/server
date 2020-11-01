@@ -150,7 +150,7 @@ class CompletePasswordResetAPIView(generics.GenericAPIView):
 
 
 class AnnouncementListAPIView(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
     serializer_class = AnnouncementRetrieveSerializer
 
     def get_queryset(self):
@@ -191,3 +191,9 @@ class MapAnnouncementInfoListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         return Announcement.objects.all().exclude(place__isnull=True)
+
+
+class AnnouncementByIdAPIView(generics.RetrieveAPIView):
+    permission_classes = (IsAuthenticated, )
+    queryset = Announcement.objects.all()
+    serializer_class = AnnouncementRetrieveSerializer
