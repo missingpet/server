@@ -15,7 +15,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'username', 'photo', 'password']
+        fields = ['email', 'username', 'password']
 
     def validate(self, attrs):
         email = attrs.get('email',)
@@ -172,7 +172,6 @@ class AnnouncementCreateSerializer(serializers.ModelSerializer):
         if place:
             if longitude < -180.0 or longitude > 180.0:
                 raise ValidationError({'error': 'Неверная долгота.'})
-
             if latitude < -90.0 or latitude > 90.0:
                 raise ValidationError({'error': 'Неверная широта.'})
         else:
