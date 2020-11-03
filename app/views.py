@@ -26,7 +26,7 @@ class SignUpAPIView(generics.GenericAPIView):
         serializer.save()
         user_data = serializer.data
 
-        user = User.objects.get(email=user_data['email'])
+        user = User.objects.get(email=user_data.get('email',))
         access_token = RefreshToken.for_user(user).access_token
 
         current_site_domain = get_current_site(request).domain
@@ -49,10 +49,10 @@ class SignUpAPIView(generics.GenericAPIView):
 class ConfirmEmailAPIView(generics.GenericAPIView):
 
     def get(self, request):
-        token = request.GET.get('token')
+        token = request.GET.get('token',)
         try:
             payload = jwt.decode(token, settings.SECRET_KEY)
-            user = User.objects.get(id=payload['user_id'])
+            user = User.objects.get(id=payload.get('user_id',))
 
             if not user.is_verified:
                 user.is_verified = True
@@ -101,7 +101,7 @@ class RequestPasswordResetAPIView(generics.GenericAPIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = User.objects.get(email=serializer.data['email'])
+        user = User.objects.get(email=serializer.data.get('email',))
         uidb64 = urlsafe_base64_encode(smart_bytes(user.id))
         token = PasswordResetTokenGenerator().make_token(user)
 
@@ -134,7 +134,7 @@ class ConfirmPasswordResetAPIView(generics.GenericAPIView):
             if not PasswordResetTokenGenerator().check_token(user=user, token=token):
                 return Response({'error': 'Неверный токен.'}, status=status.HTTP_401_UNAUTHORIZED)
 
-            return Response({'success': 'Адрес электронной почты успешно подтверждён.'}, status=status.HTTP_200_OK)
+            return Response({'uidb64': uidb64, 'token': token}, status=status.HTTP_200_OK)
 
         except DjangoUnicodeDecodeError:
             return Response({'error': 'Неверный токен.'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -159,6 +159,7 @@ class AnnouncementListAPIView(generics.ListAPIView):
 
 
 class MyAnnouncementListAPIView(generics.ListAPIView):
+    pagination_class = None
     permission_classes = (IsAuthenticated, IsAnnouncementAuthor, )
     serializer_class = AnnouncementRetrieveSerializer
 
@@ -186,6 +187,7 @@ class AnnouncementUpdateAPIView(generics.UpdateAPIView):
 
 
 class AnnouncementMapInfoListAPIView(generics.ListAPIView):
+    pagination_class = None
     permission_classes = (IsAuthenticated, )
     serializer_class = MapAnnouncementInfoSerializer
 
