@@ -1,13 +1,14 @@
 import re
-from django.core.exceptions import ValidationError
-from rest_framework import serializers
 from .models import User, Announcement
-from django.contrib import auth
+from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
+from django.contrib import auth
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -26,9 +27,7 @@ class SignUpSerializer(serializers.ModelSerializer):
                 {'error': 'Имя пользователя должно содержать только буквенно-цифровые символы.'}
             )
 
-        email_regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
-        if not re.match(email_regex, email):
-            raise serializers.ValidationError({'error': 'Некорректный формат адреса электронной почты.'})
+        validate_email(email)
 
         return attrs
 
@@ -36,7 +35,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         return User.objects.create_user(**validated_data)
 
 
-class LoginSerializer(serializers.ModelSerializer):
+class SignInSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(min_length=3, max_length=255)
     password = serializers.CharField(min_length=6, max_length=60, write_only=True)
     username = serializers.CharField(min_length=3, max_length=32, read_only=True)
@@ -74,7 +73,7 @@ class LoginSerializer(serializers.ModelSerializer):
         }
 
 
-class LogoutSerializer(serializers.Serializer):
+class SignOutSerializer(serializers.Serializer):
     refresh = serializers.CharField()
 
     default_error_messages = {'error': 'Токен недействителен.'}
@@ -200,7 +199,7 @@ class AnnouncementCreateSerializer(serializers.ModelSerializer):
         return attrs
 
 
-class MapAnnouncementInfoSerializer(serializers.ModelSerializer):
+class AnnouncementMapInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Announcement
         fields = ['id', 'latitude', 'longitude']

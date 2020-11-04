@@ -1,19 +1,18 @@
-from rest_framework import generics, status, permissions
-from rest_framework.generics import get_object_or_404
+import jwt
 from .serializers import *
-from rest_framework.response import Response
+from .permissions import IsAnnouncementAuthor
 from .models import User, Announcement
-from rest_framework_simplejwt.tokens import RefreshToken
 from .utils import *
+from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.urls import reverse
 from django.conf import settings
-import jwt
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_bytes, smart_str, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from .permissions import IsAnnouncementAuthor
 
 
 class SignUpAPIView(generics.GenericAPIView):
@@ -25,14 +24,11 @@ class SignUpAPIView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         user_data = serializer.data
-
         user = User.objects.get(email=user_data.get('email',))
         access_token = RefreshToken.for_user(user).access_token
-
         current_site_domain = get_current_site(request).domain
         relative_link = reverse('confirm-email')
         absolute_url = f'http://{current_site_domain}{relative_link}?token={access_token}'
-
         email_body = f'Здравствуйте, {user.username}! ' \
                      f'Для подтверждения адреса электронной почты перейдите по ссылке: \n{absolute_url}'
         data = {
@@ -40,9 +36,7 @@ class SignUpAPIView(generics.GenericAPIView):
             'email_body': email_body,
             'email_to': user.email
         }
-
         Util.send_email(data)
-
         return Response(user_data, status=status.HTTP_201_CREATED)
 
 
@@ -53,7 +47,6 @@ class ConfirmEmailAPIView(generics.GenericAPIView):
         try:
             payload = jwt.decode(token, settings.SECRET_KEY)
             user = User.objects.get(id=payload.get('user_id',))
-
             if not user.is_verified:
                 user.is_verified = True
                 user.save()
@@ -64,18 +57,15 @@ class ConfirmEmailAPIView(generics.GenericAPIView):
                     },
                     status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION
                 )
-
             return Response({'success': 'Адрес электронной почты успешно подтверждён.'}, status=status.HTTP_200_OK)
-
         except jwt.ExpiredSignatureError:
             return Response({'error': 'Данная ссылка больше недействительна.'}, status=status.HTTP_400_BAD_REQUEST)
-
         except jwt.exceptions.DecodeError:
             return Response({'error': 'Неверный токен.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class LoginAPIView(generics.GenericAPIView):
-    serializer_class = LoginSerializer
+class SignInAPIView(generics.GenericAPIView):
+    serializer_class = SignInSerializer
 
     def post(self, request):
         user = request.data
@@ -84,8 +74,8 @@ class LoginAPIView(generics.GenericAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class LogoutAPIView(generics.GenericAPIView):
-    serializer_class = LogoutSerializer
+class SignOutAPIView(generics.GenericAPIView):
+    serializer_class = SignOutSerializer
     permission_classes = (IsAuthenticated, )
 
     def post(self, request):
@@ -104,18 +94,13 @@ class RequestPasswordResetAPIView(generics.GenericAPIView):
         user = User.objects.get(email=serializer.data.get('email',))
         uidb64 = urlsafe_base64_encode(smart_bytes(user.id))
         token = PasswordResetTokenGenerator().make_token(user)
-
         current_site_domain = get_current_site(request=request).domain
         relative_link = reverse('confirm-password-reset', kwargs={'uidb64': uidb64, 'token': token})
         absolute_url = f'http://{current_site_domain}{relative_link}?token={token}'
-
         email_body = f'Для сброса пароля перейдите по ссылке: \n{absolute_url}\n\n'\
                      f'Проигнорируйте это сообщение, если вы не запрашивали сброс пароля.'
-
         data = {'email_subject': 'Сброс пароля.', 'email_body': email_body, 'email_to': user.email}
-
         Util.send_email(data)
-
         return Response(
             {
                 'success': f'На адрес {user.email} отправлено письмо для сброса пароля.'
@@ -130,12 +115,9 @@ class ConfirmPasswordResetAPIView(generics.GenericAPIView):
         try:
             id = smart_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(id=id)
-
             if not PasswordResetTokenGenerator().check_token(user=user, token=token):
                 return Response({'error': 'Неверный токен.'}, status=status.HTTP_401_UNAUTHORIZED)
-
             return Response({'uidb64': uidb64, 'token': token}, status=status.HTTP_200_OK)
-
         except DjangoUnicodeDecodeError:
             return Response({'error': 'Неверный токен.'}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -149,7 +131,7 @@ class CompletePasswordResetAPIView(generics.GenericAPIView):
         return Response({'success': 'Пароль успешно сброшен.'}, status=status.HTTP_200_OK)
 
 
-class AnnouncementListAPIView(generics.ListAPIView):
+class FeedAnnouncementListAPIView(generics.ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = AnnouncementRetrieveSerializer
 
@@ -182,20 +164,18 @@ class AnnouncementDeleteAPIView(generics.DestroyAPIView):
     queryset = Announcement.objects.all()
 
 
-class AnnouncementUpdateAPIView(generics.UpdateAPIView):
-    pass
-
-
 class AnnouncementMapInfoListAPIView(generics.ListAPIView):
     pagination_class = None
     permission_classes = (IsAuthenticated, )
-    serializer_class = MapAnnouncementInfoSerializer
-
-    def get_queryset(self):
-        return Announcement.objects.all().exclude(place__isnull=True)
+    serializer_class = AnnouncementMapInfoSerializer
+    queryset = Announcement.objects.all().exclude(latitude__isnull=True, longitude__isnull=True)
 
 
-class AnnouncementByIdAPIView(generics.RetrieveAPIView):
+class AnnouncementRetrieveAPIView(generics.RetrieveAPIView):
     permission_classes = (IsAuthenticated, )
     queryset = Announcement.objects.all()
     serializer_class = AnnouncementRetrieveSerializer
+
+
+class AnnouncementUpdateAPIView(generics.UpdateAPIView):
+    pass
