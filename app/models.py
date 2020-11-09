@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.utils.translation import gettext_lazy as _
+
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
@@ -27,14 +29,42 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Пользователь"""
-    email = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='Адрес электронной почты')
-    username = models.CharField(max_length=32, unique=True, db_index=True, verbose_name='Имя пользователя')
-    is_active = models.BooleanField(default=True, verbose_name='Активирован')
-    is_verified = models.BooleanField(default=False, verbose_name='Подтверждён')
-    is_staff = models.BooleanField(default=False, verbose_name='Персонал')
-    is_superuser = models.BooleanField(default=False, verbose_name='Суперпользователь')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлён')
+    email = models.CharField(
+        _('Адрес электронной почты'),
+        max_length=255,
+        unique=True,
+        db_index=True
+    )
+    username = models.CharField(
+        _('Имя пользователя'),
+        max_length=32,
+        unique=True,
+        db_index=True
+    )
+    is_active = models.BooleanField(
+        _('Активирован'),
+        default=True
+    )
+    is_verified = models.BooleanField(
+        _('Подтверждён'),
+        default=False
+    )
+    is_staff = models.BooleanField(
+        _('Персонал'),
+        default=False
+    )
+    is_superuser = models.BooleanField(
+        _('Суперпользователь'),
+        default=False
+    )
+    created_at = models.DateTimeField(
+        _('Создан'),
+        auto_now_add=True
+    )
+    updated_at = models.DateTimeField(
+        _('Обновлён'),
+        auto_now=True
+    )
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -58,31 +88,75 @@ class Announcement(models.Model):
     """Объявление"""
     LOST = 1
     FOUND = 2
-    ANNOUNCMENT_TYPES = [
+    ANNOUNCMENT_TYPES = (
         (LOST, 'Потеряно'),
         (FOUND, 'Найдено')
-    ]
+    )
 
     DOG = 1
     CAT = 2
     OTHER = 3
-    ANIMAL_TYPES = [
+    ANIMAL_TYPES = (
         (DOG, 'Собака'),
         (CAT, 'Кошка'),
         (OTHER, 'Другое')
-    ]
+    )
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
-    description = models.CharField(max_length=500, null=True, blank=True, verbose_name='Описание')
-    photo = models.ImageField(upload_to='announcements', blank=True, null=True, verbose_name='Фотография животного')
-    announcement_type = models.IntegerField(choices=ANNOUNCMENT_TYPES, default=LOST, verbose_name='Тип объявления')
-    animal_type = models.IntegerField(choices=ANIMAL_TYPES, default=DOG, verbose_name='Тип животного')
-    place = models.CharField(max_length=500, blank=True, null=True, verbose_name='Место, где животное потерялось или нашлось')
-    latitude = models.FloatField(blank=True, null=True, verbose_name='Широта')
-    longitude = models.FloatField(blank=True, null=True, verbose_name='Долгота')
-    contact_phone_number = models.CharField(max_length=12, verbose_name='Контактный телефон')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменено')
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь'
+    )
+    description = models.CharField(
+        _('Описание'),
+        max_length=1000,
+        null=True,
+        blank=True
+    )
+    photo = models.ImageField(
+        _('Фотография животного'),
+        upload_to='announcements',
+        blank=True,
+        null=True
+    )
+    announcement_type = models.IntegerField(
+        _('Тип объявления'),
+        choices=ANNOUNCMENT_TYPES,
+        default=LOST
+    )
+    animal_type = models.IntegerField(
+        _('Тип животного'),
+        choices=ANIMAL_TYPES,
+        default=DOG
+    )
+    place = models.CharField(
+        _('Место, где животное было найдено или потеряно'),
+        max_length=500,
+        blank=True,
+        null=True
+    )
+    latitude = models.FloatField(
+        _('Широта'),
+        blank=True,
+        null=True
+    )
+    longitude = models.FloatField(
+        _('Долгота'),
+        blank=True,
+        null=True
+    )
+    contact_phone_number = models.CharField(
+        _('Контактный телефон'),
+        max_length=12
+    )
+    created_at = models.DateTimeField(
+        _('Создано'),
+        auto_now_add=True
+    )
+    updated_at = models.DateTimeField(
+        _('Изменено'),
+        auto_now=True
+    )
 
     class Meta:
         ordering = ['-created_at']
