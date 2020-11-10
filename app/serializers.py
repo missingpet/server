@@ -1,6 +1,6 @@
-import re
-
 from .models import User, Announcement
+
+from .validators import *
 
 from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
@@ -8,37 +8,6 @@ from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 from django.core.validators import validate_email
 from django.contrib import auth
-
-
-def validate_contact_phone_number(contact_phone_number):
-    if not re.match(r'\+7\d{10}$', contact_phone_number):
-        raise serializers.ValidationError('Неверный формат номера телефона.')
-    return contact_phone_number
-
-
-def validate_username(username):
-    if not username.isalnum():
-        raise serializers.ValidationError('Имя пользователя должно содержать только буквенно-цифровые символы.')
-    return username
-
-
-def validate_photo(photo):
-    if photo.size > 5242880:
-        raise serializers.ValidationError('Размер изображения не должен превышать 5 мегабайт.')
-    return photo
-
-
-def validate_address_and_coordinates(address, latitude, longitude):
-    if address and longitude and latitude:
-        if longitude < -180.0 or longitude > 180.0:
-            raise serializers.ValidationError('Неверная долгота.')
-        if latitude < -90.0 or latitude > 90.0:
-            raise serializers.ValidationError('Неверная широта.')
-    else:
-        address = None
-        latitude = None
-        longitude = None
-    return address, latitude, longitude
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -180,11 +149,7 @@ class AnnouncementCreateSerializer(serializers.ModelSerializer):
         attrs['longitude'] = longitude
         validate_contact_phone_number(contact_phone_number)
         validate_photo(photo)
-
-        if announcement_type not in (1, 2):
-            raise serializers.ValidationError('Неверный тип объявления.')
-
-        if animal_type not in (1, 2, 3):
-            raise serializers.ValidationError('Неверный тип животного.')
+        validate_announcement_type(announcement_type)
+        validate_animal_type(animal_type)
 
         return attrs
