@@ -38,3 +38,9 @@ def validate_announcement_type(announcement_type):
     if announcement_type not in (1, 2):
         raise ValidationError('Неверный тип объявления.')
     return announcement_type
+
+
+def validate_animal_type(animal_type):
+    if animal_type not in (1, 2, 3):
+        raise ValidationError('Неверный тип животного.')
+    return animal_type
