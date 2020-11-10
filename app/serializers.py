@@ -149,11 +149,7 @@ class AnnouncementCreateSerializer(serializers.ModelSerializer):
         attrs['longitude'] = longitude
         validate_contact_phone_number(contact_phone_number)
         validate_photo(photo)
-
-        if announcement_type not in (1, 2):
-            raise serializers.ValidationError('Неверный тип объявления.')
-
-        if animal_type not in (1, 2, 3):
-            raise serializers.ValidationError('Неверный тип животного.')
+        validate_announcement_type(announcement_type)
+        validate_animal_type(animal_type)
 
         return attrs
