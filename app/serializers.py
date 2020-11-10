@@ -23,26 +23,30 @@ def validate_username(username):
 
 
 def validate_photo(photo):
-    if photo:
-        if photo.size > 5242880:
-            raise serializers.ValidationError('Размер изображения не должен превышать 5 мегабайт.')
+    if photo.size > 5242880:
+        raise serializers.ValidationError('Размер изображения не должен превышать 5 мегабайт.')
     return photo
 
 
-def validate_place_and_coordinates(place, latitude, longitude):
-    if place:
+def validate_address_and_coordinates(address, latitude, longitude):
+    if address and longitude and latitude:
         if longitude < -180.0 or longitude > 180.0:
             raise serializers.ValidationError('Неверная долгота.')
         if latitude < -90.0 or latitude > 90.0:
             raise serializers.ValidationError('Неверная широта.')
     else:
+        address = None
         latitude = None
         longitude = None
-    return place, latitude, longitude
+    return address, latitude, longitude
 
 
 class SignUpSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(min_length=6, max_length=60, write_only=True)
+    password = serializers.CharField(
+        min_length=6,
+        max_length=60,
+        write_only=True
+    )
 
     class Meta:
         model = User
@@ -60,9 +64,20 @@ class SignUpSerializer(serializers.ModelSerializer):
 
 
 class SignInSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(min_length=3, max_length=255)
-    password = serializers.CharField(min_length=6, max_length=60, write_only=True)
-    username = serializers.CharField(min_length=3, max_length=32, read_only=True)
+    email = serializers.EmailField(
+        min_length=3,
+        max_length=255
+    )
+    password = serializers.CharField(
+        min_length=6,
+        max_length=60,
+        write_only=True
+    )
+    username = serializers.CharField(
+        min_length=3,
+        max_length=32,
+        read_only=True
+    )
     tokens = serializers.SerializerMethodField()
 
     class Meta:
@@ -83,9 +98,6 @@ class SignInSerializer(serializers.ModelSerializer):
 
         if not user:
             raise AuthenticationFailed('Введён неверный адрес электронной почты или пароль. Попробуйте снова.')
-
-        if not user.is_verified:
-            raise AuthenticationFailed('Аккаунт не подтверждён.')
 
         return {
             'id': user.id,
@@ -108,11 +120,14 @@ class SignOutSerializer(serializers.Serializer):
         try:
             RefreshToken(self.token).blacklist()
         except TokenError:
-            self.fail('TokenError')
+            self.fail('error')
 
 
 class AnnouncementRetrieveSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username', read_only=True)
+    user = serializers.CharField(
+        source='user.username',
+        read_only=True
+    )
 
     class Meta:
         model = Announcement
@@ -120,15 +135,28 @@ class AnnouncementRetrieveSerializer(serializers.ModelSerializer):
 
 
 class AnnouncementCreateSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username', read_only=True)
-    photo = serializers.ImageField(allow_null=True)
+    user = serializers.CharField(
+        source='user.username',
+        read_only=True
+    )
+    photo = serializers.ImageField()
     announcement_type = serializers.IntegerField()
     animal_type = serializers.IntegerField()
-    place = serializers.CharField(min_length=1, max_length=500, allow_null=True)
+    address = serializers.CharField(
+        min_length=1,
+        max_length=500,
+        allow_null=True
+    )
     latitude = serializers.FloatField(allow_null=True)
     longitude = serializers.FloatField(allow_null=True)
-    description = serializers.CharField(min_length=1, max_length=1000, allow_null=True)
-    contact_phone_number = serializers.CharField(min_length=12, max_length=12)
+    description = serializers.CharField(
+        min_length=1,
+        max_length=1000
+    )
+    contact_phone_number = serializers.CharField(
+        min_length=12,
+        max_length=12
+    )
     created_at = serializers.DateTimeField(read_only=True)
     updated_at = serializers.DateTimeField(read_only=True)
 
@@ -140,15 +168,16 @@ class AnnouncementCreateSerializer(serializers.ModelSerializer):
 
         longitude = attrs.get('longitude')
         latitude = attrs.get('latitude')
-        place = attrs.get('place')
+        address = attrs.get('address')
         photo = attrs.get('photo')
         announcement_type = attrs.get('announcement_type')
         animal_type = attrs.get('animal_type')
         contact_phone_number = attrs.get('contact_phone_number')
 
-        _, lat, long = validate_place_and_coordinates(place, latitude, longitude)
-        attrs['latitude'] = lat
-        attrs['longitude'] = long
+        address, latitude, longitude = validate_address_and_coordinates(address, latitude, longitude)
+        attrs['address'] = address
+        attrs['latitude'] = latitude
+        attrs['longitude'] = longitude
         validate_contact_phone_number(contact_phone_number)
         validate_photo(photo)
 
