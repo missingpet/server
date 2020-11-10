@@ -2,7 +2,7 @@ from .serializers import *
 
 from .permissions import IsAnnouncementAuthor
 
-from .models import User, Announcement
+from .models import Announcement
 
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
@@ -18,9 +18,6 @@ class SignUpAPIView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         user_data = serializer.data
-        user = User.objects.get(email=user_data.get('email'))
-        user.is_verified = True
-        user.save()
         return Response(user_data, status=status.HTTP_201_CREATED)
 
 
