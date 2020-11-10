@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
-from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -30,39 +30,35 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """Пользователь"""
     email = models.CharField(
-        _('Адрес электронной почты'),
+        'Адрес электронной почты',
         max_length=255,
         unique=True,
         db_index=True
     )
     username = models.CharField(
-        _('Имя пользователя'),
-        max_length=32,
+        'Имя пользователя',
+        max_length=64,
         unique=True,
         db_index=True
     )
     is_active = models.BooleanField(
-        _('Активирован'),
+        'Активирован',
         default=True
     )
-    is_verified = models.BooleanField(
-        _('Подтверждён'),
-        default=False
-    )
     is_staff = models.BooleanField(
-        _('Персонал'),
+        'Персонал',
         default=False
     )
     is_superuser = models.BooleanField(
-        _('Суперпользователь'),
+        'Суперпользователь',
         default=False
     )
     created_at = models.DateTimeField(
-        _('Создан'),
+        'Создан',
         auto_now_add=True
     )
     updated_at = models.DateTimeField(
-        _('Обновлён'),
+        'Обновлён',
         auto_now=True
     )
 
@@ -88,7 +84,7 @@ class Announcement(models.Model):
     """Объявление"""
     LOST = 1
     FOUND = 2
-    ANNOUNCMENT_TYPES = (
+    ANNOUNCEMENT_TYPES = (
         (LOST, 'Потеряно'),
         (FOUND, 'Найдено')
     )
@@ -105,56 +101,53 @@ class Announcement(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        verbose_name='Пользователь'
+        verbose_name=User._meta.verbose_name
     )
     description = models.CharField(
-        _('Описание'),
+        'Описание',
         max_length=1000,
-        null=True,
-        blank=True
+        default='Описание отсутствует'
     )
     photo = models.ImageField(
-        _('Фотография животного'),
+        'Фотография животного',
         upload_to='announcements',
-        blank=True,
-        null=True
     )
     announcement_type = models.IntegerField(
-        _('Тип объявления'),
-        choices=ANNOUNCMENT_TYPES,
+        'Тип объявления',
+        choices=ANNOUNCEMENT_TYPES,
         default=LOST
     )
     animal_type = models.IntegerField(
-        _('Тип животного'),
+        'Тип животного',
         choices=ANIMAL_TYPES,
         default=DOG
     )
-    place = models.CharField(
-        _('Место, где животное было найдено или потеряно'),
+    address = models.CharField(
+        'Место пропажи/находки',
         max_length=500,
         blank=True,
         null=True
     )
     latitude = models.FloatField(
-        _('Широта'),
+        'Широта',
         blank=True,
         null=True
     )
     longitude = models.FloatField(
-        _('Долгота'),
+        'Долгота',
         blank=True,
         null=True
     )
     contact_phone_number = models.CharField(
-        _('Контактный телефон'),
+        'Контактный телефон',
         max_length=12
     )
     created_at = models.DateTimeField(
-        _('Создано'),
+        'Создано',
         auto_now_add=True
     )
     updated_at = models.DateTimeField(
-        _('Изменено'),
+        'Изменено',
         auto_now=True
     )
 
@@ -168,7 +161,7 @@ class Announcement(models.Model):
             this_record = Announcement.objects.get(id=self.id)
             if this_record.photo != self.photo:
                 this_record.photo.delete(save=False)
-        except:
+        except ObjectDoesNotExist:
             pass
         super(Announcement, self).save(*args, **kwargs)
 
