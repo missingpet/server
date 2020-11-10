@@ -32,3 +32,9 @@ def validate_address_and_coordinates(address, latitude, longitude):
         latitude = None
         longitude = None
     return address, latitude, longitude
+
+
+def validate_announcement_type(announcement_type):
+    if announcement_type not in (1, 2):
+        raise ValidationError('Неверный тип объявления.')
+    return announcement_type
