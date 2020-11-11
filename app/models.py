@@ -77,7 +77,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return {'refresh': f'{refresh_token}', 'access': f'{refresh_token.access_token}'}
 
     def __str__(self):
-        return f'email: {self.email}; username: {self.username}; id: {self.id}'
+        return '{}'.format(self.email)
 
 
 class Announcement(models.Model):
@@ -170,4 +170,4 @@ class Announcement(models.Model):
         super(Announcement, self).delete(*args, **kwargs)
 
     def __str__(self):
-        return f'user: {self.user}; created_at: {self.created_at}; description: {self.description}; id: {self.id}'
+        return '{}'.format(self.user)
