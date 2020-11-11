@@ -87,5 +87,4 @@ class FeedMapInfoListAPIView(generics.ListAPIView):
     pagination_class = None
 
     def get_queryset(self):
-        return Announcement.objects.exclude(user=self.request.user)
-
+        return Announcement.objects.exclude(user=self.request.user).exclude(address__isnull=True)
