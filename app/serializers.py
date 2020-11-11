@@ -153,3 +153,10 @@ class AnnouncementCreateSerializer(serializers.ModelSerializer):
         validate_animal_type(animal_type)
 
         return attrs
+
+
+class MapInfoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Announcement
+        fields = ['id', 'latitude', 'longitude']
