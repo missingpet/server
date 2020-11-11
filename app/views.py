@@ -73,3 +73,9 @@ class AnnouncementCreateAPIView(generics.CreateAPIView):
 class AnnouncementDeleteAPIView(generics.DestroyAPIView):
     permission_classes = (IsAuthenticated, IsAnnouncementAuthor)
     queryset = Announcement.objects.all()
+
+
+class AnnouncementRetrieveAPIView(generics.RetrieveAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = AnnouncementRetrieveSerializer
+    queryset = Announcement.objects.all()
