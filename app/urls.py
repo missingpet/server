@@ -16,4 +16,5 @@ urlpatterns = [
     path('announcement/delete/<int:pk>/', AnnouncementDeleteAPIView.as_view(), name='delete-announcement'),
     path('announcement/my/', MyAnnouncementListAPIView.as_view(), name='my-announcements'),
     path('announcement/retrieve/<int:pk>/', AnnouncementRetrieveAPIView.as_view(), name='retrieve-announcement'),
+    path('announcement/feed-map-info/', FeedMapInfoListAPIView.as_view(), name='feed-map-info'),
 ]
