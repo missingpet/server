@@ -84,6 +84,7 @@ class AnnouncementRetrieveAPIView(generics.RetrieveAPIView):
 class FeedMapInfoListAPIView(generics.ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = MapInfoSerializer
+    pagination_class = None
 
     def get_queryset(self):
         return Announcement.objects.exclude(user=self.request.user)
