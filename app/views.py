@@ -54,6 +54,7 @@ class FeedAnnouncementListAPIView(generics.ListAPIView):
 class MyAnnouncementListAPIView(generics.ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = AnnouncementRetrieveSerializer
+    pagination_class = None
 
     def get_queryset(self):
         user = self.request.user
