@@ -54,6 +54,7 @@ class FeedAnnouncementListAPIView(generics.ListAPIView):
 class MyAnnouncementListAPIView(generics.ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = AnnouncementRetrieveSerializer
+    pagination_class = None
 
     def get_queryset(self):
         user = self.request.user
@@ -72,3 +73,18 @@ class AnnouncementCreateAPIView(generics.CreateAPIView):
 class AnnouncementDeleteAPIView(generics.DestroyAPIView):
     permission_classes = (IsAuthenticated, IsAnnouncementAuthor)
     queryset = Announcement.objects.all()
+
+
+class AnnouncementRetrieveAPIView(generics.RetrieveAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = AnnouncementRetrieveSerializer
+    queryset = Announcement.objects.all()
+
+
+class FeedMapInfoListAPIView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = MapInfoSerializer
+    pagination_class = None
+
+    def get_queryset(self):
+        return Announcement.objects.exclude(user=self.request.user).exclude(address__isnull=True)

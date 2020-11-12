@@ -1,5 +1,7 @@
 import re
 
+import imghdr
+
 from rest_framework.serializers import ValidationError
 
 
@@ -16,6 +18,8 @@ def validate_username(username):
 
 
 def validate_photo(photo):
+    if imghdr.what(photo) != 'jpeg' or imghdr.what(photo) != 'png':
+        raise ValidationError('Расширение изображения должно быть jpeg или png.')
     if photo.size > 5242880:
         raise ValidationError('Размер изображения не должен превышать 5 мегабайт.')
     return photo
