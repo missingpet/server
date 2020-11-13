@@ -37,7 +37,8 @@ class Announcement(Model):
     description = CharField(
         'Описание',
         max_length=1000,
-        default='Описание отсутствует'
+        blank=True,
+        null=True
     )
     photo = ImageField(
         'Фотография животного',
