@@ -35,7 +35,7 @@ class AnnouncementCreateAPIView(generics.CreateAPIView):
 
 
 class AnnouncementDeleteAPIView(generics.DestroyAPIView):
-    permission_classes = (IsAuthenticated, IsAnnouncementAuthor)
+    permission_classes = (IsAnnouncementAuthor, )
     queryset = Announcement.objects.all()
 
 
