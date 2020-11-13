@@ -65,26 +65,6 @@ class AnnouncementCreateSerializer(ModelSerializer):
         source='user.username',
         read_only=True
     )
-    photo = ImageField()
-    announcement_type = IntegerField()
-    animal_type = IntegerField()
-    address = CharField(
-        min_length=1,
-        max_length=500,
-        allow_null=True
-    )
-    latitude = FloatField(allow_null=True)
-    longitude = FloatField(allow_null=True)
-    description = CharField(
-        min_length=1,
-        max_length=1000
-    )
-    contact_phone_number = CharField(
-        min_length=12,
-        max_length=12
-    )
-    created_at = DateTimeField(read_only=True)
-    updated_at = DateTimeField(read_only=True)
 
     class Meta:
         model = Announcement
