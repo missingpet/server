@@ -19,8 +19,7 @@ def validate_contact_phone_number(contact_phone_number):
 
 
 def validate_photo(photo):
-    extension = imghdr.what(photo)
-    if extension != 'jpeg' or extension != 'png':
+    if imghdr.what(photo) not in ('jpeg', 'png'):
         raise ValidationError('Image extension should be jpeg or png.')
     if photo.size > 5242880:
         raise ValidationError('Image size should be less than 5 megabytes.')
