@@ -1,6 +1,10 @@
 from .base import AnnouncementBaseSerializer, MapInfoBaseSerializer
 
-from .validators import *
+from .validators import validate_address_and_coordinates
+from .validators import validate_contact_phone_number
+from .validators import validate_announcement_type
+from .validators import validate_animal_type
+from .validators import validate_photo
 
 
 class AnnouncementRetrieveSerializer(AnnouncementBaseSerializer):
