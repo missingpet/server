@@ -37,8 +37,6 @@ class Announcement(Model):
     description = CharField(
         'Описание',
         max_length=1000,
-        blank=True,
-        null=True
     )
     photo = ImageField(
         'Фотография животного',
@@ -47,12 +45,10 @@ class Announcement(Model):
     announcement_type = IntegerField(
         'Тип объявления',
         choices=ANNOUNCEMENT_TYPES,
-        default=LOST
     )
     animal_type = IntegerField(
         'Тип животного',
         choices=ANIMAL_TYPES,
-        default=DOG
     )
     address = CharField(
         'Место пропажи/находки',
