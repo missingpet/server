@@ -22,8 +22,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'admin_reorder',
 
-    'users',
-    'announcements'
+    'users.apps.UsersConfig',
+    'announcements.apps.AnnouncementsConfig'
 ]
 
 MIDDLEWARE = [
@@ -100,7 +100,8 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-ANNOUNCEMENTS_PHOTO = 'announcements'
+MEDIA_SPLIT_DIRS = '/%Y/%m/%d/'
+ANNOUNCEMENTS_PHOTO = 'announcements{}'.format(MEDIA_SPLIT_DIRS)
 
 SIMPLE_JWT = {
     'SIGNING_KEY': SECRET_KEY,
