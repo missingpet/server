@@ -70,13 +70,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     class Meta:
-        ordering = ['-email', '-username']
+        ordering = ['-username', '-email']
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
     def tokens(self):
         refresh_token = RefreshToken.for_user(self)
-        return {'refresh': '{}'.format(refresh_token), 'access': '{}'.format(refresh_token.access_token)}
+        return {
+            'refresh': '{}'.format(refresh_token),
+            'access': '{}'.format(
+                refresh_token.access_token
+            )
+        }
 
     def __str__(self):
-        return self.email
+        return '{} | {}'.format(self.username, self.email)

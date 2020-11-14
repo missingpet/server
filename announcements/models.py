@@ -26,9 +26,9 @@ class Announcement(Model):
     CAT = 2
     OTHER = 3
     ANIMAL_TYPES = (
-        (DOG, 'Собака'),
-        (CAT, 'Кошка'),
-        (OTHER, 'Другое')
+        (DOG, 'Собаки'),
+        (CAT, 'Кошки'),
+        (OTHER, 'Иное')
     )
 
     user = ForeignKey(
