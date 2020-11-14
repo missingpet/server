@@ -1,6 +1,12 @@
 from .models import User
 
-from rest_framework import serializers
+from rest_framework.serializers import SerializerMethodField
+from rest_framework.serializers import ValidationError
+from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import EmailField
+from rest_framework.serializers import Serializer
+from rest_framework.serializers import CharField
+
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import TokenError
@@ -11,14 +17,14 @@ from django.contrib import auth
 
 def validate_username(username):
     if not username.isalnum():
-        raise serializers.ValidationError(
+        raise ValidationError(
             'Username should contain only alphanumeric characters.'
         )
     return username
 
 
-class SignUpSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(
+class SignUpSerializer(ModelSerializer):
+    password = CharField(
         min_length=6,
         max_length=60,
         write_only=True
@@ -39,22 +45,22 @@ class SignUpSerializer(serializers.ModelSerializer):
         return User.objects.create_user(**validated_data)
 
 
-class SignInSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(
+class SignInSerializer(ModelSerializer):
+    email = EmailField(
         min_length=3,
         max_length=255
     )
-    password = serializers.CharField(
+    password = CharField(
         min_length=6,
         max_length=60,
         write_only=True
     )
-    username = serializers.CharField(
+    username = CharField(
         min_length=3,
         max_length=32,
         read_only=True
     )
-    tokens = serializers.SerializerMethodField()
+    tokens = SerializerMethodField()
 
     class Meta:
         model = User
@@ -85,8 +91,8 @@ class SignInSerializer(serializers.ModelSerializer):
         }
 
 
-class SignOutSerializer(serializers.Serializer):
-    refresh = serializers.CharField()
+class SignOutSerializer(Serializer):
+    refresh = CharField()
 
     default_error_messages = {'error': 'Invalid token.'}
 

@@ -1,34 +1,41 @@
-from .serializers import *
+from .serializers import SignInSerializer
+from .serializers import SignUpSerializer
+from .serializers import SignOutSerializer
 
-from rest_framework import generics
-from rest_framework import status
+from rest_framework.generics import GenericAPIView
+
+from rest_framework.status import HTTP_201_CREATED
+from rest_framework.status import HTTP_200_OK
+from rest_framework.status import HTTP_204_NO_CONTENT
+
 from rest_framework.response import Response
+
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 
-class SignUpAPIView(generics.GenericAPIView):
+class SignUpAPIView(GenericAPIView):
     serializer_class = SignUpSerializer
+    permission_classes = (AllowAny, )
 
     def post(self, request):
-        user = request.data
-        serializer = self.serializer_class(data=user)
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        user_data = serializer.data
-        return Response(user_data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=HTTP_201_CREATED)
 
 
-class SignInAPIView(generics.GenericAPIView):
+class SignInAPIView(GenericAPIView):
     serializer_class = SignInSerializer
+    permission_classes = (AllowAny, )
 
     def post(self, request):
-        user = request.data
-        serializer = self.serializer_class(data=user)
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=HTTP_200_OK)
 
 
-class SignOutAPIView(generics.GenericAPIView):
+class SignOutAPIView(GenericAPIView):
     serializer_class = SignOutSerializer
     permission_classes = (IsAuthenticated, )
 
@@ -36,4 +43,4 @@ class SignOutAPIView(generics.GenericAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=HTTP_204_NO_CONTENT)
