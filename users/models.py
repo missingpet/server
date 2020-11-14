@@ -79,4 +79,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         return {'refresh': '{}'.format(refresh_token), 'access': '{}'.format(refresh_token.access_token)}
 
     def __str__(self):
-        return '{}'.format(self.email)
+        return self.email

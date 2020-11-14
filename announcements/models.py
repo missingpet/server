@@ -100,4 +100,4 @@ class Announcement(Model):
         super(Announcement, self).delete(*args, **kwargs)
 
     def __str__(self):
-        return '{}'.format(self.user)
+        return self.user
