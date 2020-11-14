@@ -1,3 +1,5 @@
+from config.settings import ANNOUNCEMENTS_PHOTO
+
 from django.db.models import Model
 from django.db.models import CharField
 from django.db.models import ImageField
@@ -40,7 +42,7 @@ class Announcement(Model):
     )
     photo = ImageField(
         'Фотография животного',
-        upload_to='announcements',
+        upload_to=ANNOUNCEMENTS_PHOTO,
     )
     announcement_type = IntegerField(
         'Тип объявления',
