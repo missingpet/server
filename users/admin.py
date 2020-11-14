@@ -9,10 +9,14 @@ class UserAdmin(admin.ModelAdmin):
         'last_login',
     )
     list_display = (
-        'email',
         'username',
+        'email',
         'created_at',
         'is_active'
+    )
+    list_display_links = (
+        'username',
+        'email',
     )
     list_filter = (
         'is_staff',
