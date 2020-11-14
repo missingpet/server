@@ -12,7 +12,7 @@ from drf_yasg.views import get_schema_view
 
 schema_view = get_schema_view(
     Info(
-        title='MissingPet',
+        title='MissingPet API',
         default_version=''
     ),
     public=True,
@@ -20,8 +20,14 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('', admin.site.urls),
-    path('api/', include('announcements.urls')),
-    path('api/auth/', include('users.urls')),
+    path(
+        'api/',
+        include('announcements.urls')
+    ),
+    path(
+        'api/auth/',
+        include('users.urls')
+    ),
     path(
         'api/',
         include('rest_framework.urls', namespace='rest_framework')
