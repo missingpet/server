@@ -4,11 +4,15 @@ from .permissions import IsAnnouncementAuthor
 
 from .models import Announcement
 
-from rest_framework import generics
+from rest_framework.generics import ListAPIView
+from rest_framework.generics import CreateAPIView
+from rest_framework.generics import DestroyAPIView
+from rest_framework.generics import RetrieveAPIView
+
 from rest_framework.permissions import IsAuthenticated
 
 
-class FeedAnnouncementListAPIView(generics.ListAPIView):
+class FeedAnnouncementListAPIView(ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = AnnouncementRetrieveSerializer
 
@@ -16,7 +20,7 @@ class FeedAnnouncementListAPIView(generics.ListAPIView):
         return Announcement.objects.exclude(user=self.request.user)
 
 
-class MyAnnouncementListAPIView(generics.ListAPIView):
+class MyAnnouncementListAPIView(ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = AnnouncementRetrieveSerializer
     pagination_class = None
@@ -25,7 +29,7 @@ class MyAnnouncementListAPIView(generics.ListAPIView):
         return Announcement.objects.filter(user=self.request.user)
 
 
-class AnnouncementCreateAPIView(generics.CreateAPIView):
+class AnnouncementCreateAPIView(CreateAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = AnnouncementCreateSerializer
     queryset = Announcement.objects.all()
@@ -34,18 +38,18 @@ class AnnouncementCreateAPIView(generics.CreateAPIView):
         return serializer.save(user=self.request.user)
 
 
-class AnnouncementDeleteAPIView(generics.DestroyAPIView):
+class AnnouncementDeleteAPIView(DestroyAPIView):
     permission_classes = (IsAnnouncementAuthor, )
     queryset = Announcement.objects.all()
 
 
-class AnnouncementRetrieveAPIView(generics.RetrieveAPIView):
+class AnnouncementRetrieveAPIView(RetrieveAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = AnnouncementRetrieveSerializer
     queryset = Announcement.objects.all()
 
 
-class FeedMapInfoListAPIView(generics.ListAPIView):
+class FeedMapInfoListAPIView(ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = FeedMapInfoSerializer
     pagination_class = None
