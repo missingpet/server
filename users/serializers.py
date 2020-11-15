@@ -11,16 +11,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import TokenError
 
-from django.core.validators import validate_email
 from django.contrib import auth
-
-
-def validate_username(username):
-    if not username.isalnum():
-        raise ValidationError(
-            'Username should contain only alphanumeric characters.'
-        )
-    return username
 
 
 class SignUpSerializer(ModelSerializer):
@@ -37,8 +28,7 @@ class SignUpSerializer(ModelSerializer):
     def validate(self, attrs):
         email = attrs.get('email')
         username = attrs.get('username')
-        validate_username(username)
-        validate_email(email)
+
         return attrs
 
     def create(self, validated_data):
@@ -94,7 +84,9 @@ class SignInSerializer(ModelSerializer):
 class SignOutSerializer(Serializer):
     refresh = CharField()
 
-    default_error_messages = {'error': 'Invalid token.'}
+    default_error_messages = {
+        'error': 'Invalid token.'
+    }
 
     def validate(self, attrs):
         self.token = attrs.get('refresh')
