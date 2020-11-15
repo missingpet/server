@@ -26,7 +26,7 @@ class AnnouncementCreateSerializer(AnnouncementBaseSerializer):
 
         if not re.match(r'\+7\d{10}$', contact_phone_number):
             raise ValidationError(
-                _('Wrong phone number format.')
+                _('Contact phone number should starts with +7 and contains 12 characters total.')
             )
 
         if imghdr.what(photo) not in ('jpeg', 'png'):
