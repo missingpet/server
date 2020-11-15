@@ -38,7 +38,7 @@ class Announcement(Model):
     )
     description = CharField(
         'Описание',
-        max_length=1000,
+        max_length=5000,
     )
     photo = ImageField(
         'Фотография животного',
@@ -54,7 +54,7 @@ class Announcement(Model):
     )
     address = CharField(
         'Место пропажи/находки',
-        max_length=500,
+        max_length=1000,
         blank=True,
         null=True
     )
