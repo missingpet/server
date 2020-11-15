@@ -1,9 +1,12 @@
-from .models import User
+import re
+
+from .email_regex import *
+
+from users.models import User
 
 from rest_framework.serializers import SerializerMethodField
 from rest_framework.serializers import ValidationError
 from rest_framework.serializers import ModelSerializer
-from rest_framework.serializers import EmailField
 from rest_framework.serializers import Serializer
 from rest_framework.serializers import CharField
 
@@ -13,11 +16,13 @@ from rest_framework_simplejwt.tokens import TokenError
 
 from django.contrib import auth
 
+from django.utils.translation import gettext_lazy as _
+
 
 class SignUpSerializer(ModelSerializer):
     password = CharField(
         min_length=6,
-        max_length=60,
+        max_length=128,
         write_only=True
     )
 
@@ -29,6 +34,28 @@ class SignUpSerializer(ModelSerializer):
         email = attrs.get('email')
         username = attrs.get('username')
 
+        username_len = len(username)
+        if username_len < 3 or username_len > 64:
+            raise ValidationError(
+                _('Username should contain 3 to 64 characters.')
+            )
+
+        if not username.isalnum():
+            raise ValidationError(
+                _('Username should contain only alphanumeric characters.')
+            )
+
+        email_len = len(email)
+        if email_len < 3 or email_len > 255:
+            raise ValidationError(
+                _('Email address should contain 3 to 255 characters.')
+            )
+
+        if not re.match(EMAIL_REGEX, email):
+            raise ValidationError(
+                _('Invalid email address format.')
+            )
+
         return attrs
 
     def create(self, validated_data):
@@ -36,18 +63,18 @@ class SignUpSerializer(ModelSerializer):
 
 
 class SignInSerializer(ModelSerializer):
-    email = EmailField(
+    email = CharField(
         min_length=3,
         max_length=255
     )
     password = CharField(
         min_length=6,
-        max_length=60,
+        max_length=128,
         write_only=True
     )
     username = CharField(
         min_length=3,
-        max_length=32,
+        max_length=64,
         read_only=True
     )
     tokens = SerializerMethodField()
@@ -70,7 +97,7 @@ class SignInSerializer(ModelSerializer):
 
         if not user:
             raise AuthenticationFailed(
-                'Invalid email address.'
+                _('Invalid email address.')
             )
 
         return {
@@ -85,7 +112,7 @@ class SignOutSerializer(Serializer):
     refresh = CharField()
 
     default_error_messages = {
-        'error': 'Invalid token.'
+        'error': _('Invalid token.')
     }
 
     def validate(self, attrs):
