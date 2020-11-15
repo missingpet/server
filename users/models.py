@@ -12,18 +12,31 @@ from rest_framework_simplejwt.tokens import RefreshToken
 class UserManager(BaseUserManager):
     def create_user(self, email, username, password):
         if email is None:
-            raise ValueError('Email address must be set.')
+            raise ValueError(
+                'Email address must be set.'
+            )
         if username is None:
-            raise ValueError('Username must be set.')
-        user = self.model(email=self.normalize_email(email), username=username)
+            raise ValueError(
+                'Username must be set.'
+            )
+        user = self.model(
+            email=self.normalize_email(email),
+            username=username
+        )
         user.set_password(password)
         user.save()
         return user
 
     def create_superuser(self, email, username, password):
         if password is None:
-            raise ValueError('Password must be set.')
-        user = self.create_user(username=username, email=email, password=password)
+            raise ValueError(
+                'Password must be set.'
+            )
+        user = self.create_user(
+            username=username,
+            email=email,
+            password=password
+        )
         user.is_superuser = True
         user.is_staff = True
         user.save()
@@ -84,4 +97,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         }
 
     def __str__(self):
-        return '{} | {}'.format(self.username, self.email)
+        return '{}'.format(self.email)

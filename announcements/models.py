@@ -34,11 +34,11 @@ class Announcement(Model):
     user = ForeignKey(
         User,
         on_delete=CASCADE,
-        verbose_name=User._meta.verbose_name
+        verbose_name='Пользователь'
     )
     description = CharField(
         'Описание',
-        max_length=1000,
+        max_length=2000,
     )
     photo = ImageField(
         'Фотография животного',
@@ -54,7 +54,7 @@ class Announcement(Model):
     )
     address = CharField(
         'Место пропажи/находки',
-        max_length=500,
+        max_length=1000,
         blank=True,
         null=True
     )
@@ -100,4 +100,4 @@ class Announcement(Model):
         super(Announcement, self).delete(*args, **kwargs)
 
     def __str__(self):
-        return self.user
+        return '{}'.format(self.user)
