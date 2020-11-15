@@ -1,6 +1,7 @@
-from announcements.models import Announcement
+from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import CharField
 
-from rest_framework.serializers import ModelSerializer, CharField
+from ..models import Announcement
 
 
 class AnnouncementBaseSerializer(ModelSerializer):
@@ -12,10 +13,3 @@ class AnnouncementBaseSerializer(ModelSerializer):
     class Meta:
         model = Announcement
         fields = '__all__'
-
-
-class MapInfoBaseSerializer(ModelSerializer):
-
-    class Meta:
-        model = Announcement
-        fields = ('id', 'latitude', 'longitude')
