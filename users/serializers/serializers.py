@@ -97,7 +97,7 @@ class SignInSerializer(ModelSerializer):
 
         if not user:
             raise AuthenticationFailed(
-                _('Invalid email address.')
+                _('Invalid email address or password.')
             )
 
         return {
