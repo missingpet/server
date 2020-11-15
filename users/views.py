@@ -1,7 +1,3 @@
-from .serializers import SignInSerializer
-from .serializers import SignUpSerializer
-from .serializers import SignOutSerializer
-
 from rest_framework.generics import GenericAPIView
 
 from rest_framework.status import HTTP_201_CREATED
@@ -12,6 +8,10 @@ from rest_framework.response import Response
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
+
+from .serializers import SignInSerializer
+from .serializers import SignUpSerializer
+from .serializers import SignOutSerializer
 
 
 class SignUpAPIView(GenericAPIView):
