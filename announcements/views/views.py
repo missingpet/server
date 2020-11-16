@@ -1,9 +1,3 @@
-from .serializers import *
-
-from .permissions import IsAnnouncementAuthor
-
-from .models import Announcement
-
 from rest_framework.generics import ListAPIView
 from rest_framework.generics import CreateAPIView
 from rest_framework.generics import DestroyAPIView
@@ -11,18 +5,22 @@ from rest_framework.generics import RetrieveAPIView
 
 from rest_framework.permissions import IsAuthenticated
 
+from ..serializers import *
 
-class FeedAnnouncementListAPIView(ListAPIView):
-    permission_classes = (IsAuthenticated, )
-    serializer_class = AnnouncementRetrieveSerializer
+from ..permissions import IsAnnouncementAuthor
+
+from ..models import Announcement
+
+from .base import AnnouncementBaseListAPIView
+
+
+class FeedAnnouncementListAPIView(AnnouncementBaseListAPIView):
 
     def get_queryset(self):
         return Announcement.objects.exclude(user=self.request.user)
 
 
-class MyAnnouncementListAPIView(ListAPIView):
-    permission_classes = (IsAuthenticated, )
-    serializer_class = AnnouncementRetrieveSerializer
+class MyAnnouncementListAPIView(AnnouncementBaseListAPIView):
     pagination_class = None
 
     def get_queryset(self):
@@ -51,7 +49,7 @@ class AnnouncementRetrieveAPIView(RetrieveAPIView):
 
 class FeedMapInfoListAPIView(ListAPIView):
     permission_classes = (IsAuthenticated, )
-    serializer_class = FeedMapInfoSerializer
+    serializer_class = MapInfoSerializer
     pagination_class = None
 
     def get_queryset(self):

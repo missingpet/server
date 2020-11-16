@@ -1,9 +1,5 @@
 import re
 
-from .email_regex import *
-
-from users.models import User
-
 from rest_framework.serializers import SerializerMethodField
 from rest_framework.serializers import ValidationError
 from rest_framework.serializers import ModelSerializer
@@ -11,12 +7,15 @@ from rest_framework.serializers import Serializer
 from rest_framework.serializers import CharField
 
 from rest_framework.exceptions import AuthenticationFailed
+
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import TokenError
 
 from django.contrib import auth
 
 from django.utils.translation import gettext_lazy as _
+
+from .models import User
 
 
 class SignUpSerializer(ModelSerializer):
@@ -51,7 +50,7 @@ class SignUpSerializer(ModelSerializer):
                 _('Email address should contain 3 to 255 characters.')
             )
 
-        if not re.match(EMAIL_REGEX, email):
+        if not re.match(r'[a-z0-9]+@[a-z0-9]+\.[a-z0-9]+$', email):
             raise ValidationError(
                 _('Invalid email address format.')
             )

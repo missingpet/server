@@ -3,10 +3,11 @@ import imghdr
 
 from rest_framework.exceptions import ValidationError
 
-from .base import AnnouncementBaseSerializer
-from .base import MapInfoBaseSerializer
-
 from django.utils.translation import gettext_lazy as _
+
+from .base import AnnouncementBaseSerializer
+from .base import ModelSerializer
+from .base import Announcement
 
 
 class AnnouncementRetrieveSerializer(AnnouncementBaseSerializer):
@@ -77,5 +78,8 @@ class AnnouncementCreateSerializer(AnnouncementBaseSerializer):
         return attrs
 
 
-class FeedMapInfoSerializer(MapInfoBaseSerializer):
-    pass
+class MapInfoSerializer(ModelSerializer):
+
+    class Meta:
+        model = Announcement
+        fields = ('id', 'latitude', 'longitude')
