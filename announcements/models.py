@@ -55,18 +55,12 @@ class Announcement(Model):
     address = CharField(
         'Место пропажи/находки',
         max_length=1000,
-        blank=True,
-        null=True
     )
     latitude = FloatField(
         'Широта',
-        blank=True,
-        null=True
     )
     longitude = FloatField(
         'Долгота',
-        blank=True,
-        null=True
     )
     contact_phone_number = CharField(
         'Контактный телефон',
