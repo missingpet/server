@@ -1,5 +1,9 @@
 import re
 
+from django.contrib import auth
+
+from django.utils.translation import gettext_lazy as _
+
 from rest_framework.serializers import SerializerMethodField
 from rest_framework.serializers import ValidationError
 from rest_framework.serializers import ModelSerializer
@@ -10,10 +14,6 @@ from rest_framework.exceptions import AuthenticationFailed
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import TokenError
-
-from django.contrib import auth
-
-from django.utils.translation import gettext_lazy as _
 
 from .models import User
 
@@ -30,6 +30,9 @@ class SignUpSerializer(ModelSerializer):
         fields = ('email', 'username', 'password')
 
     def validate(self, attrs):
+        """
+        Проверяет корректность значений полей при регистрации нового пользователя.
+        """
         email = attrs.get('email')
         username = attrs.get('username')
 

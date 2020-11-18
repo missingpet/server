@@ -10,6 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class UserManager(BaseUserManager):
+
     def create_user(self, email, username, password):
         if email is None:
             raise ValueError(
@@ -44,6 +45,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """Модель пользователя."""
     email = CharField(
         'Адрес электронной почты',
         max_length=255,
@@ -78,23 +80,23 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ('username', )
 
     objects = UserManager()
 
     class Meta:
-        ordering = ['-username', '-email']
+        ordering = ('-username', '-email')
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
     def tokens(self):
         refresh_token = RefreshToken.for_user(self)
         return {
-            'refresh': '{}'.format(refresh_token),
-            'access': '{}'.format(
+            'refresh': str(refresh_token),
+            'access': str(
                 refresh_token.access_token
             )
         }
 
     def __str__(self):
-        return '{}'.format(self.email)
+        return self.email

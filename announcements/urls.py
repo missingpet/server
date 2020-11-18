@@ -1,11 +1,6 @@
 from django.urls import path
 
-from .views import FeedAnnouncementListAPIView
-from .views import AnnouncementRetrieveAPIView
-from .views import AnnouncementCreateAPIView
-from .views import AnnouncementDeleteAPIView
-from .views import MyAnnouncementListAPIView
-from .views import FeedMapInfoListAPIView
+from .views import *
 
 
 urlpatterns = [
@@ -21,7 +16,7 @@ urlpatterns = [
     ),
     path(
         'announcement/delete/<int:pk>/',
-        AnnouncementDeleteAPIView.as_view(),
+        AnnouncementDestroyAPIView.as_view(),
         name='delete-announcement'
     ),
     path(
