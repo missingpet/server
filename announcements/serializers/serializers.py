@@ -17,9 +17,7 @@ class AnnouncementRetrieveSerializer(AnnouncementBaseSerializer):
 class AnnouncementCreateSerializer(AnnouncementBaseSerializer):
 
     def validate(self, attrs):
-        """
-        Проверяет корректность значений всех полей объявления.
-        """
+        """Проверяет корректность значений всех полей объявления."""
         contact_phone_number = attrs.get('contact_phone_number')
         photo = attrs.get('photo')
         latitude = attrs.get('latitude')

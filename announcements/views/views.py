@@ -15,17 +15,13 @@ from .base import AnnouncementBaseListAPIView
 
 
 class FeedAnnouncementListAPIView(AnnouncementBaseListAPIView):
-    """
-    Лента объявлений.
-    """
+    """Лента объявлений."""
     def get_queryset(self):
         return Announcement.objects.exclude(user=self.request.user)
 
 
 class MyAnnouncementListAPIView(AnnouncementBaseListAPIView):
-    """
-    Объявления пользователя.
-    """
+    """Объявления пользователя."""
     pagination_class = None
 
     def get_queryset(self):
@@ -33,9 +29,7 @@ class MyAnnouncementListAPIView(AnnouncementBaseListAPIView):
 
 
 class AnnouncementCreateAPIView(CreateAPIView):
-    """
-    Создание нового объявления.
-    """
+    """Создание нового объявления."""
     permission_classes = (IsAuthenticated, )
     serializer_class = AnnouncementCreateSerializer
     queryset = Announcement.objects.all()
@@ -45,26 +39,20 @@ class AnnouncementCreateAPIView(CreateAPIView):
 
 
 class AnnouncementDestroyAPIView(DestroyAPIView):
-    """
-    Удаление объявления.
-    """
+    """Удаление объявления."""
     permission_classes = (IsAnnouncementAuthor, )
     queryset = Announcement.objects.all()
 
 
 class AnnouncementRetrieveAPIView(RetrieveAPIView):
-    """
-    Получение конкретного объявления по id.
-    """
+    """Получение конкретного объявления по id."""
     permission_classes = (IsAuthenticated, )
     serializer_class = AnnouncementRetrieveSerializer
     queryset = Announcement.objects.all()
 
 
 class FeedMapInfoListAPIView(ListAPIView):
-    """
-    Список всех объектов вида "id, широта, долгота" из ленты объявлений.
-    """
+    """Список всех объектов вида "id, широта, долгота" из ленты объявлений."""
     permission_classes = (IsAuthenticated, )
     serializer_class = MapInfoSerializer
     pagination_class = None

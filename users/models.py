@@ -10,13 +10,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class UserManager(BaseUserManager):
-    """
-    Менеджер пользователей.
-    """
+    """Менеджер пользователей."""
     def create_user(self, email, username, password):
-        """
-        Создание пользователя.
-        """
+        """Создание пользователя."""
         if email is None:
             raise ValueError(
                 'Email address must be set.'
@@ -34,9 +30,7 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, username, password):
-        """
-        Создание суперпользователя.
-        """
+        """Создание суперпользователя."""
         if password is None:
             raise ValueError(
                 'Password must be set.'
@@ -53,9 +47,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """
-    Модель пользователя с email.
-    """
+    """Пользователь с email."""
     email = CharField(
         'Адрес электронной почты',
         max_length=255,
