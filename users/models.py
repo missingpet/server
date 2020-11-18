@@ -11,7 +11,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserManager(BaseUserManager):
     """
-    Кастомный менеджер пользователей.
+    Менеджер пользователей.
     """
     def create_user(self, email, username, password):
         """
@@ -54,7 +54,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """
-    Кастомная модель пользователя с email.
+    Модель пользователя с email.
     """
     email = CharField(
         'Адрес электронной почты',
