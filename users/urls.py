@@ -16,12 +16,12 @@ urlpatterns = [
     path(
         'signin/',
         SignInAPIView.as_view(),
-        name='login'
+        name='signin'
     ),
     path(
         'signout/',
         SignOutAPIView.as_view(),
-        name='logout'
+        name='signout'
     ),
     path(
         'token/refresh/',
