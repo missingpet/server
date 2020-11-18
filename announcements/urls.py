@@ -30,8 +30,8 @@ urlpatterns = [
         name='retrieve-announcement'
     ),
     path(
-        'announcement/feed-map-info/',
+        'announcement/feed/map/',
         FeedMapInfoListAPIView.as_view(),
-        name='feed-map-info'
+        name='feed-map'
     ),
 ]
