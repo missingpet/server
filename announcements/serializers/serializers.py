@@ -17,9 +17,9 @@ class AnnouncementRetrieveSerializer(AnnouncementBaseSerializer):
 class AnnouncementCreateSerializer(AnnouncementBaseSerializer):
 
     def validate(self, attrs):
+        """Проверяет корректность значений всех полей объявления."""
         contact_phone_number = attrs.get('contact_phone_number')
         photo = attrs.get('photo')
-        address = attrs.get('address')
         latitude = attrs.get('latitude')
         longitude = attrs.get('longitude')
         announcement_type = attrs.get('announcement_type')
@@ -39,30 +39,13 @@ class AnnouncementCreateSerializer(AnnouncementBaseSerializer):
                 _('Image size should be less than 5 megabytes.')
             )
 
-        if address:
-            if not latitude:
-                raise ValidationError(
-                    _('Address is given but latitude isn`t.')
-                )
-            if not longitude:
-                raise ValidationError(
-                    _('Address is given but longitude isn`t.')
-                )
-            if latitude < -90.0 or latitude > 90.0:
-                raise ValidationError(
-                    _('Latitude should take value between -90,0 and 90,0.')
-                )
-            if longitude < -180.0 or longitude > 180.0:
-                raise ValidationError(
-                    _('Longitude should take value between -180,0 and 180,0.')
-                )
-        elif latitude:
+        if latitude < -90.0 or latitude > 90.0:
             raise ValidationError(
-                _('Latitude is given but address isn`t.')
+                _('Latitude should take value between -90,0 and 90,0.')
             )
-        elif longitude:
+        if longitude < -180.0 or longitude > 180.0:
             raise ValidationError(
-                _('Longitude is given but address isn`t.')
+                _('Longitude should take value between -180,0 and 180,0.')
             )
 
         if announcement_type not in (1, 2):

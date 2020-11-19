@@ -15,6 +15,7 @@ from users.models import User
 
 
 class Announcement(Model):
+    """Объявление о пропавшем/найденном питомце."""
     LOST = 1
     FOUND = 2
     ANNOUNCEMENT_TYPES = (
@@ -55,18 +56,12 @@ class Announcement(Model):
     address = CharField(
         'Место пропажи/находки',
         max_length=1000,
-        blank=True,
-        null=True
     )
     latitude = FloatField(
         'Широта',
-        blank=True,
-        null=True
     )
     longitude = FloatField(
         'Долгота',
-        blank=True,
-        null=True
     )
     contact_phone_number = CharField(
         'Контактный телефон',
@@ -82,11 +77,12 @@ class Announcement(Model):
     )
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ('-created_at', )
         verbose_name = 'Объявление'
         verbose_name_plural = 'Объявления'
 
     def save(self, *args, **kwargs):
+        # При обновлении фотографии старую фотографию удаляем.
         try:
             this_record = Announcement.objects.get(id=self.id)
             if this_record.photo != self.photo:
@@ -96,8 +92,9 @@ class Announcement(Model):
         super(Announcement, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
+        # Удаляем фотографию вместе с объявлением.
         self.photo.delete(save=False)
         super(Announcement, self).delete(*args, **kwargs)
 
     def __str__(self):
-        return '{}'.format(self.user)
+        return str(self.user)
