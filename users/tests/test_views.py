@@ -18,11 +18,11 @@ class ApiTestCases(APITestCase):
         self.client = APIClient()
         self.user_1 = User.objects.create_user(
             'test@email.com',
-            'test_user',
-            'test_password'
+            'test',
+            'password'
         )
 
-    @tag('signup')
+    @tag('sign-up')
     def test_sign_up(self):
         """Тестирует регистрацию нового пользователя."""
         data = {
@@ -30,17 +30,17 @@ class ApiTestCases(APITestCase):
             'email': 'some@email.com',
             'password': 'password'
         }
-        response = self.client.post(reverse('signup'), data)
+        response = self.client.post(reverse('sign-up'), data)
         self.assertEqual(response.status_code, HTTP_201_CREATED)
 
-    @tag('signin')
+    @tag('sign-in')
     def test_sign_in(self):
         """Тестирует вход в профиль."""
         data = {
             'email': 'test@email.com',
-            'password': 'test_password'
+            'password': 'password'
         }
-        response = self.client.post(reverse('signin'), data)
+        response = self.client.post(reverse('sign-in'), data)
         self.assertEqual(response.status_code, HTTP_200_OK)
 
     def tearDown(self):
@@ -54,7 +54,7 @@ class WithAuthApiTestCases(APITestCase):
         # Создаём тестового пользователя.
         self.auth_user = User.objects.create_user(
             'auth@email.com',
-            'auth_user',
+            'auth',
             'auth_password'
         )
         # Тело запроса.
@@ -63,20 +63,20 @@ class WithAuthApiTestCases(APITestCase):
             'password': 'auth_password'
         }
         # Входим в аккаунт.
-        response = self.client.post(reverse('signin'), data)
+        response = self.client.post(reverse('sign-in'), data)
         # Получаем учётные данные.
         self.access = response.data['tokens']['access']
         self.refresh = response.data['tokens']['refresh']
         # Добавляем access-токен в заголовок запроса.
         self.client.credentials(HTTP_AUTHORIZATION='Bearer {}'.format(self.access))
 
-    @tag('signout')
+    @tag('sign-out')
     def test_sign_out(self):
         """Тестирует выход из профиля."""
         data = {
             'refresh': self.refresh
         }
-        response = self.client.post(reverse('signout'), data)
+        response = self.client.post(reverse('sign-out'), data)
         self.assertEqual(response.status_code, HTTP_204_NO_CONTENT)
 
     def tearDown(self):
