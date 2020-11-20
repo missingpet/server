@@ -11,17 +11,17 @@ urlpatterns = [
     path(
         'signup/',
         SignUpAPIView.as_view(),
-        name='signup'
+        name='sign-up'
     ),
     path(
         'signin/',
         SignInAPIView.as_view(),
-        name='signin'
+        name='sign-in'
     ),
     path(
         'signout/',
         SignOutAPIView.as_view(),
-        name='signout'
+        name='sign-out'
     ),
     path(
         'token/refresh/',
