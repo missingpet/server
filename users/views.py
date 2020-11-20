@@ -1,4 +1,4 @@
-from rest_framework.generics import GenericAPIView
+pyfrom rest_framework.generics import GenericAPIView
 
 from rest_framework.status import HTTP_200_OK
 from rest_framework.status import HTTP_201_CREATED
