@@ -4,24 +4,37 @@ from rest_framework.generics import DestroyAPIView
 from rest_framework.generics import RetrieveAPIView
 
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 
-from ..permissions import IsAnnouncementAuthor
+from .permissions import IsAnnouncementAuthor
 
-from ..models import Announcement
+from .models import Announcement
 
-from ..serializers import *
+from .serializers import AnnouncementRetrieveSerializer
+from .serializers import AnnouncementCreateSerializer
+from .serializers import MapInfoSerializer
 
-from .base import AnnouncementBaseListAPIView
+
+class AllAnnouncementListAPIView(ListAPIView):
+    """Лента всех объявлений."""
+    permission_classes = (AllowAny, )
+    serializer_class = AnnouncementRetrieveSerializer
+    queryset = Announcement.objects.all()
 
 
-class FeedAnnouncementListAPIView(AnnouncementBaseListAPIView):
-    """Лента объявлений."""
+class FeedAnnouncementListAPIView(ListAPIView):
+    """Лента объявлений без объявлений пользователя."""
+    permission_classes = (IsAuthenticated, )
+    serializer_class = AnnouncementRetrieveSerializer
+
     def get_queryset(self):
         return Announcement.objects.exclude(user=self.request.user)
 
 
-class MyAnnouncementListAPIView(AnnouncementBaseListAPIView):
+class MyAnnouncementListAPIView(ListAPIView):
     """Объявления пользователя."""
+    permission_classes = (IsAuthenticated, )
+    serializer_class = AnnouncementRetrieveSerializer
     pagination_class = None
 
     def get_queryset(self):
@@ -51,8 +64,22 @@ class AnnouncementRetrieveAPIView(RetrieveAPIView):
     queryset = Announcement.objects.all()
 
 
+class AllMapInfoListAPIView(ListAPIView):
+    """
+    Список всех объектов вида "id, широта, долгота"
+    из ленты всех объявлений.
+    """
+    permission_classes = (AllowAny, )
+    serializer_class = MapInfoSerializer
+    pagination_class = None
+    queryset = Announcement.objects.all()
+
+
 class FeedMapInfoListAPIView(ListAPIView):
-    """Список всех объектов вида "id, широта, долгота" из ленты объявлений."""
+    """
+    Список всех объектов вида "id, широта, долгота"
+    из ленты объявлений без объявлений пользователя.
+    """
     permission_classes = (IsAuthenticated, )
     serializer_class = MapInfoSerializer
     pagination_class = None
