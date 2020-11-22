@@ -59,7 +59,7 @@ class AnnouncementDestroyAPIView(DestroyAPIView):
 
 class AnnouncementRetrieveAPIView(RetrieveAPIView):
     """Получение конкретного объявления по id."""
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (AllowAny, )
     serializer_class = AnnouncementRetrieveSerializer
     queryset = Announcement.objects.all()
 
@@ -85,4 +85,4 @@ class FeedMapInfoListAPIView(ListAPIView):
     pagination_class = None
 
     def get_queryset(self):
-        return Announcement.objects.exclude(user=self.request.user).exclude(address__isnull=True)
+        return Announcement.objects.exclude(user=self.request.user)
