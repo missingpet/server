@@ -42,3 +42,6 @@ urlpatterns = [
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += staticfiles_urlpatterns()
+
+admin.sites.AdminSite.site_title = 'MissingPet CMS'
+admin.sites.AdminSite.site_header = 'MissingPet CMS'

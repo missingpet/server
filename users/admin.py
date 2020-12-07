@@ -26,3 +26,4 @@ class UserAdmin(admin.ModelAdmin):
         'username',
         'email'
     )
+    save_on_top = True

@@ -15,16 +15,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
 
+EXTERNAL_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
     'admin_reorder',
-
-    'users.apps.UsersConfig',
-    'announcements.apps.AnnouncementsConfig'
 ]
+
+INTERNAL_APPS = [
+    'users.apps.UsersConfig',
+    'announcements.apps.AnnouncementsConfig',
+]
+
+INSTALLED_APPS += EXTERNAL_APPS
+INSTALLED_APPS += INTERNAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -34,16 +41,20 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
 
+EXTERNAL_MIDDLEWARE = [
     'admin_reorder.middleware.ModelAdminReorder',
 ]
+
+MIDDLEWARE += EXTERNAL_MIDDLEWARE
 
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

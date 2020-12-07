@@ -1,0 +1,55 @@
+#header {
+    background: #194861;
+    color: #FBFBFB;
+}
+
+#branding h1, #branding h1 a:link, #branding h1 a:visited {
+    color: #FBFBFB;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    background: #4B7D98;
+    color: #AEC4D0;
+}
+
+a:link, a:visited {
+    color: #295A75;
+    text-decoration: none;
+}
+
+h1 {
+    color: #838388;
+}
+
+#nav-sidebar .current-app .section:link, #nav-sidebar .current-app .section:visited {
+    color: #FFD896;
+    font-weight: bold;
+}
+#nav-sidebar .current-model {
+    background: #FFD896;
+}
+
+div.breadcrumbs {
+    background: #295A75;
+    padding: 10px 40px;
+    border: none;
+    font-size: 14px;
+    color: #AEC4D0;
+    text-align: left;
+}
+/*
+.submit-row a.deletelink {
+    background: #E94F4F;
+    color: #FBFBFB;
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    background: #295A75;
+    color: #FBFBFB;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #4B7D98;
+    color: #FBFBFB;
+}
+*/
