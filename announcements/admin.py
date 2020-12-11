@@ -26,7 +26,7 @@ class AnnouncementAdmin(admin.ModelAdmin):
     def get_photo(self, obj):
         src = obj.photo.url
         width = 200
-        return mark_safe('<img src={} width={}>'.format(src, width))
+        return mark_safe('<img src=%s width=%i>' % (src, width))
 
     get_photo.short_description = 'Миниатюра'
 
