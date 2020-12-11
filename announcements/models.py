@@ -83,12 +83,10 @@ class Announcement(Model):
 
     def save(self, *args, **kwargs):
         # При обновлении фотографии старую фотографию удаляем.
-        try:
-            this_record = Announcement.objects.get(id=self.id)
+        this_record = Announcement.objects.filter(id=self.id).first()
+        if this_record is not None:
             if this_record.photo != self.photo:
                 this_record.photo.delete(save=False)
-        except ObjectDoesNotExist:
-            pass
         super(Announcement, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
