@@ -7,8 +7,6 @@ from django.db.models import ForeignKey
 from django.db.models import IntegerField
 from django.db.models import DateTimeField
 
-from django.core.exceptions import ObjectDoesNotExist
-
 from config.settings import ANNOUNCEMENTS_PHOTO
 
 from users.models import User
