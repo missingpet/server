@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from django.utils.safestring import mark_safe
+from django.utils.html import format_html
 
 from .models import Announcement
 
@@ -26,7 +26,7 @@ class AnnouncementAdmin(admin.ModelAdmin):
     def get_photo(self, obj):
         src = obj.photo.url
         width = 200
-        return mark_safe('<img src=%s width=%i>' % (src, width))
+        return format_html('<img src={} width={}>'.format(src, width))
 
     get_photo.short_description = 'Миниатюра'
 
