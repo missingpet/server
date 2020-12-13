@@ -44,18 +44,14 @@ class Announcement(Model):
         "Место пропажи/находки",
         max_length=1000,
     )
-    latitude = FloatField(
-        "Широта",
-    )
-    longitude = FloatField(
-        "Долгота",
-    )
+    latitude = FloatField("Широта", )
+    longitude = FloatField("Долгота", )
     contact_phone_number = CharField("Контактный телефон", max_length=12)
     created_at = DateTimeField("Создано", auto_now_add=True)
     updated_at = DateTimeField("Изменено", auto_now=True)
 
     class Meta:
-        ordering = ("-created_at",)
+        ordering = ("-created_at", )
         verbose_name = "Объявление"
         verbose_name_plural = "Объявления"
 
