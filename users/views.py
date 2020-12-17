@@ -1,16 +1,10 @@
 from rest_framework.generics import GenericAPIView
-
-from rest_framework.status import HTTP_200_OK
-from rest_framework.status import HTTP_201_CREATED
-from rest_framework.status import HTTP_204_NO_CONTENT
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.status import (HTTP_200_OK, HTTP_201_CREATED,
+                                   HTTP_204_NO_CONTENT)
 
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.permissions import AllowAny
-
-from .serializers import SignInSerializer
-from .serializers import SignUpSerializer
-from .serializers import SignOutSerializer
+from .serializers import SignInSerializer, SignOutSerializer, SignUpSerializer
 
 
 class SignUpAPIView(GenericAPIView):
