@@ -84,7 +84,8 @@ class SignInSerializer(ModelSerializer):
         fields = ('email', 'password', 'username', 'tokens')
 
     def get_tokens(self, current_user_instance):
-        tokens = User.objects.get(email=current_user_instance['email']).tokens()
+        tokens = User.objects.get(
+            email=current_user_instance['email']).tokens()
         return {
             'refresh': tokens['refresh'],
             'access': tokens['access']

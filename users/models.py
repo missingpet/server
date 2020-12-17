@@ -11,6 +11,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserManager(BaseUserManager):
     """Менеджер пользователей."""
+
     def create_user(self, email, username, password):
         """Создание пользователя."""
         if email is None:
