@@ -1,20 +1,35 @@
 import re
 import imghdr
 
-from rest_framework.exceptions import ValidationError
-
 from django.utils.translation import gettext_lazy as _
 
-from .base import AnnouncementBaseSerializer
-from .base import ModelSerializer
-from .base import Announcement
+from rest_framework.exceptions import ValidationError
+from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import CharField
+
+from .models import Announcement
 
 
-class AnnouncementRetrieveSerializer(AnnouncementBaseSerializer):
-    pass
+class AnnouncementRetrieveSerializer(ModelSerializer):
+    user = CharField(
+        source='user.username',
+        read_only=True
+    )
+
+    class Meta:
+        model = Announcement
+        fields = '__all__'
 
 
-class AnnouncementCreateSerializer(AnnouncementBaseSerializer):
+class AnnouncementCreateSerializer(ModelSerializer):
+    user = CharField(
+        source='user.username',
+        read_only=True
+    )
+
+    class Meta:
+        model = Announcement
+        fields = '__all__'
 
     def validate(self, attrs):
         """Проверяет корректность значений всех полей объявления."""

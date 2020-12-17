@@ -9,7 +9,7 @@ from .views import SignOutAPIView
 
 urlpatterns = [
     path(
-        'signup/',
+        "signup/",
         SignUpAPIView.as_view(),
         name='sign-up'
     ),

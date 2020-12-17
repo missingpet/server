@@ -33,7 +33,7 @@ class UserManager(BaseUserManager):
         """Создание суперпользователя."""
         if password is None:
             raise ValueError(
-                'Password must be set.'
+                "Password must be set."
             )
         user = self.create_user(
             username=username,

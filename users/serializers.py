@@ -27,7 +27,7 @@ class SignUpSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'password')
+        fields = ("email", 'username', 'password')
 
     def validate(self, attrs):
         """Проверяет корректность значений полей при регистрации нового пользователя."""

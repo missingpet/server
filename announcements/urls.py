@@ -12,7 +12,7 @@ from .views import AllMapInfoListAPIView
 
 urlpatterns = [
     path(
-        'announcement/feed/',
+        "announcement/feed/",
         FeedAnnouncementListAPIView.as_view(),
         name='feed-announcements'
     ),
