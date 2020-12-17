@@ -1,11 +1,6 @@
-from django.db.models import CharField
-from django.db.models import BooleanField
-from django.db.models import DateTimeField
-
-from django.contrib.auth.models import BaseUserManager
-from django.contrib.auth.models import AbstractBaseUser
-from django.contrib.auth.models import PermissionsMixin
-
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+                                        PermissionsMixin)
+from django.db.models import BooleanField, CharField, DateTimeField
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
