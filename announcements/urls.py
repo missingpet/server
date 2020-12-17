@@ -30,14 +30,18 @@ urlpatterns = [
         AnnouncementDestroyAPIView.as_view(),
         name="delete-announcement",
     ),
-    path(
-        "announcement/my/", MyAnnouncementListAPIView.as_view(), name="my-announcements"
-    ),
+    path("announcement/my/",
+         MyAnnouncementListAPIView.as_view(),
+         name="my-announcements"),
     path(
         "announcement/create/",
         AnnouncementCreateAPIView.as_view(),
         name="create-announcement",
     ),
-    path("announcement/feed/map/", FeedMapInfoListAPIView.as_view(), name="feed-map"),
-    path("announcement/all/map/", AllMapInfoListAPIView.as_view(), name="all-map"),
+    path("announcement/feed/map/",
+         FeedMapInfoListAPIView.as_view(),
+         name="feed-map"),
+    path("announcement/all/map/",
+         AllMapInfoListAPIView.as_view(),
+         name="all-map"),
 ]
