@@ -15,8 +15,9 @@ from .serializers import SignOutSerializer
 
 class SignUpAPIView(GenericAPIView):
     """Регистрация нового пользователя."""
+
     serializer_class = SignUpSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -27,8 +28,9 @@ class SignUpAPIView(GenericAPIView):
 
 class SignInAPIView(GenericAPIView):
     """Вход в профиль."""
+
     serializer_class = SignInSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -38,8 +40,9 @@ class SignInAPIView(GenericAPIView):
 
 class SignOutAPIView(GenericAPIView):
     """Выход из профиля."""
+
     serializer_class = SignOutSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
