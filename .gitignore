@@ -5,3 +5,4 @@ venv/
 .vscode/
 secret_key.py
 media/
+__pycache__
