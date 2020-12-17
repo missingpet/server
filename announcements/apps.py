@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class AnnouncementsConfig(AppConfig):
-    name = 'announcements'
+    name = "announcements"
     verbose_name = "Объявления"
