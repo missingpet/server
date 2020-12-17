@@ -1,9 +1,13 @@
 from django.urls import path
 
-from .views import (AllAnnouncementListAPIView, AllMapInfoListAPIView,
-                    AnnouncementCreateAPIView, AnnouncementDestroyAPIView,
-                    AnnouncementRetrieveAPIView, FeedAnnouncementListAPIView,
-                    FeedMapInfoListAPIView, MyAnnouncementListAPIView)
+from .views import AllAnnouncementListAPIView
+from .views import AllMapInfoListAPIView
+from .views import AnnouncementCreateAPIView
+from .views import AnnouncementDestroyAPIView
+from .views import AnnouncementRetrieveAPIView
+from .views import FeedAnnouncementListAPIView
+from .views import FeedMapInfoListAPIView
+from .views import MyAnnouncementListAPIView
 
 urlpatterns = [
     path(

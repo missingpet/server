@@ -3,9 +3,13 @@ import re
 from django.contrib import auth
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework.serializers import (CharField, ModelSerializer, Serializer,
-                                        SerializerMethodField, ValidationError)
-from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+from rest_framework.serializers import CharField
+from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import Serializer
+from rest_framework.serializers import SerializerMethodField
+from rest_framework.serializers import ValidationError
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import TokenError
 
 from .models import User
 
