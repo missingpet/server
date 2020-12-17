@@ -1,20 +1,19 @@
 from rest_framework.generics import GenericAPIView
-
+from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
 from rest_framework.status import HTTP_201_CREATED
 from rest_framework.status import HTTP_204_NO_CONTENT
-from rest_framework.response import Response
-
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.permissions import AllowAny
 
 from .serializers import SignInSerializer
-from .serializers import SignUpSerializer
 from .serializers import SignOutSerializer
+from .serializers import SignUpSerializer
 
 
 class SignUpAPIView(GenericAPIView):
     """Регистрация нового пользователя."""
+
     serializer_class = SignUpSerializer
     permission_classes = (AllowAny, )
 
@@ -27,6 +26,7 @@ class SignUpAPIView(GenericAPIView):
 
 class SignInAPIView(GenericAPIView):
     """Вход в профиль."""
+
     serializer_class = SignInSerializer
     permission_classes = (AllowAny, )
 
@@ -38,6 +38,7 @@ class SignInAPIView(GenericAPIView):
 
 class SignOutAPIView(GenericAPIView):
     """Выход из профиля."""
+
     serializer_class = SignOutSerializer
     permission_classes = (IsAuthenticated, )
 
