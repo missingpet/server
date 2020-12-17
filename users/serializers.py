@@ -29,11 +29,11 @@ class SignUpSerializer(ModelSerializer):
         username_len = len(username)
         if username_len < 3 or username_len > 64:
             raise ValidationError(
-                _("Username should contain 3 to 64 characters."))
+                _("Username should contains 3 to 64 characters."))
 
         if not username.isalnum():
             raise ValidationError(
-                _("Username should contain only alphanumeric characters."))
+                _("Username should contains only alphanumeric characters."))
 
         email_len = len(email)
         if email_len < 3 or email_len > 255:
