@@ -8,24 +8,8 @@ from .views import SignOutAPIView
 
 
 urlpatterns = [
-    path(
-        "signup/",
-        SignUpAPIView.as_view(),
-        name='sign-up'
-    ),
-    path(
-        'signin/',
-        SignInAPIView.as_view(),
-        name='sign-in'
-    ),
-    path(
-        'signout/',
-        SignOutAPIView.as_view(),
-        name='sign-out'
-    ),
-    path(
-        'token/refresh/',
-        TokenRefreshView.as_view(),
-        name='refresh-token'
-    ),
+    path("signup/", SignUpAPIView.as_view(), name="sign-up"),
+    path("signin/", SignInAPIView.as_view(), name="sign-in"),
+    path("signout/", SignOutAPIView.as_view(), name="sign-out"),
+    path("token/refresh/", TokenRefreshView.as_view(), name="refresh-token"),
 ]

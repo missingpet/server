@@ -3,15 +3,15 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ('', )
+ALLOWED_HOSTS = ("",)
 
 DATABASES = {
     "default": {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "",
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "",
+        "PORT": "",
     }
 }
