@@ -1,18 +1,11 @@
-from rest_framework.generics import ListAPIView
-from rest_framework.generics import CreateAPIView
-from rest_framework.generics import DestroyAPIView
-from rest_framework.generics import RetrieveAPIView
-
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.permissions import AllowAny
-
-from .permissions import IsAnnouncementAuthor
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView)
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .models import Announcement
-
-from .serializers import AnnouncementRetrieveSerializer
-from .serializers import AnnouncementCreateSerializer
-from .serializers import MapInfoSerializer
+from .permissions import IsAnnouncementAuthor
+from .serializers import (AnnouncementCreateSerializer,
+                          AnnouncementRetrieveSerializer, MapInfoSerializer)
 
 
 class AllAnnouncementListAPIView(ListAPIView):
