@@ -1,17 +1,14 @@
-from rest_framework.generics import ListAPIView
 from rest_framework.generics import CreateAPIView
 from rest_framework.generics import DestroyAPIView
+from rest_framework.generics import ListAPIView
 from rest_framework.generics import RetrieveAPIView
-
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
-
-from .permissions import IsAnnouncementAuthor
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Announcement
-
-from .serializers import AnnouncementRetrieveSerializer
+from .permissions import IsAnnouncementAuthor
 from .serializers import AnnouncementCreateSerializer
+from .serializers import AnnouncementRetrieveSerializer
 from .serializers import MapInfoSerializer
 
 
@@ -75,6 +72,7 @@ class AllMapInfoListAPIView(ListAPIView):
     Список всех объектов вида "id, широта, долгота"
     из ленты всех объявлений.
     """
+
     permission_classes = (AllowAny, )
     serializer_class = MapInfoSerializer
     pagination_class = None
@@ -86,6 +84,7 @@ class FeedMapInfoListAPIView(ListAPIView):
     Список всех объектов вида "id, широта, долгота"
     из ленты объявлений без объявлений пользователя.
     """
+
     permission_classes = (IsAuthenticated, )
     serializer_class = MapInfoSerializer
     pagination_class = None
