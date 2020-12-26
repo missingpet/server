@@ -18,7 +18,7 @@ from .serializers import MapInfoSerializer
 class AllAnnouncementListAPIView(ListAPIView):
     """Лента всех объявлений."""
 
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
     serializer_class = AnnouncementRetrieveSerializer
     queryset = Announcement.objects.all()
 
@@ -26,7 +26,7 @@ class AllAnnouncementListAPIView(ListAPIView):
 class FeedAnnouncementListAPIView(ListAPIView):
     """Лента объявлений без объявлений пользователя."""
 
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     serializer_class = AnnouncementRetrieveSerializer
 
     def get_queryset(self):
@@ -36,7 +36,7 @@ class FeedAnnouncementListAPIView(ListAPIView):
 class MyAnnouncementListAPIView(ListAPIView):
     """Объявления пользователя."""
 
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     serializer_class = AnnouncementRetrieveSerializer
     pagination_class = None
 
@@ -47,7 +47,7 @@ class MyAnnouncementListAPIView(ListAPIView):
 class AnnouncementCreateAPIView(CreateAPIView):
     """Создание нового объявления."""
 
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     serializer_class = AnnouncementCreateSerializer
     queryset = Announcement.objects.all()
 
@@ -58,14 +58,14 @@ class AnnouncementCreateAPIView(CreateAPIView):
 class AnnouncementDestroyAPIView(DestroyAPIView):
     """Удаление объявления."""
 
-    permission_classes = (IsAnnouncementAuthor, )
+    permission_classes = (IsAnnouncementAuthor,)
     queryset = Announcement.objects.all()
 
 
 class AnnouncementRetrieveAPIView(RetrieveAPIView):
     """Получение конкретного объявления по id."""
 
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
     serializer_class = AnnouncementRetrieveSerializer
     queryset = Announcement.objects.all()
 
@@ -75,7 +75,8 @@ class AllMapInfoListAPIView(ListAPIView):
     Список всех объектов вида "id, широта, долгота"
     из ленты всех объявлений.
     """
-    permission_classes = (AllowAny, )
+
+    permission_classes = (AllowAny,)
     serializer_class = MapInfoSerializer
     pagination_class = None
     queryset = Announcement.objects.all()
@@ -86,7 +87,8 @@ class FeedMapInfoListAPIView(ListAPIView):
     Список всех объектов вида "id, широта, долгота"
     из ленты объявлений без объявлений пользователя.
     """
-    permission_classes = (IsAuthenticated, )
+
+    permission_classes = (IsAuthenticated,)
     serializer_class = MapInfoSerializer
     pagination_class = None
 
