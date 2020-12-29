@@ -63,7 +63,7 @@ class SignInSerializer(ModelSerializer):
 
     def get_tokens(self, current_user_instance):
         tokens = User.objects.get(
-            email=current_user_instance["email"]).tokens()
+            id=current_user_instance.id).tokens()
         return {"refresh": tokens["refresh"], "access": tokens["access"]}
 
     def validate(self, attrs):

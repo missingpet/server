@@ -4,24 +4,22 @@ import re
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import SerializerMethodField
 
 from announcements.models import Announcement
-from users.models import User
-
-
-class UserSerializer(ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = ("id", "username")
 
 
 class AnnouncementSerializer(ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = SerializerMethodField()
 
     class Meta:
         model = Announcement
         fields = "__all__"
+
+    def get_user(self, current_announcement_instance):
+        user = Announcement.objects.get(
+            id=current_announcement_instance.id).user
+        return {"id": user.id, "username": user.username}
 
 
 class AnnouncementCreateSerializer(AnnouncementSerializer):
