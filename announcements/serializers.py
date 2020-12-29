@@ -10,7 +10,6 @@ from users.models import User
 
 
 class UserSerializer(ModelSerializer):
-
     class Meta:
         model = User
         fields = ("id", "username")
@@ -25,7 +24,6 @@ class AnnouncementSerializer(ModelSerializer):
 
 
 class AnnouncementCreateSerializer(AnnouncementSerializer):
-
     def validate(self, attrs):
         """Проверяет корректность значений всех полей объявления."""
         contact_phone_number = attrs.get("contact_phone_number")
@@ -67,7 +65,6 @@ class AnnouncementCreateSerializer(AnnouncementSerializer):
 
 
 class MapInfoSerializer(ModelSerializer):
-
     class Meta:
         model = Announcement
         fields = ("id", "latitude", "longitude")
