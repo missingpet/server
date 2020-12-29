@@ -10,6 +10,7 @@ from users.models import User
 
 
 class AnnouncementUserInfoSerializer(ModelSerializer):
+
     class Meta:
         model = User
         fields = ("id", "username")
