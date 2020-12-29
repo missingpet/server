@@ -6,7 +6,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import SerializerMethodField
 
-from announcements.models import Announcement
+from .models import Announcement
 
 
 class AnnouncementSerializer(ModelSerializer):
