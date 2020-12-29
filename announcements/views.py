@@ -1,16 +1,13 @@
-from rest_framework.generics import ListAPIView
 from rest_framework.generics import CreateAPIView
+from rest_framework.generics import ListAPIView
 from rest_framework.generics import RetrieveDestroyAPIView
-
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
-
-from .permissions import IsAnnouncementAuthorOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Announcement
-
-from .serializers import AnnouncementSerializer
+from .permissions import IsAnnouncementAuthorOrReadOnly
 from .serializers import AnnouncementCreateSerializer
+from .serializers import AnnouncementSerializer
 from .serializers import MapInfoSerializer
 
 
@@ -64,15 +61,18 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
 
     def get(self, request, *args, **kwargs):
         """Получение объявления по идентификатору."""
-        return super(AnnouncementRetrieveDestroyAPIView, self).get(request, *args, **kwargs)
+        return super(AnnouncementRetrieveDestroyAPIView,
+                     self).get(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
         """Удаление объявления."""
-        return super(AnnouncementRetrieveDestroyAPIView, self).delete(request, *args, **kwargs)
+        return super(AnnouncementRetrieveDestroyAPIView,
+                     self).delete(request, *args, **kwargs)
 
 
 class AllMapInfoListAPIView(ListAPIView):
     """Список ВСЕХ объектов вида "id, широта, долгота"."""
+
     permission_classes = (AllowAny, )
     serializer_class = MapInfoSerializer
     pagination_class = None
@@ -81,6 +81,7 @@ class AllMapInfoListAPIView(ListAPIView):
 
 class FeedMapInfoListAPIView(ListAPIView):
     """Список объектов ЛЕНТЫ вида "id, широта, долгота" для данного пользователя."""
+
     permission_classes = (AllowAny, )
     serializer_class = MapInfoSerializer
     pagination_class = None
