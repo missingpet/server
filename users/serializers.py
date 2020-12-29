@@ -4,6 +4,7 @@ from django.contrib import auth
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.serializers import CharField
+from rest_framework.serializers import IntegerField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import Serializer
 from rest_framework.serializers import SerializerMethodField
@@ -50,6 +51,7 @@ class SignUpSerializer(ModelSerializer):
 
 
 class SignInSerializer(ModelSerializer):
+    id = IntegerField(read_only=True)
     email = CharField(min_length=3, max_length=255)
     password = CharField(min_length=6, max_length=128, write_only=True)
     username = CharField(min_length=3, max_length=64, read_only=True)
@@ -57,7 +59,7 @@ class SignInSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("email", "password", "username", "tokens")
+        fields = ("id", "email", "password", "username", "tokens")
 
     def get_tokens(self, current_user_instance):
         tokens = User.objects.get(

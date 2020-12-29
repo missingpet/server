@@ -9,27 +9,21 @@ from announcements.models import Announcement
 from users.models import User
 
 
-class AnnouncementUserInfoSerializer(ModelSerializer):
+class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ("id", "username")
 
 
-class AnnouncementRetrieveSerializer(ModelSerializer):
-    user = AnnouncementUserInfoSerializer(read_only=True)
+class AnnouncementSerializer(ModelSerializer):
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Announcement
         fields = "__all__"
 
 
-class AnnouncementCreateSerializer(ModelSerializer):
-    user = AnnouncementUserInfoSerializer(read_only=True)
-
-    class Meta:
-        model = Announcement
-        fields = "__all__"
-
+class AnnouncementCreateSerializer(AnnouncementSerializer):
     def validate(self, attrs):
         """Проверяет корректность значений всех полей объявления."""
         contact_phone_number = attrs.get("contact_phone_number")

@@ -1,47 +1,47 @@
 from django.urls import path
 
-from .views import AllAnnouncementListAPIView
+from .views import AllAnnouncementsListAPIView
 from .views import AllMapInfoListAPIView
 from .views import AnnouncementCreateAPIView
-from .views import AnnouncementDestroyAPIView
-from .views import AnnouncementRetrieveAPIView
-from .views import FeedAnnouncementListAPIView
+from .views import AnnouncementRetrieveDestroyAPIView
+from .views import FeedAnnouncementsListAPIView
 from .views import FeedMapInfoListAPIView
-from .views import MyAnnouncementListAPIView
+from .views import UserAnnouncementsListAPIView
 
 urlpatterns = [
     path(
-        "announcement/feed/",
-        FeedAnnouncementListAPIView.as_view(),
-        name="feed-announcements",
-    ),
-    path(
-        "announcement/retrieve/<int:pk>/",
-        AnnouncementRetrieveAPIView.as_view(),
-        name="retrieve-announcement",
-    ),
-    path(
         "announcement/all/",
-        AllAnnouncementListAPIView.as_view(),
+        AllAnnouncementsListAPIView.as_view(),
         name="all-announcements",
     ),
     path(
-        "announcement/delete/<int:pk>/",
-        AnnouncementDestroyAPIView.as_view(),
-        name="delete-announcement",
+        "announcement/user/<int:user_id>/",
+        UserAnnouncementsListAPIView.as_view(),
+        name="user-announcements",
     ),
-    path("announcement/my/",
-         MyAnnouncementListAPIView.as_view(),
-         name="my-announcements"),
     path(
-        "announcement/create/",
+        "announcement/user/<int:user_id>/feed/",
+        FeedAnnouncementsListAPIView.as_view(),
+        name="feed-announcements",
+    ),
+    path(
+        "announcement/<int:pk>/",
+        AnnouncementRetrieveDestroyAPIView.as_view(),
+        name="retrieve-destroy-announcement",
+    ),
+    path(
+        "announcement/",
         AnnouncementCreateAPIView.as_view(),
         name="create-announcement",
     ),
-    path("announcement/feed/map/",
-         FeedMapInfoListAPIView.as_view(),
-         name="feed-map"),
-    path("announcement/all/map/",
-         AllMapInfoListAPIView.as_view(),
-         name="all-map"),
+    path(
+        "announcement/map_info/all/",
+        AllMapInfoListAPIView.as_view(),
+        name="all-map-info",
+    ),
+    path(
+        "announcement/map_info/<int:user_id>/feed/",
+        FeedMapInfoListAPIView.as_view(),
+        name="feed-map-info",
+    ),
 ]
