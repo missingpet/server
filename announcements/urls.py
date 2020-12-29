@@ -1,10 +1,12 @@
 from django.urls import path
 
-from .views import (AllAnnouncementsListAPIView, AllMapInfoListAPIView,
-                    AnnouncementCreateAPIView,
-                    AnnouncementRetrieveDestroyAPIView,
-                    FeedAnnouncementsListAPIView, FeedMapInfoListAPIView,
-                    UserAnnouncementsListAPIView)
+from .views import AllAnnouncementsListAPIView
+from .views import AllMapInfoListAPIView
+from .views import AnnouncementCreateAPIView
+from .views import AnnouncementRetrieveDestroyAPIView
+from .views import FeedAnnouncementsListAPIView
+from .views import FeedMapInfoListAPIView
+from .views import UserAnnouncementsListAPIView
 
 urlpatterns = [
     path(
