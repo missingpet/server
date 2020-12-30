@@ -18,22 +18,21 @@ class SignUpAPIView(GenericAPIView):
     """Регистрация нового пользователя."""
 
     serializer_class = SignUpSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
     @swagger_auto_schema(
         operation_summary="Регистрирация пользователя.",
         operation_description="Регистрирует нового пользователя.",
         responses={
             "201": SignUpSerializer,
-            "400":
-                """
+            "400": """
                 Пользователь с таким именем или адресом электронной почты уже существует.
                 
                 Неверный формат имени и/или адреса электронной почты.
                 
                 Слишком короткий пароль, имя пользователя или адрес электронной почты.
                 """,
-        }
+        },
     )
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -46,7 +45,7 @@ class SignInAPIView(GenericAPIView):
     """Вход в профиль."""
 
     serializer_class = SignInSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
     @swagger_auto_schema(
         operation_summary="Авторизация пользователя.",
@@ -54,7 +53,7 @@ class SignInAPIView(GenericAPIView):
         responses={
             "200": SignInSerializer,
             "403": "Неверный адрес электронной почты или пароль.",
-        }
+        },
     )
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -66,7 +65,7 @@ class SignOutAPIView(GenericAPIView):
     """Выход из профиля."""
 
     serializer_class = SignOutSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     @swagger_auto_schema(
         operation_summary="Выход из профиля пользователя.",
@@ -75,7 +74,7 @@ class SignOutAPIView(GenericAPIView):
             "204": "Это успех, refresh токен сброшен.",
             "400": "Недопустимый токен.",
             "403": "Учетные данные не были предоставлены.",
-        }
+        },
     )
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -90,10 +89,7 @@ class TokenRefreshAPIView(TokenRefreshView):
     @swagger_auto_schema(
         operation_summary="Обновление токена доступа.",
         operation_description="Обновляет access токен по заданному refresh токену.",
-        responses={
-            "200": "Это успех.",
-            "401": "Токен недействителен или просрочен."
-        },
+        responses={"200": "Это успех.", "401": "Токен недействителен или просрочен."},
     )
     def post(self, request, *args, **kwargs):
         return super(TokenRefreshAPIView, self).post(request, *args, **kwargs)

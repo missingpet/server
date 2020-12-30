@@ -22,19 +22,20 @@ class AllAnnouncementsListAPIView(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = AnnouncementSerializer
     queryset = Announcement.objects.all()
-    url_kwargs = ("page", )
+    url_kwargs = ("page",)
 
     @swagger_auto_schema(
         operation_summary="Список всех объявлений.",
         operation_description="Возвращает список всех объявлений.",
         manual_parameters=[
-            Parameter(url_kwargs[0], IN_QUERY, type="integer",
-                      description="Номер страницы в наборе результатов с пагинацией."),
+            Parameter(
+                url_kwargs[0],
+                IN_QUERY,
+                type="integer",
+                description="Номер страницы в наборе результатов с пагинацией.",
+            ),
         ],
-        responses={
-            "200": AnnouncementSerializer,
-            "404": "Неправильная страница."
-        }
+        responses={"200": AnnouncementSerializer, "404": "Неправильная страница."},
     )
     def get(self, request, *args, **kwargs):
         return super(AllAnnouncementsListAPIView, self).get(request, *args, **kwargs)
@@ -54,22 +55,26 @@ class UserAnnouncementsListAPIView(ListAPIView):
         Сюда входят только те объявления, которые были созданы указанным пользователем.
         """,
         manual_parameters=[
-            Parameter(url_kwargs[0], IN_PATH, type="integer",
-                      description="Уникальный идентификатор пользователя."),
-            Parameter(url_kwargs[1], IN_QUERY, type="integer",
-                      description="Номер страницы в наборе результатов с пагинацией.")
+            Parameter(
+                url_kwargs[0],
+                IN_PATH,
+                type="integer",
+                description="Уникальный идентификатор пользователя.",
+            ),
+            Parameter(
+                url_kwargs[1],
+                IN_QUERY,
+                type="integer",
+                description="Номер страницы в наборе результатов с пагинацией.",
+            ),
         ],
-        responses={
-            "200": AnnouncementSerializer,
-            "404": "Неправильная страница."
-        }
+        responses={"200": AnnouncementSerializer, "404": "Неправильная страница."},
     )
     def get(self, request, *args, **kwargs):
         return super(UserAnnouncementsListAPIView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Announcement.objects.filter(
-            user_id=self.kwargs.get(self.url_kwargs[0]))
+        return Announcement.objects.filter(user_id=self.kwargs.get(self.url_kwargs[0]))
 
 
 class FeedAnnouncementsListAPIView(ListAPIView):
@@ -86,22 +91,28 @@ class FeedAnnouncementsListAPIView(ListAPIView):
         Сюда не входят объявления, созданные указанным пользователем.
         """,
         manual_parameters=[
-            Parameter(url_kwargs[0], IN_PATH, type="integer",
-                      description="Уникальный идентификатор пользователя."),
-            Parameter(url_kwargs[1], IN_QUERY, type="integer",
-                      description="Номер страницы в наборе результатов с пагинацией.")
+            Parameter(
+                url_kwargs[0],
+                IN_PATH,
+                type="integer",
+                description="Уникальный идентификатор пользователя.",
+            ),
+            Parameter(
+                url_kwargs[1],
+                IN_QUERY,
+                type="integer",
+                description="Номер страницы в наборе результатов с пагинацией.",
+            ),
         ],
-        responses={
-            "200": AnnouncementSerializer,
-            "404": "Неправильная страница."
-        }
+        responses={"200": AnnouncementSerializer, "404": "Неправильная страница."},
     )
     def get(self, request, *args, **kwargs):
         return super(FeedAnnouncementsListAPIView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
         return Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_url_kwarg))
+            user_id=self.kwargs.get(self.lookup_url_kwarg)
+        )
 
 
 class AnnouncementCreateAPIView(CreateAPIView):
@@ -117,8 +128,8 @@ class AnnouncementCreateAPIView(CreateAPIView):
         responses={
             "201": AnnouncementSerializer,
             "400": "Не заполнено обязательное поле.",
-            "403": "Учетные данные не были предоставлены."
-        }
+            "403": "Учетные данные не были предоставлены.",
+        },
     )
     def post(self, request, *args, **kwargs):
         return super(AnnouncementCreateAPIView, self).post(request, *args, **kwargs)
@@ -133,45 +144,51 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
     serializer_class = AnnouncementSerializer
     permission_classes = (IsAnnouncementAuthorOrReadOnly,)
     queryset = Announcement.objects.all()
-    url_kwargs = ("id", )
+    url_kwargs = ("id",)
 
     @swagger_auto_schema(
         operation_summary="Получение объявления.",
         operation_description="Возвращает объявление с указанным идентификатором.",
         manual_parameters=[
-            Parameter(url_kwargs[0], IN_PATH, type="integer",
-                      description="Уникальный идентификатор объявления.")
+            Parameter(
+                url_kwargs[0],
+                IN_PATH,
+                type="integer",
+                description="Уникальный идентификатор объявления.",
+            )
         ],
-        responses={
-            "200": AnnouncementSerializer,
-            "404": "Объявление не найдено."
-        }
+        responses={"200": AnnouncementSerializer, "404": "Объявление не найдено."},
     )
     def get(self, request, *args, **kwargs):
-        return super(AnnouncementRetrieveDestroyAPIView,
-                     self).get(request, *args, **kwargs)
+        return super(AnnouncementRetrieveDestroyAPIView, self).get(
+            request, *args, **kwargs
+        )
 
     @swagger_auto_schema(
         operation_summary="Удаление объявления.",
         operation_description="Удаляет объявление с указанным идентификатором.",
         manual_parameters=[
-            Parameter("id", IN_PATH, type="integer",
-                      description="Уникальный идентификатор объявления.")
+            Parameter(
+                "id",
+                IN_PATH,
+                type="integer",
+                description="Уникальный идентификатор объявления.",
+            )
         ],
         responses={
             "204": "Объявление успешно удалено.",
-            "403":
-                """
+            "403": """
                 Учетные данные не были предоставлены.
                 
                 У вас недостаточно прав для выполнения данного действия.
                 """,
             "404": "Объявление не найдено.",
-        }
+        },
     )
     def delete(self, request, *args, **kwargs):
-        return super(AnnouncementRetrieveDestroyAPIView,
-                     self).delete(request, *args, **kwargs)
+        return super(AnnouncementRetrieveDestroyAPIView, self).delete(
+            request, *args, **kwargs
+        )
 
 
 class AllMapInfoListAPIView(ListAPIView):
@@ -186,8 +203,8 @@ class AllMapInfoListAPIView(ListAPIView):
     pagination_class = None
 
     @swagger_auto_schema(
-        operation_summary="Список всех объектов вида \"id, широта, долгота\".",
-        operation_description="Возвращает список всех объектов вида \"id, широта, долгота\".",
+        operation_summary='Список всех объектов вида "id, широта, долгота".',
+        operation_description='Возвращает список всех объектов вида "id, широта, долгота".',
     )
     def get(self, request, *args, **kwargs):
         return super(AllMapInfoListAPIView, self).get(request, *args, **kwargs)
@@ -202,19 +219,22 @@ class FeedMapInfoListAPIView(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = MapInfoSerializer
     pagination_class = None
-    url_kwargs = ("user_id", )
+    url_kwargs = ("user_id",)
 
     @swagger_auto_schema(
-        operation_summary="Список всех объектов вида \"id, широта, долгота\" для заданного пользователя.",
-        operation_description="Возвращает список всех объектов вида \"id, широта, долгота\" кроме созданных самим пользователем.",
+        operation_summary='Список всех объектов вида "id, широта, долгота" для заданного пользователя.',
+        operation_description='Возвращает список всех объектов вида "id, широта, долгота" кроме созданных самим пользователем.',
         manual_parameters=[
-            Parameter(url_kwargs[0], IN_PATH, type="integer",
-                      description="Уникальный идентификатор пользователя."),
-        ]
+            Parameter(
+                url_kwargs[0],
+                IN_PATH,
+                type="integer",
+                description="Уникальный идентификатор пользователя.",
+            ),
+        ],
     )
     def get(self, request, *args, **kwargs):
         return super(FeedMapInfoListAPIView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.url_kwargs[0]))
+        return Announcement.objects.exclude(user_id=self.kwargs.get(self.url_kwargs[0]))
