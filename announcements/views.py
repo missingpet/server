@@ -1,19 +1,13 @@
-from rest_framework.generics import CreateAPIView
-from rest_framework.generics import ListAPIView
-from rest_framework.generics import RetrieveDestroyAPIView
-from rest_framework.permissions import AllowAny
-from rest_framework.permissions import IsAuthenticated
-
+from drf_yasg.openapi import IN_PATH, IN_QUERY, Parameter
 from drf_yasg.utils import swagger_auto_schema
-from drf_yasg.openapi import Parameter
-from drf_yasg.openapi import IN_QUERY
-from drf_yasg.openapi import IN_PATH
+from rest_framework.generics import (CreateAPIView, ListAPIView,
+                                     RetrieveDestroyAPIView)
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .models import Announcement
 from .permissions import IsAnnouncementAuthorOrReadOnly
-from .serializers import AnnouncementCreateSerializer
-from .serializers import AnnouncementSerializer
-from .serializers import MapInfoSerializer
+from .serializers import (AnnouncementCreateSerializer, AnnouncementSerializer,
+                          MapInfoSerializer)
 
 
 class AllAnnouncementsListAPIView(ListAPIView):
