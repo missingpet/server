@@ -6,7 +6,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import SerializerMethodField
 
-from announcements.models import Announcement
+from .models import Announcement
 
 
 class AnnouncementSerializer(ModelSerializer):
@@ -16,9 +16,9 @@ class AnnouncementSerializer(ModelSerializer):
         model = Announcement
         fields = "__all__"
 
-    def get_user(self, current_announcement_instance):
-        user = Announcement.objects.get(
-            id=current_announcement_instance.id).user
+    @staticmethod
+    def get_user(obj):
+        user = Announcement.objects.get(id=obj.id).user
         return {"id": user.id, "username": user.username}
 
 

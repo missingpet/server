@@ -7,10 +7,15 @@ from .models import Announcement
 @admin.register(Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "user",
         "announcement_type",
         "animal_type",
         "created_at",
+    )
+    list_display_links = (
+        "id",
+        "user",
     )
     list_filter = ("announcement_type", "animal_type")
     readonly_fields = (
@@ -18,6 +23,7 @@ class AnnouncementAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     )
+    search_fields = ("description", "address")
 
     def get_photo(self, obj):
         src = obj.photo.url
