@@ -18,10 +18,10 @@ from .serializers import MapInfoSerializer
 class AllAnnouncementsListAPIView(ListAPIView):
     """Все объявления."""
 
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
     serializer_class = AnnouncementSerializer
     queryset = Announcement.objects.all()
-    url_kwargs = ("page",)
+    url_kwargs = ("page", )
 
     @swagger_auto_schema(
         operation_summary="Список всех объявлений.",
@@ -34,16 +34,20 @@ class AllAnnouncementsListAPIView(ListAPIView):
                 description="Номер страницы в наборе результатов с пагинацией.",
             ),
         ],
-        responses={"200": AnnouncementSerializer, "404": "Неправильная страница."},
+        responses={
+            "200": AnnouncementSerializer,
+            "404": "Неправильная страница."
+        },
     )
     def get(self, request, *args, **kwargs):
-        return super(AllAnnouncementsListAPIView, self).get(request, *args, **kwargs)
+        return super(AllAnnouncementsListAPIView,
+                     self).get(request, *args, **kwargs)
 
 
 class UserAnnouncementsListAPIView(ListAPIView):
     """Объявления пользователя."""
 
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
     serializer_class = AnnouncementSerializer
     url_kwargs = ("user_id", "page")
 
@@ -67,19 +71,24 @@ class UserAnnouncementsListAPIView(ListAPIView):
                 description="Номер страницы в наборе результатов с пагинацией.",
             ),
         ],
-        responses={"200": AnnouncementSerializer, "404": "Неправильная страница."},
+        responses={
+            "200": AnnouncementSerializer,
+            "404": "Неправильная страница."
+        },
     )
     def get(self, request, *args, **kwargs):
-        return super(UserAnnouncementsListAPIView, self).get(request, *args, **kwargs)
+        return super(UserAnnouncementsListAPIView,
+                     self).get(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Announcement.objects.filter(user_id=self.kwargs.get(self.url_kwargs[0]))
+        return Announcement.objects.filter(
+            user_id=self.kwargs.get(self.url_kwargs[0]))
 
 
 class FeedAnnouncementsListAPIView(ListAPIView):
     """Лента объявлений."""
 
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
     serializer_class = AnnouncementSerializer
     url_kwargs = ("user_id", "page")
 
@@ -103,21 +112,24 @@ class FeedAnnouncementsListAPIView(ListAPIView):
                 description="Номер страницы в наборе результатов с пагинацией.",
             ),
         ],
-        responses={"200": AnnouncementSerializer, "404": "Неправильная страница."},
+        responses={
+            "200": AnnouncementSerializer,
+            "404": "Неправильная страница."
+        },
     )
     def get(self, request, *args, **kwargs):
-        return super(FeedAnnouncementsListAPIView, self).get(request, *args, **kwargs)
+        return super(FeedAnnouncementsListAPIView,
+                     self).get(request, *args, **kwargs)
 
     def get_queryset(self):
         return Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_url_kwarg)
-        )
+            user_id=self.kwargs.get(self.lookup_url_kwarg))
 
 
 class AnnouncementCreateAPIView(CreateAPIView):
     """Создание объявления."""
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
     serializer_class = AnnouncementCreateSerializer
     queryset = Announcement.objects.all()
 
@@ -131,7 +143,8 @@ class AnnouncementCreateAPIView(CreateAPIView):
         },
     )
     def post(self, request, *args, **kwargs):
-        return super(AnnouncementCreateAPIView, self).post(request, *args, **kwargs)
+        return super(AnnouncementCreateAPIView,
+                     self).post(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
@@ -141,13 +154,14 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
     """Получение/удаление объявления."""
 
     serializer_class = AnnouncementSerializer
-    permission_classes = (IsAnnouncementAuthorOrReadOnly,)
+    permission_classes = (IsAnnouncementAuthorOrReadOnly, )
     queryset = Announcement.objects.all()
-    url_kwargs = ("id",)
+    url_kwargs = ("id", )
 
     @swagger_auto_schema(
         operation_summary="Получение объявления.",
-        operation_description="Возвращает объявление с указанным идентификатором.",
+        operation_description=
+        "Возвращает объявление с указанным идентификатором.",
         manual_parameters=[
             Parameter(
                 url_kwargs[0],
@@ -156,12 +170,14 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
                 description="Уникальный идентификатор объявления.",
             )
         ],
-        responses={"200": AnnouncementSerializer, "404": "Объявление не найдено."},
+        responses={
+            "200": AnnouncementSerializer,
+            "404": "Объявление не найдено."
+        },
     )
     def get(self, request, *args, **kwargs):
-        return super(AnnouncementRetrieveDestroyAPIView, self).get(
-            request, *args, **kwargs
-        )
+        return super(AnnouncementRetrieveDestroyAPIView,
+                     self).get(request, *args, **kwargs)
 
     @swagger_auto_schema(
         operation_summary="Удаление объявления.",
@@ -185,9 +201,8 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
         },
     )
     def delete(self, request, *args, **kwargs):
-        return super(AnnouncementRetrieveDestroyAPIView, self).delete(
-            request, *args, **kwargs
-        )
+        return super(AnnouncementRetrieveDestroyAPIView,
+                     self).delete(request, *args, **kwargs)
 
 
 class AllMapInfoListAPIView(ListAPIView):
@@ -196,14 +211,15 @@ class AllMapInfoListAPIView(ListAPIView):
     Это нужно для маркеров на карте объявлений.
     """
 
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
     serializer_class = MapInfoSerializer
     queryset = Announcement.objects.all()
     pagination_class = None
 
     @swagger_auto_schema(
         operation_summary='Список всех объектов вида "id, широта, долгота".',
-        operation_description='Возвращает список всех объектов вида "id, широта, долгота".',
+        operation_description=
+        'Возвращает список всех объектов вида "id, широта, долгота".',
     )
     def get(self, request, *args, **kwargs):
         return super(AllMapInfoListAPIView, self).get(request, *args, **kwargs)
@@ -215,14 +231,16 @@ class FeedMapInfoListAPIView(ListAPIView):
     Это нужно для маркеров на карте объявлений.
     """
 
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
     serializer_class = MapInfoSerializer
     pagination_class = None
-    url_kwargs = ("user_id",)
+    url_kwargs = ("user_id", )
 
     @swagger_auto_schema(
-        operation_summary='Список всех объектов вида "id, широта, долгота" для заданного пользователя.',
-        operation_description='Возвращает список всех объектов вида "id, широта, долгота" кроме созданных самим пользователем.',
+        operation_summary=
+        'Список всех объектов вида "id, широта, долгота" для заданного пользователя.',
+        operation_description=
+        'Возвращает список всех объектов вида "id, широта, долгота" кроме созданных самим пользователем.',
         manual_parameters=[
             Parameter(
                 url_kwargs[0],
@@ -233,7 +251,9 @@ class FeedMapInfoListAPIView(ListAPIView):
         ],
     )
     def get(self, request, *args, **kwargs):
-        return super(FeedMapInfoListAPIView, self).get(request, *args, **kwargs)
+        return super(FeedMapInfoListAPIView, self).get(request, *args,
+                                                       **kwargs)
 
     def get_queryset(self):
-        return Announcement.objects.exclude(user_id=self.kwargs.get(self.url_kwargs[0]))
+        return Announcement.objects.exclude(
+            user_id=self.kwargs.get(self.url_kwargs[0]))
