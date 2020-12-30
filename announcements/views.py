@@ -32,8 +32,7 @@ class AllAnnouncementsListAPIView(ListAPIView):
                       description="Номер страницы в наборе результатов с пагинацией."),
         ],
         responses={
-            "200": AnnouncementSerializer
-            ,
+            "200": AnnouncementSerializer,
             "404": "Неправильная страница."
         }
     )
@@ -50,8 +49,7 @@ class UserAnnouncementsListAPIView(ListAPIView):
 
     @swagger_auto_schema(
         operation_summary="Список объявлений пользователя.",
-        operation_description=
-        """
+        operation_description="""
         Возвращает список объявлений пользователя по указанному id пользователя.
         Сюда входят только те объявления, которые были созданы указанным пользователем.
         """,
@@ -83,8 +81,7 @@ class FeedAnnouncementsListAPIView(ListAPIView):
 
     @swagger_auto_schema(
         operation_summary="Лента объявлений.",
-        operation_description=
-        """
+        operation_description="""
         Возвращает ленту объявлений для пользователя с указанным id.
         Сюда не входят объявления, созданные указанным пользователем.
         """,
@@ -142,7 +139,8 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
         operation_summary="Получение объявления.",
         operation_description="Возвращает объявление с указанным идентификатором.",
         manual_parameters=[
-            Parameter(url_kwargs[0], IN_PATH, type="integer", description="Уникальный идентификатор объявления.")
+            Parameter(url_kwargs[0], IN_PATH, type="integer",
+                      description="Уникальный идентификатор объявления.")
         ],
         responses={
             "200": AnnouncementSerializer,
@@ -157,7 +155,8 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
         operation_summary="Удаление объявления.",
         operation_description="Удаляет объявление с указанным идентификатором.",
         manual_parameters=[
-            Parameter("id", IN_PATH, type="integer", description="Уникальный идентификатор объявления.")
+            Parameter("id", IN_PATH, type="integer",
+                      description="Уникальный идентификатор объявления.")
         ],
         responses={
             "204": "Объявление успешно удалено.",
@@ -207,8 +206,7 @@ class FeedMapInfoListAPIView(ListAPIView):
 
     @swagger_auto_schema(
         operation_summary="Список всех объектов вида \"id, широта, долгота\" для заданного пользователя.",
-        operation_description=
-        "Возвращает список всех объектов вида \"id, широта, долгота\" кроме созданных самим пользователем.",
+        operation_description="Возвращает список всех объектов вида \"id, широта, долгота\" кроме созданных самим пользователем.",
         manual_parameters=[
             Parameter(url_kwargs[0], IN_PATH, type="integer",
                       description="Уникальный идентификатор пользователя."),
