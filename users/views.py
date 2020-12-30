@@ -1,3 +1,4 @@
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
@@ -6,8 +7,6 @@ from rest_framework.status import HTTP_200_OK
 from rest_framework.status import HTTP_201_CREATED
 from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework_simplejwt.views import TokenRefreshView
-
-from drf_yasg.utils import swagger_auto_schema
 
 from .serializers import SignInSerializer
 from .serializers import SignOutSerializer
@@ -24,16 +23,17 @@ class SignUpAPIView(GenericAPIView):
         operation_summary="Регистрирация пользователя.",
         operation_description="Регистрирует нового пользователя.",
         responses={
-            "201": SignUpSerializer,
+            "201":
+            SignUpSerializer,
             "400":
-                """
+            """
                 Пользователь с таким именем или адресом электронной почты уже существует.
-                
+
                 Неверный формат имени и/или адреса электронной почты.
-                
+
                 Слишком короткий пароль, имя пользователя или адрес электронной почты.
                 """,
-        }
+        },
     )
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -54,7 +54,7 @@ class SignInAPIView(GenericAPIView):
         responses={
             "200": SignInSerializer,
             "403": "Неверный адрес электронной почты или пароль.",
-        }
+        },
     )
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -75,7 +75,7 @@ class SignOutAPIView(GenericAPIView):
             "204": "Это успех, refresh токен сброшен.",
             "400": "Недопустимый токен.",
             "403": "Учетные данные не были предоставлены.",
-        }
+        },
     )
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -89,7 +89,8 @@ class TokenRefreshAPIView(TokenRefreshView):
 
     @swagger_auto_schema(
         operation_summary="Обновление токена доступа.",
-        operation_description="Обновляет access токен по заданному refresh токену.",
+        operation_description=
+        "Обновляет access токен по заданному refresh токену.",
         responses={
             "200": "Это успех.",
             "401": "Токен недействителен или просрочен."
