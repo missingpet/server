@@ -1,6 +1,7 @@
 from drf_yasg.openapi import IN_PATH
 from drf_yasg.openapi import IN_QUERY
 from drf_yasg.openapi import Parameter
+from drf_yasg.openapi import TYPE_INTEGER
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import CreateAPIView
 from rest_framework.generics import ListAPIView
@@ -30,7 +31,7 @@ class AllAnnouncementsListAPIView(ListAPIView):
             Parameter(
                 url_kwargs[0],
                 IN_QUERY,
-                type="integer",
+                type=TYPE_INTEGER,
                 description="Номер страницы в наборе результатов с пагинацией.",
             ),
         ],
@@ -61,13 +62,13 @@ class UserAnnouncementsListAPIView(ListAPIView):
             Parameter(
                 url_kwargs[0],
                 IN_PATH,
-                type="integer",
+                type=TYPE_INTEGER,
                 description="Уникальный идентификатор пользователя.",
             ),
             Parameter(
                 url_kwargs[1],
                 IN_QUERY,
-                type="integer",
+                type=TYPE_INTEGER,
                 description="Номер страницы в наборе результатов с пагинацией.",
             ),
         ],
@@ -102,13 +103,13 @@ class FeedAnnouncementsListAPIView(ListAPIView):
             Parameter(
                 url_kwargs[0],
                 IN_PATH,
-                type="integer",
+                type=TYPE_INTEGER,
                 description="Уникальный идентификатор пользователя.",
             ),
             Parameter(
                 url_kwargs[1],
                 IN_QUERY,
-                type="integer",
+                type=TYPE_INTEGER,
                 description="Номер страницы в наборе результатов с пагинацией.",
             ),
         ],
@@ -166,7 +167,7 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
             Parameter(
                 url_kwargs[0],
                 IN_PATH,
-                type="integer",
+                type=TYPE_INTEGER,
                 description="Уникальный идентификатор объявления.",
             )
         ],
@@ -186,7 +187,7 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
             Parameter(
                 "id",
                 IN_PATH,
-                type="integer",
+                type=TYPE_INTEGER,
                 description="Уникальный идентификатор объявления.",
             )
         ],
@@ -245,7 +246,7 @@ class FeedMapInfoListAPIView(ListAPIView):
             Parameter(
                 url_kwargs[0],
                 IN_PATH,
-                type="integer",
+                type=TYPE_INTEGER,
                 description="Уникальный идентификатор пользователя.",
             ),
         ],
