@@ -2,8 +2,8 @@ from django.contrib import auth
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.serializers import CharField
-from rest_framework.serializers import IntegerField
 from rest_framework.serializers import EmailField
+from rest_framework.serializers import IntegerField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import Serializer
 from rest_framework.serializers import SerializerMethodField

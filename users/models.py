@@ -3,8 +3,8 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db.models import BooleanField
 from django.db.models import CharField
-from django.db.models import EmailField
 from django.db.models import DateTimeField
+from django.db.models import EmailField
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
@@ -38,9 +38,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """Пользователь с email."""
 
-    email = EmailField("Адрес электронной почты",
-                       unique=True,
-                       db_index=True)
+    email = EmailField("Адрес электронной почты", unique=True, db_index=True)
     username = CharField("Имя пользователя",
                          max_length=64,
                          unique=True,
@@ -52,7 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     updated_at = DateTimeField("Обновлён", auto_now=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ("username",)
+    REQUIRED_FIELDS = ("username", )
 
     objects = UserManager()
 
