@@ -42,7 +42,7 @@ class SignUpSerializer(ModelSerializer):
 
 class SignInSerializer(ModelSerializer):
     id = IntegerField(read_only=True)
-    email = EmailField(min_length=3, max_length=255)
+    email = EmailField()
     password = CharField(min_length=6, max_length=128, write_only=True)
     username = CharField(min_length=3, max_length=64, read_only=True)
     tokens = SerializerMethodField()
