@@ -50,7 +50,7 @@ class SignInAPIView(GenericAPIView):
 
     @swagger_auto_schema(
         operation_summary="Авторизация пользователя.",
-        operation_description="Регистрирует нового пользователя.",
+        operation_description="Производит авторизацию пользователя.",
         responses={
             "200": SignInSerializer,
             "403": "Неверный адрес электронной почты или пароль.",

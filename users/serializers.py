@@ -1,9 +1,8 @@
-import re
-
 from django.contrib import auth
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.serializers import CharField
+from rest_framework.serializers import EmailField
 from rest_framework.serializers import IntegerField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import Serializer
@@ -24,7 +23,6 @@ class SignUpSerializer(ModelSerializer):
 
     def validate(self, attrs):
         """Проверяет корректность значений полей при регистрации нового пользователя."""
-        email = attrs.get("email")
         username = attrs.get("username")
 
         username_len = len(username)
@@ -36,14 +34,6 @@ class SignUpSerializer(ModelSerializer):
             raise ValidationError(
                 _("Username should contains only alphanumeric characters."))
 
-        email_len = len(email)
-        if email_len < 3 or email_len > 255:
-            raise ValidationError(
-                _("Email address should contain 3 to 255 characters."))
-
-        if not re.match(r"[a-z0-9]+@[a-z0-9]+\.[a-z0-9]+$", email):
-            raise ValidationError(_("Invalid email address format."))
-
         return attrs
 
     def create(self, validated_data):
@@ -52,7 +42,7 @@ class SignUpSerializer(ModelSerializer):
 
 class SignInSerializer(ModelSerializer):
     id = IntegerField(read_only=True)
-    email = CharField(min_length=3, max_length=255)
+    email = EmailField(min_length=3, max_length=255)
     password = CharField(min_length=6, max_length=128, write_only=True)
     username = CharField(min_length=3, max_length=64, read_only=True)
     tokens = SerializerMethodField()
