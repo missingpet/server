@@ -89,8 +89,7 @@ class TokenRefreshAPIView(TokenRefreshView):
 
     @swagger_auto_schema(
         operation_summary="Обновление токена доступа.",
-        operation_description=
-        "Обновляет access токен по заданному refresh токену.",
+        operation_description="Обновляет access токен по заданному refresh токену.",
         responses={
             "200": "Это успех.",
             "401": "Токен недействителен или просрочен."

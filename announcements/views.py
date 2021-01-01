@@ -161,8 +161,7 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
 
     @swagger_auto_schema(
         operation_summary="Получение объявления.",
-        operation_description=
-        "Возвращает объявление с указанным идентификатором.",
+        operation_description="Возвращает объявление с указанным идентификатором.",
         manual_parameters=[
             Parameter(
                 url_kwargs[0],
@@ -219,8 +218,7 @@ class AllMapInfoListAPIView(ListAPIView):
 
     @swagger_auto_schema(
         operation_summary='Список всех объектов вида "id, широта, долгота".',
-        operation_description=
-        'Возвращает список всех объектов вида "id, широта, долгота".',
+        operation_description='Возвращает список всех объектов вида "id, широта, долгота".',
     )
     def get(self, request, *args, **kwargs):
         return super(AllMapInfoListAPIView, self).get(request, *args, **kwargs)
@@ -238,10 +236,8 @@ class FeedMapInfoListAPIView(ListAPIView):
     url_kwargs = ("user_id", )
 
     @swagger_auto_schema(
-        operation_summary=
-        'Список всех объектов вида "id, широта, долгота" для заданного пользователя.',
-        operation_description=
-        'Возвращает список всех объектов вида "id, широта, долгота" кроме созданных самим пользователем.',
+        operation_summary='Список всех объектов вида "id, широта, долгота" для заданного пользователя.',
+        operation_description='Возвращает список всех объектов вида "id, широта, долгота" кроме созданных самим пользователем.',
         manual_parameters=[
             Parameter(
                 url_kwargs[0],
