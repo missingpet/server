@@ -13,48 +13,35 @@ from ..models import User
 
 
 class ApiTestCases(APITestCase):
-
     def setUp(self):
         self.client = APIClient()
-        self.user_1 = User.objects.create_user(
-            "test@email.com",
-            "test",
-            "password"
-        )
+        self.user_1 = User.objects.create_user("test@email.com", "test", "password")
 
-    @tag('sign-up')
+    @tag("sign-up")
     def test_sign_up(self):
         """Тестирует регистрацию нового пользователя."""
         data = {
-            'username': 'username',
-            'email': 'some@email.com',
-            'password': 'password'
+            "username": "username",
+            "email": "some@email.com",
+            "password": "password",
         }
-        response = self.client.post(reverse('sign-up'), data)
+        response = self.client.post(reverse("sign-up"), data)
         self.assertEqual(response.status_code, HTTP_201_CREATED)
 
-    @tag('sign-in')
+    @tag("sign-in")
     def test_sign_in(self):
         """Тестирует вход в профиль."""
-        data = {
-            'email': 'test@email.com',
-            'password': 'password'
-        }
-        response = self.client.post(reverse('sign-in'), data)
+        data = {"email": "test@email.com", "password": "password"}
+        response = self.client.post(reverse("sign-in"), data)
         self.assertEqual(response.status_code, HTTP_200_OK)
 
-    @tag('sign-out')
+    @tag("sign-out")
     def test_sign_out(self):
         """Тестирует выход из профиля."""
-        data = {
-            'email': 'test@email.com',
-            'password': 'password'
-        }
-        response = self.client.post(reverse('sign-in'), data)
-        data = {
-            'refresh': response.data['tokens']['refresh']
-        }
-        response = self.client.post(reverse('sign-out'), data)
+        data = {"email": "test@email.com", "password": "password"}
+        response = self.client.post(reverse("sign-in"), data)
+        data = {"refresh": response.data["tokens"]["refresh"]}
+        response = self.client.post(reverse("sign-out"), data)
         self.assertEqual(response.status_code, HTTP_204_NO_CONTENT)
 
     def tearDown(self):
