@@ -33,7 +33,7 @@ class SignUpSerializer(ModelSerializer):
             raise ValidationError(
                 _("Username should contains only alphanumeric characters."))
 
-        return username
+        return attrs
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
