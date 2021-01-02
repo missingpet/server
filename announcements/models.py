@@ -26,7 +26,7 @@ class Announcement(Model):
     user = ForeignKey(User, on_delete=CASCADE, verbose_name="Пользователь")
     description = CharField(
         "Описание",
-        max_length=2000,
+        max_length=5000,
     )
     photo = ImageField(
         "Фотография животного",
@@ -41,7 +41,7 @@ class Announcement(Model):
         choices=ANIMAL_TYPES,
     )
     address = CharField(
-        "Место пропажи/находки",
+        "Место пропажи или находки",
         max_length=1000,
     )
     latitude = FloatField("Широта", )

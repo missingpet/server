@@ -4,9 +4,9 @@ from rest_framework.status import HTTP_200_OK
 from rest_framework.status import HTTP_201_CREATED
 from rest_framework.status import HTTP_204_NO_CONTENT
 
-from users.serializers import SignInSerializer
-from users.serializers import SignOutSerializer
-from users.serializers import SignUpSerializer
+from .serializers import SignInSerializer
+from .serializers import SignOutSerializer
+from .serializers import SignUpSerializer
 
 
 class SignUpAPIView(GenericAPIView):

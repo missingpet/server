@@ -60,10 +60,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = "Пользователи"
 
     def tokens(self):
-        refresh_token = RefreshToken.for_user(self)
+        refresh = RefreshToken.for_user(self)
         return {
-            "refresh": str(refresh_token),
-            "access": str(refresh_token.access_token),
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
         }
 
     def __str__(self):

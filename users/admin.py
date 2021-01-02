@@ -1,10 +1,11 @@
-from django.contrib import admin
+from django.contrib.admin import ModelAdmin
+from django.contrib.admin import register
 
 from .models import User
 
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+@register(User)
+class UserAdmin(ModelAdmin):
     readonly_fields = ("last_login", )
     list_display = ("id", "username", "email", "created_at", "is_active")
     list_display_links = (
