@@ -14,4 +14,7 @@ auth_urls = [
 
 token_urls = [path("refresh/", TokenRefreshView.as_view(), name="refresh")]
 
-urlpatterns = [path("auth/", include(auth_urls)), path("token/", include(token_urls))]
+urlpatterns = [
+    path("auth/", include(auth_urls)),
+    path("token/", include(token_urls))
+]
