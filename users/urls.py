@@ -1,11 +1,7 @@
-from django.urls import path
-from django.urls import include
+from django.urls import include, path
 from rest_framework_simplejwt.views import TokenRefreshView
 
-from .views import SignInAPIView
-from .views import SignOutAPIView
-from .views import SignUpAPIView
-
+from .views import SignInAPIView, SignOutAPIView, SignUpAPIView
 
 auth_urls = [
     path("signup/", SignUpAPIView.as_view(), name="sign-up"),
