@@ -8,9 +8,9 @@ class UserTestCases(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
-            username='user',
-            email='user@email.com',
-            password='123'
+            username="user",
+            email="user@email.com",
+            password="123"
         )
         self.superuser = User.objects.create_superuser(
             username='superuser',

@@ -17,9 +17,9 @@ class ApiTestCases(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user_1 = User.objects.create_user(
-            'test@email.com',
-            'test',
-            'password'
+            "test@email.com",
+            "test",
+            "password"
         )
 
     @tag('sign-up')
