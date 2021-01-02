@@ -1,9 +1,12 @@
-from django.urls import include, path
+from django.urls import include
+from django.urls import path
 
-from .views import (AllMapInfoListAPIView, AnnouncementListCreateAPIView,
-                    AnnouncementRetrieveDestroyAPIView,
-                    FeedAnnouncementsListAPIView, FeedMapInfoListAPIView,
-                    UserAnnouncementsListAPIView)
+from .views import AllMapInfoListAPIView
+from .views import AnnouncementListCreateAPIView
+from .views import AnnouncementRetrieveDestroyAPIView
+from .views import FeedAnnouncementsListAPIView
+from .views import FeedMapInfoListAPIView
+from .views import UserAnnouncementsListAPIView
 
 user_urls = [
     path(

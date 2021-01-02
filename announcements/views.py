@@ -1,11 +1,13 @@
-from rest_framework.generics import (ListAPIView, ListCreateAPIView,
-                                     RetrieveDestroyAPIView)
+from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import RetrieveDestroyAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Announcement
 from .permissions import IsAnnouncementAuthorOrReadOnly
-from .serializers import (AnnouncementCreateSerializer, AnnouncementSerializer,
-                          MapInfoSerializer)
+from .serializers import AnnouncementCreateSerializer
+from .serializers import AnnouncementSerializer
+from .serializers import MapInfoSerializer
 
 
 class UserAnnouncementsListAPIView(ListAPIView):

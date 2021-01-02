@@ -1,5 +1,11 @@
-from django.db.models import (CASCADE, CharField, DateTimeField, FloatField,
-                              ForeignKey, ImageField, IntegerField, Model)
+from django.db.models import CASCADE
+from django.db.models import CharField
+from django.db.models import DateTimeField
+from django.db.models import FloatField
+from django.db.models import ForeignKey
+from django.db.models import ImageField
+from django.db.models import IntegerField
+from django.db.models import Model
 
 from config.settings import ANNOUNCEMENTS_PHOTO
 from users.models import User
