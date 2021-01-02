@@ -40,7 +40,7 @@ urlpatterns = [
         name="all-map-info",
     ),
     path(
-        "announcement/map_info/<int:user_id>/feed/",
+        "announcement/map_info/user/<int:user_id>/feed/",
         FeedMapInfoListAPIView.as_view(),
         name="feed-map-info",
     ),
