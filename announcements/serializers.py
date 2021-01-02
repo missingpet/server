@@ -16,8 +16,7 @@ class AnnouncementSerializer(ModelSerializer):
         model = Announcement
         fields = "__all__"
 
-    @staticmethod
-    def get_user(obj):
+    def get_user(self, obj):
         user = Announcement.objects.get(id=obj.id).user
         return {"id": user.id, "username": user.username}
 

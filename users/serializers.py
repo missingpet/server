@@ -21,8 +21,8 @@ class SignUpSerializer(ModelSerializer):
         model = User
         fields = ("email", "username", "password")
 
-    @staticmethod
-    def validate_username(username):
+    def validate(self, attrs):
+        username = attrs.get("username")
 
         username_len = len(username)
         if username_len < 3 or username_len > 64:
@@ -50,8 +50,7 @@ class SignInSerializer(ModelSerializer):
         model = User
         fields = ("id", "email", "password", "username", "tokens")
 
-    @staticmethod
-    def get_tokens(current_user_instance):
+    def get_tokens(self, current_user_instance):
         tokens = User.objects.get(id=current_user_instance["id"]).tokens()
         return {"refresh": tokens["refresh"], "access": tokens["access"]}
 
