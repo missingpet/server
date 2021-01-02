@@ -25,8 +25,7 @@ class UserAnnouncementsListAPIView(ListAPIView):
 
     def get_queryset(self):
         return Announcement.objects.filter(
-            user_id=self.kwargs.get(self.lookup_url_kwarg)
-        )
+            user_id=self.kwargs.get(self.lookup_url_kwarg))
 
 
 class FeedAnnouncementsListAPIView(ListAPIView):
@@ -37,14 +36,13 @@ class FeedAnnouncementsListAPIView(ListAPIView):
 
     def get_queryset(self):
         return Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_url_kwarg)
-        )
+            user_id=self.kwargs.get(self.lookup_url_kwarg))
 
 
 class AnnouncementCreateAPIView(CreateAPIView):
     """Создание объявления."""
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
     serializer_class = AnnouncementCreateSerializer
     queryset = Announcement.objects.all()
 
@@ -56,7 +54,7 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
     """Получение/удаление объявления."""
 
     serializer_class = AnnouncementSerializer
-    permission_classes = (IsAnnouncementAuthorOrReadOnly,)
+    permission_classes = (IsAnnouncementAuthorOrReadOnly, )
     queryset = Announcement.objects.all()
 
 
@@ -83,5 +81,4 @@ class FeedMapInfoListAPIView(ListAPIView):
 
     def get_queryset(self):
         return Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_url_kwarg)
-        )
+            user_id=self.kwargs.get(self.lookup_url_kwarg))
