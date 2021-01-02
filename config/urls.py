@@ -8,7 +8,6 @@ from django.urls import path
 from drf_yasg.openapi import Info
 from drf_yasg.views import get_schema_view
 
-
 schema_view = get_schema_view(
     Info(title="MissingPet API", default_version=""),
     public=True,

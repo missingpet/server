@@ -1,10 +1,9 @@
-from os.path import dirname
-from os.path import abspath
-from os.path import join
 from datetime import timedelta
+from os.path import abspath
+from os.path import dirname
+from os.path import join
 
 from .secret_key import *
-
 
 BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
 
