@@ -21,9 +21,8 @@ class SignUpSerializer(ModelSerializer):
         model = User
         fields = ("email", "username", "password")
 
-    def validate(self, attrs):
-        """Проверяет корректность значений полей при регистрации нового пользователя."""
-        username = attrs.get("username")
+    @staticmethod
+    def validate_username(username):
 
         username_len = len(username)
         if username_len < 3 or username_len > 64:
@@ -34,7 +33,7 @@ class SignUpSerializer(ModelSerializer):
             raise ValidationError(
                 _("Username should contains only alphanumeric characters."))
 
-        return attrs
+        return username
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
@@ -77,12 +76,8 @@ class SignOutSerializer(Serializer):
 
     default_error_messages = {"error": _("Invalid token.")}
 
-    def validate(self, attrs):
-        self.token = attrs.get("refresh")
-        return attrs
-
     def save(self, **kwargs):
         try:
-            RefreshToken(self.token).blacklist()
+            RefreshToken(self.validated_data.get("refresh")).blacklist()
         except TokenError:
             self.fail("error")
