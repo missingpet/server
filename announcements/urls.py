@@ -16,14 +16,14 @@ user_urls = [
 ]
 
 announcement_urls = [
-    path("announcement/<int:pk>/", AnnouncementRetrieveDestroyAPIView.as_view(), name="retrieve-destroy-announcement"),
-    path("announcement/", AnnouncementListCreateAPIView.as_view(), name="create-announcement"),
+    path("<int:pk>/", AnnouncementRetrieveDestroyAPIView.as_view(), name="retrieve-destroy-announcement"),
+    path("", AnnouncementListCreateAPIView.as_view(), name="create-announcement"),
 ]
 
 objects_for_announcements_map_urls = [
-    path("objects_for_announcements_map/", AllMapInfoListAPIView.as_view(), name="all-map-info"),
+    path("", AllMapInfoListAPIView.as_view(), name="all-map-info"),
 ]
 
 urlpatterns = [path("user/", include(user_urls))]
-urlpatterns += [path("announcement/"), include(announcement_urls)]
-urlpatterns += [path("", include(objects_for_announcements_map_urls))]
+urlpatterns += [path("announcement/", include(announcement_urls))]
+urlpatterns += [path("objects_for_announcements_map/", include(objects_for_announcements_map_urls))]
