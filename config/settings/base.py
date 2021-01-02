@@ -5,6 +5,7 @@ from datetime import timedelta
 
 from .secret_key import *
 
+
 BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
 
 INSTALLED_APPS = [
@@ -124,6 +125,7 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": "Bearer",
     "ACCESS_TOKEN_LIFETIME": timedelta(days=3),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken", ),
 }
 
 SWAGGER_SETTINGS = {
