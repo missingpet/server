@@ -13,9 +13,9 @@ class UserManager(BaseUserManager):
 
     def create_user(self, email, username, password):
         """Создание пользователя."""
-        if email is None:
+        if not email:
             raise ValueError("Email address must be set.")
-        if username is None:
+        if not username:
             raise ValueError("Username must be set.")
         user = self.model(email=self.normalize_email(email), username=username)
         user.set_password(password)
@@ -24,7 +24,7 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, username, password):
         """Создание суперпользователя."""
-        if password is None:
+        if not password:
             raise ValueError("Password must be set.")
         user = self.create_user(username=username,
                                 email=email,
