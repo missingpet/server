@@ -1,7 +1,11 @@
-from django.urls import include, path
-from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
+from django.urls import include
+from django.urls import path
+from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.views import TokenVerifyView
 
-from .views import SignInAPIView, SignOutAPIView, SignUpAPIView
+from .views import SignInAPIView
+from .views import SignOutAPIView
+from .views import SignUpAPIView
 
 token_urls = [
     path("refresh/", TokenRefreshView.as_view(), name="refresh"),
