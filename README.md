@@ -1,1 +1,2 @@
-# missing-pet-backend
+# MissingPet Server
+Backend for MissingPet project
