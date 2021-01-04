@@ -32,7 +32,7 @@ announcement_urls = [
     ),
     path("",
          AnnouncementListCreateAPIView.as_view(),
-         name="create-announcement"),
+         name="list-create-announcement"),
 ]
 
 objects_for_announcements_map_urls = [
