@@ -1,11 +1,11 @@
 from django.urls import include
 from django.urls import path
 
-from .views import AllMapInfoListAPIView
+from .views import AllObjectsForAnnouncementsMapListAPIView
 from .views import AnnouncementListCreateAPIView
 from .views import AnnouncementRetrieveDestroyAPIView
 from .views import FeedAnnouncementsListAPIView
-from .views import FeedMapInfoListAPIView
+from .views import ObjectsForAnnouncementsMapForUserFeedListAPIView
 from .views import UserAnnouncementsListAPIView
 
 user_urls = [
@@ -19,7 +19,7 @@ user_urls = [
          name="feed"),
     path(
         "<int:user_id>/objects_for_announcements_map/feed/",
-        FeedMapInfoListAPIView.as_view(),
+        ObjectsForAnnouncementsMapForUserFeedListAPIView.as_view(),
         name="feed-map-info",
     ),
 ]
@@ -36,7 +36,7 @@ announcement_urls = [
 ]
 
 objects_for_announcements_map_urls = [
-    path("", AllMapInfoListAPIView.as_view(), name="all-map-info"),
+    path("", AllObjectsForAnnouncementsMapListAPIView.as_view(), name="all-map-info"),
 ]
 
 urlpatterns = [

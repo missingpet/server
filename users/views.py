@@ -1,7 +1,6 @@
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
-from rest_framework.status import HTTP_201_CREATED
 from rest_framework.status import HTTP_204_NO_CONTENT
 
 from .serializers import SignInSerializer
@@ -9,16 +8,10 @@ from .serializers import SignOutSerializer
 from .serializers import SignUpSerializer
 
 
-class SignUpAPIView(GenericAPIView):
+class SignUpAPIView(CreateAPIView):
     """Регистрация нового пользователя."""
 
     serializer_class = SignUpSerializer
-
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=HTTP_201_CREATED)
 
 
 class SignInAPIView(GenericAPIView):
@@ -32,13 +25,11 @@ class SignInAPIView(GenericAPIView):
         return Response(serializer.data, status=HTTP_200_OK)
 
 
-class SignOutAPIView(GenericAPIView):
+class SignOutAPIView(CreateAPIView):
     """Выход из профиля."""
 
     serializer_class = SignOutSerializer
 
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+    def create(self, request, *args, **kwargs):
+        super(SignOutAPIView, self).create(request, *args, *kwargs)
         return Response(status=HTTP_204_NO_CONTENT)

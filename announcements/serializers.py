@@ -9,7 +9,7 @@ from rest_framework.serializers import SerializerMethodField
 from .models import Announcement
 
 
-class AnnouncementSerializer(ModelSerializer):
+class AnnouncementRetrieveSerializer(ModelSerializer):
     user = SerializerMethodField()
 
     class Meta:
@@ -21,7 +21,7 @@ class AnnouncementSerializer(ModelSerializer):
         return {"id": user.id, "username": user.username}
 
 
-class AnnouncementCreateSerializer(AnnouncementSerializer):
+class AnnouncementCreateSerializer(AnnouncementRetrieveSerializer):
     def validate(self, attrs):
         """Проверяет корректность значений всех полей объявления."""
         contact_phone_number = attrs.get("contact_phone_number")
@@ -62,7 +62,7 @@ class AnnouncementCreateSerializer(AnnouncementSerializer):
         return attrs
 
 
-class MapInfoSerializer(ModelSerializer):
+class ObjectsForAnnouncementsMapRetrieveSerializer(ModelSerializer):
     class Meta:
         model = Announcement
         fields = ("id", "latitude", "longitude")
