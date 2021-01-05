@@ -2,7 +2,6 @@ from django.contrib import auth
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.serializers import CharField
-from rest_framework.serializers import EmailField
 from rest_framework.serializers import IntegerField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import Serializer
@@ -15,6 +14,7 @@ from .models import User
 
 
 class SignUpSerializer(ModelSerializer):
+    username = CharField(min_length=3, max_length=64)
     password = CharField(min_length=6, max_length=128, write_only=True)
 
     class Meta:
@@ -23,11 +23,6 @@ class SignUpSerializer(ModelSerializer):
 
     def validate(self, attrs):
         username = attrs.get("username")
-
-        username_len = len(username)
-        if username_len < 3 or username_len > 64:
-            raise ValidationError(
-                _("Username should contains 3 to 64 characters."))
 
         if not username.isalnum():
             raise ValidationError(
@@ -41,7 +36,6 @@ class SignUpSerializer(ModelSerializer):
 
 class SignInSerializer(ModelSerializer):
     id = IntegerField(read_only=True)
-    email = EmailField()
     password = CharField(min_length=6, max_length=128, write_only=True)
     username = CharField(min_length=3, max_length=64, read_only=True)
     tokens = SerializerMethodField()
