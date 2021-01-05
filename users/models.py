@@ -5,6 +5,7 @@ from django.db.models import BooleanField
 from django.db.models import CharField
 from django.db.models import DateTimeField
 from django.db.models import EmailField
+from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
@@ -38,16 +39,16 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """Пользователь с email."""
 
-    email = EmailField("Адрес электронной почты", unique=True, db_index=True)
-    username = CharField("Имя пользователя",
+    email = EmailField(_("Адрес электронной почты"), unique=True, db_index=True)
+    username = CharField(_("Имя пользователя"),
                          max_length=64,
                          unique=True,
                          db_index=True)
-    is_active = BooleanField("Активирован", default=True)
-    is_staff = BooleanField("Персонал", default=False)
-    is_superuser = BooleanField("Суперпользователь", default=False)
-    created_at = DateTimeField("Создан", auto_now_add=True)
-    updated_at = DateTimeField("Обновлён", auto_now=True)
+    is_active = BooleanField(_("Активирован"), default=True)
+    is_staff = BooleanField(_("Персонал"), default=False)
+    is_superuser = BooleanField(_("Суперпользователь"), default=False)
+    created_at = DateTimeField(_("Создан"), auto_now_add=True)
+    updated_at = DateTimeField(_("Обновлён"), auto_now=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ("username", )
@@ -56,8 +57,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         ordering = ("-username", "-email")
-        verbose_name = "Пользователь"
-        verbose_name_plural = "Пользователи"
+        verbose_name = _("Пользователь")
+        verbose_name_plural = _("Пользователи")
 
     def tokens(self):
         refresh = RefreshToken.for_user(self)
