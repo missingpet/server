@@ -2,6 +2,7 @@ from django.contrib import auth
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.serializers import CharField
+from rest_framework.serializers import EmailField
 from rest_framework.serializers import IntegerField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import Serializer
@@ -9,11 +10,13 @@ from rest_framework.serializers import SerializerMethodField
 from rest_framework.serializers import ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import TokenError
+from rest_framework.validators import UniqueValidator
 
 from .models import User
 
 
 class SignUpSerializer(ModelSerializer):
+    email = EmailField(validators=[UniqueValidator(queryset=User.objects.all())])
     username = CharField(min_length=3, max_length=64)
     password = CharField(min_length=6, max_length=128, write_only=True)
 
@@ -36,6 +39,7 @@ class SignUpSerializer(ModelSerializer):
 
 class SignInSerializer(ModelSerializer):
     id = IntegerField(read_only=True)
+    email = EmailField()
     password = CharField(min_length=6, max_length=128, write_only=True)
     username = CharField(min_length=3, max_length=64, read_only=True)
     tokens = SerializerMethodField()

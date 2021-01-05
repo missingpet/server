@@ -40,10 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     """Пользователь с email."""
 
     email = EmailField(_("Адрес электронной почты"), unique=True, db_index=True)
-    username = CharField(_("Имя пользователя"),
-                         max_length=64,
-                         unique=True,
-                         db_index=True)
+    username = CharField(_("Имя пользователя"), max_length=64)
     is_active = BooleanField(_("Активирован"), default=True)
     is_staff = BooleanField(_("Персонал"), default=False)
     is_superuser = BooleanField(_("Суперпользователь"), default=False)
@@ -56,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     class Meta:
-        ordering = ("-username", "-email")
+        ordering = ("-email", )
         verbose_name = _("Пользователь")
         verbose_name_plural = _("Пользователи")
 
