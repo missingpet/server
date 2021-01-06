@@ -26,11 +26,13 @@ class SignInAPIView(GenericAPIView):
         return Response(serializer.data, status=HTTP_200_OK)
 
 
-class SignOutAPIView(CreateAPIView):
+class SignOutAPIView(GenericAPIView):
     """Выход из профиля."""
 
     serializer_class = SignOutSerializer
 
-    def create(self, request, *args, **kwargs):
-        super(SignOutAPIView, self).create(request, *args, *kwargs)
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         return Response(status=HTTP_204_NO_CONTENT)
