@@ -27,7 +27,7 @@ class AnnouncementListCreateAPIView(AnnouncementPaginationMixin,
 class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
     """Получение/удаление объявления."""
 
-    queryset = Announcement.objects.all()
+    queryset = Announcement
     serializer_class = AnnouncementRetrieveSerializer
     permission_classes = (IsAnnouncementAuthorOrReadOnly, )
 
@@ -35,7 +35,7 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
 class UserAnnouncementsListAPIView(AnnouncementPaginationMixin,
                                    AnnouncementsMixin,
                                    ListAPIView):
-    """Объявления пользователя."""
+    """Объявления пользователя с указанным user_id."""
 
     def get_queryset(self):
         return Announcement.objects.filter(
@@ -45,7 +45,7 @@ class UserAnnouncementsListAPIView(AnnouncementPaginationMixin,
 class FeedForUserListAPIView(AnnouncementPaginationMixin,
                              AnnouncementsMixin,
                              ListAPIView):
-    """Лента объявлений для заданного пользователя."""
+    """Лента объявлений для пользователя с указанным user_id."""
 
     def get_queryset(self):
         return Announcement.objects.exclude(
@@ -61,7 +61,10 @@ class AnnouncementsMapListAPIView(AnnouncementsMapMixin,
 
 class AnnouncementsMapForUserListAPIView(AnnouncementsMapMixin,
                                          ListAPIView):
-    """Карта объявлений (кроме созданных указанным пользователем объявлений)."""
+    """
+    Карта объявлений \
+    (без объявлений, созданных пользователем с указанным user_id).
+    """
 
     lookup_url_kwarg = "user_id"
 
