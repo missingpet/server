@@ -16,6 +16,8 @@ from .models import User
 
 
 class SignUpSerializer(ModelSerializer):
+    """Регистрация нового пользователя."""
+
     email = EmailField(validators=[UniqueValidator(queryset=User.objects.all())])
     username = CharField(min_length=3, max_length=64)
     password = CharField(min_length=6, max_length=128, write_only=True)
@@ -38,6 +40,8 @@ class SignUpSerializer(ModelSerializer):
 
 
 class SignInSerializer(ModelSerializer):
+    """Вход в профиль."""
+
     id = IntegerField(read_only=True)
     email = EmailField()
     password = CharField(min_length=6, max_length=128, write_only=True)
@@ -69,6 +73,8 @@ class SignInSerializer(ModelSerializer):
 
 
 class SignOutSerializer(Serializer):
+    """Выход из профиля."""
+
     refresh = CharField()
 
     default_error_messages = {"error": _("Invalid token.")}

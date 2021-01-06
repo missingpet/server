@@ -5,28 +5,20 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Announcement
 from .permissions import IsAnnouncementAuthorOrReadOnly
-from .serializers import AnnouncementCreateSerializer
+from .serializers import AnnouncementListCreateSerializer
 from .serializers import AnnouncementRetrieveSerializer
-from .serializers import ObjectsForAnnouncementsMapRetrieveSerializer
+from .mixins import AnnouncementPaginationMixin
+from .mixins import AnnouncementsMixin
+from .mixins import AnnouncementsMapMixin
 
 
-class UserAnnouncementsListAPIView(ListAPIView):
-    """Объявления пользователя."""
+class AnnouncementListCreateAPIView(AnnouncementPaginationMixin,
+                                    ListCreateAPIView):
+    """Список всех объявлений/Создание объявления."""
 
-    serializer_class = AnnouncementRetrieveSerializer
-    lookup_url_kwarg = "user_id"
-
-    def get_queryset(self):
-        return Announcement.objects.filter(
-            user_id=self.kwargs.get(self.lookup_url_kwarg))
-
-
-class AnnouncementListCreateAPIView(ListCreateAPIView):
-    """Получение списка всех объявлений/Создание объявления."""
-
-    serializer_class = AnnouncementCreateSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, )
     queryset = Announcement.objects.all()
+    serializer_class = AnnouncementListCreateSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
@@ -35,41 +27,40 @@ class AnnouncementListCreateAPIView(ListCreateAPIView):
 class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
     """Получение/удаление объявления."""
 
+    queryset = Announcement.objects.all()
     serializer_class = AnnouncementRetrieveSerializer
     permission_classes = (IsAnnouncementAuthorOrReadOnly, )
-    queryset = Announcement.objects.all()
 
 
-class AllObjectsForAnnouncementsMapListAPIView(ListAPIView):
-    """
-    Список всех объектов вида "id, широта, долгота".
-    Это нужно для маркеров на карте объявлений.
-    """
+class UserAnnouncementsListAPIView(AnnouncementsMixin,
+                                   ListAPIView):
+    """Объявления пользователя."""
 
-    serializer_class = ObjectsForAnnouncementsMapRetrieveSerializer
-    queryset = Announcement.objects.all()
-    pagination_class = None
+    def get_queryset(self):
+        return Announcement.objects.filter(
+            user_id=self.kwargs.get(self.lookup_url_kwarg))
 
 
-class ObjectsForAnnouncementsMapForUserFeedListAPIView(ListAPIView):
-    """
-    Список объектов вида "id, широта, долгота" из ленты для заданного пользователя.
-    Это нужно для маркеров на карте объявлений.
-    """
-
-    serializer_class = ObjectsForAnnouncementsMapRetrieveSerializer
-    lookup_url_kwarg = "user_id"
-    pagination_class = None
+class FeedForUserListAPIView(AnnouncementsMixin,
+                             ListAPIView):
+    """Лента объявлений для заданного пользователя."""
 
     def get_queryset(self):
         return Announcement.objects.exclude(
             user_id=self.kwargs.get(self.lookup_url_kwarg))
 
 
-class FeedAnnouncementsListAPIView(ListAPIView):
-    """Лента объявлений для заданного пользователя."""
+class AnnouncementsMapListAPIView(AnnouncementsMapMixin,
+                                  ListAPIView):
+    """Карта всех объявлений."""
 
-    serializer_class = AnnouncementRetrieveSerializer
+    queryset = Announcement.objects.all()
+
+
+class AnnouncementsMapForUserListAPIView(AnnouncementsMapMixin,
+                                         ListAPIView):
+    """Карта объявлений (кроме созданных указанным пользователем объявлений)."""
+
     lookup_url_kwarg = "user_id"
 
     def get_queryset(self):

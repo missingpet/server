@@ -1,11 +1,11 @@
 from django.urls import include
 from django.urls import path
 
-from .views import AllObjectsForAnnouncementsMapListAPIView
+from .views import AnnouncementsMapListAPIView
 from .views import AnnouncementListCreateAPIView
 from .views import AnnouncementRetrieveDestroyAPIView
-from .views import FeedAnnouncementsListAPIView
-from .views import ObjectsForAnnouncementsMapForUserFeedListAPIView
+from .views import FeedForUserListAPIView
+from .views import AnnouncementsMapForUserListAPIView
 from .views import UserAnnouncementsListAPIView
 
 user_urls = [
@@ -15,12 +15,12 @@ user_urls = [
         name="user-announcements",
     ),
     path("<int:user_id>/feed/",
-         FeedAnnouncementsListAPIView.as_view(),
-         name="feed"),
+         FeedForUserListAPIView.as_view(),
+         name="feed-for-user"),
     path(
-        "<int:user_id>/objects_for_announcements_map/feed/",
-        ObjectsForAnnouncementsMapForUserFeedListAPIView.as_view(),
-        name="feed-map-info",
+        "<int:user_id>/announcements_map/",
+        AnnouncementsMapForUserListAPIView.as_view(),
+        name="announcements-map-for-user",
     ),
 ]
 
@@ -35,13 +35,13 @@ announcement_urls = [
          name="list-create-announcement"),
 ]
 
-objects_for_announcements_map_urls = [
-    path("", AllObjectsForAnnouncementsMapListAPIView.as_view(), name="all-map-info"),
+announcements_map_urls = [
+    path("", AnnouncementsMapListAPIView.as_view(), name="announcements-map"),
 ]
 
 urlpatterns = [
     path("user/", include(user_urls)),
     path("announcement/", include(announcement_urls)),
-    path("objects_for_announcements_map/",
-         include(objects_for_announcements_map_urls)),
+    path("announcements_map/",
+         include(announcements_map_urls)),
 ]

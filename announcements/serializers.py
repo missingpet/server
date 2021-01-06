@@ -10,6 +10,8 @@ from .models import Announcement
 
 
 class AnnouncementRetrieveSerializer(ModelSerializer):
+    """Получение объявления."""
+
     user = SerializerMethodField()
 
     class Meta:
@@ -21,7 +23,9 @@ class AnnouncementRetrieveSerializer(ModelSerializer):
         return {"id": user.id, "username": user.username}
 
 
-class AnnouncementCreateSerializer(AnnouncementRetrieveSerializer):
+class AnnouncementListCreateSerializer(AnnouncementRetrieveSerializer):
+    """Список всех объявлений/Создание объявления."""
+
     def validate(self, attrs):
         """Проверяет корректность значений всех полей объявления."""
         contact_phone_number = attrs.get("contact_phone_number")
@@ -62,7 +66,9 @@ class AnnouncementCreateSerializer(AnnouncementRetrieveSerializer):
         return attrs
 
 
-class ObjectsForAnnouncementsMapRetrieveSerializer(ModelSerializer):
+class AnnouncementsMapListSerializer(ModelSerializer):
+    """Карта объявлений."""
+
     class Meta:
         model = Announcement
         fields = ("id", "latitude", "longitude")
