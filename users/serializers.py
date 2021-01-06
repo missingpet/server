@@ -10,7 +10,6 @@ from rest_framework.serializers import SerializerMethodField
 from rest_framework.serializers import ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import TokenError
-from rest_framework.validators import UniqueValidator
 
 from .models import User
 
@@ -18,7 +17,7 @@ from .models import User
 class SignUpSerializer(ModelSerializer):
     """Регистрация нового пользователя."""
 
-    email = EmailField(validators=[UniqueValidator(queryset=User.objects.all())])
+    email = EmailField()
     username = CharField(min_length=3, max_length=64)
     password = CharField(min_length=6, max_length=128, write_only=True)
 
@@ -27,11 +26,16 @@ class SignUpSerializer(ModelSerializer):
         fields = ("email", "username", "password")
 
     def validate(self, attrs):
+        email = attrs.get("email")
         username = attrs.get("username")
 
         if not username.isalnum():
             raise ValidationError(
                 _("Username should contains only alphanumeric characters."))
+
+        if User.objects.filter(email=email).first():
+            raise ValidationError(
+                _("User with this email already exists."))
 
         return attrs
 
