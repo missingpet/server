@@ -32,7 +32,8 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
     permission_classes = (IsAnnouncementAuthorOrReadOnly, )
 
 
-class UserAnnouncementsListAPIView(AnnouncementsMixin,
+class UserAnnouncementsListAPIView(AnnouncementPaginationMixin,
+                                   AnnouncementsMixin,
                                    ListAPIView):
     """Объявления пользователя."""
 
@@ -41,7 +42,8 @@ class UserAnnouncementsListAPIView(AnnouncementsMixin,
             user_id=self.kwargs.get(self.lookup_url_kwarg))
 
 
-class FeedForUserListAPIView(AnnouncementsMixin,
+class FeedForUserListAPIView(AnnouncementPaginationMixin,
+                             AnnouncementsMixin,
                              ListAPIView):
     """Лента объявлений для заданного пользователя."""
 

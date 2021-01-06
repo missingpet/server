@@ -11,7 +11,7 @@ class AnnouncementPaginationMixin:
     pagination_class.page_size = 5
 
 
-class AnnouncementsMixin(AnnouncementPaginationMixin):
+class AnnouncementsMixin:
     """Список объявлений."""
 
     serializer_class = AnnouncementRetrieveSerializer
