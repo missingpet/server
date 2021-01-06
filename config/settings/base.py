@@ -103,9 +103,9 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PAGINATION_CLASS":
-    "rest_framework.pagination.LimitOffsetPagination",
+    "rest_framework.pagination.PageSizePagination",
     "PAGE_SIZE":
-    10,
+    5,
 }
 
 AUTH_USER_MODEL = "users.User"
