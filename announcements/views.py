@@ -7,13 +7,11 @@ from .models import Announcement
 from .permissions import IsAnnouncementAuthorOrReadOnly
 from .serializers import AnnouncementListCreateSerializer
 from .serializers import AnnouncementRetrieveSerializer
-from .mixins import AnnouncementPaginationMixin
 from .mixins import AnnouncementsMixin
 from .mixins import AnnouncementsMapMixin
 
 
-class AnnouncementListCreateAPIView(AnnouncementPaginationMixin,
-                                    ListCreateAPIView):
+class AnnouncementListCreateAPIView(ListCreateAPIView):
     """Список всех объявлений/Создание объявления."""
 
     queryset = Announcement.objects.all()
@@ -32,8 +30,7 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
     permission_classes = (IsAnnouncementAuthorOrReadOnly, )
 
 
-class UserAnnouncementsListAPIView(AnnouncementPaginationMixin,
-                                   AnnouncementsMixin,
+class UserAnnouncementsListAPIView(AnnouncementsMixin,
                                    ListAPIView):
     """Объявления пользователя с указанным user_id."""
 
@@ -42,8 +39,7 @@ class UserAnnouncementsListAPIView(AnnouncementPaginationMixin,
             user_id=self.kwargs.get(self.lookup_url_kwarg))
 
 
-class FeedForUserListAPIView(AnnouncementPaginationMixin,
-                             AnnouncementsMixin,
+class FeedForUserListAPIView(AnnouncementsMixin,
                              ListAPIView):
     """Лента объявлений для пользователя с указанным user_id."""
 
