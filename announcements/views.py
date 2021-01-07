@@ -7,8 +7,7 @@ from .models import Announcement
 from .permissions import IsAnnouncementAuthorOrReadOnly
 from .serializers import AnnouncementListCreateSerializer
 from .serializers import AnnouncementRetrieveSerializer
-from .mixins import AnnouncementsMixin
-from .mixins import AnnouncementsMapMixin
+from .serializers import AnnouncementsMapListSerializer
 
 
 class AnnouncementListCreateAPIView(ListCreateAPIView):
@@ -30,38 +29,44 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
     permission_classes = (IsAnnouncementAuthorOrReadOnly, )
 
 
-class UserAnnouncementsListAPIView(AnnouncementsMixin,
-                                   ListAPIView):
+class UserAnnouncementsListAPIView(ListAPIView):
     """Объявления пользователя с указанным user_id."""
+
+    serializer_class = AnnouncementRetrieveSerializer
+    lookup_url_kwarg = "user_id"
 
     def get_queryset(self):
         return Announcement.objects.filter(
             user_id=self.kwargs.get(self.lookup_url_kwarg))
 
 
-class FeedForUserListAPIView(AnnouncementsMixin,
-                             ListAPIView):
+class FeedForUserListAPIView(ListAPIView):
     """Лента объявлений для пользователя с указанным user_id."""
+
+    serializer_class = AnnouncementRetrieveSerializer
+    lookup_url_kwarg = "user_id"
 
     def get_queryset(self):
         return Announcement.objects.exclude(
             user_id=self.kwargs.get(self.lookup_url_kwarg))
 
 
-class AnnouncementsMapListAPIView(AnnouncementsMapMixin,
-                                  ListAPIView):
+class AnnouncementsMapListAPIView(ListAPIView):
     """Карта всех объявлений."""
 
     queryset = Announcement.objects.all()
+    serializer_class = AnnouncementsMapListSerializer
+    pagination_class = None
 
 
-class AnnouncementsMapForUserListAPIView(AnnouncementsMapMixin,
-                                         ListAPIView):
+class AnnouncementsMapForUserListAPIView(ListAPIView):
     """
     Карта объявлений \
     (без объявлений, созданных пользователем с указанным user_id).
     """
 
+    serializer_class = AnnouncementsMapListSerializer
+    pagination_class = None
     lookup_url_kwarg = "user_id"
 
     def get_queryset(self):
