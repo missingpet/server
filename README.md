@@ -3,21 +3,21 @@
 Backend for MissingPet project
 
 <a name=""></a>
-## Table of contents
+### Table of contents
 
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Setup](#setup)
 
 <a name="requirements"></a>
-## Requirements 
+### Requirements 
  
 - [Python](https://www.python.org/downloads/)
 - [Pip](https://pip.pypa.io/en/stable/installing/)
 - [PostgreSQL](https://www.postgresql.org/download/)
 
 <a name="installation"></a>
-## Installation
+### Installation
 
 Clone repository
 ```bash
@@ -45,7 +45,7 @@ pip install -r requirements.txt
 ```
 
 <a name="setup"></a>
-## Setup
+### Setup
 
 Migrate
 
