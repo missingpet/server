@@ -2,12 +2,21 @@
 
 Backend for MissingPet project
 
+<a name=""></a>
+# Table of contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Setup](#setup)
+
+<a name="requirements"></a>
 # Requirements 
  
 - [Python](https://www.python.org/downloads/)
 - [Pip](https://pip.pypa.io/en/stable/installing/)
 - [PostgreSQL](https://www.postgresql.org/download/)
 
+<a name="installation"></a>
 # Installation
 
 Clone repository
@@ -35,6 +44,7 @@ Install all dependencies
 pip install -r requirements.txt
 ```
 
+<a name="setup"></a>
 # Setup
 
 Migrate
@@ -46,11 +56,6 @@ Create superuser
 
 ```python
 python manage.py createsuperuser
-
-E-email address: # enter your email address
-Username: # enter your username
-Password: # enter your password
-Password (again): # enter your password again
 ```
 Run server
 
