@@ -9,15 +9,15 @@ Backend for MissingPet project
 - [Installation](#installation)
 - [Setup](#setup)
 
+**Note :**
+Leaflet auto navigation not giving precise location of user that's why we are getting user precise location manually.
+
 <a name="requirements"></a>
 # Requirements 
  
 - [Python](https://www.python.org/downloads/)
 - [Pip](https://pip.pypa.io/en/stable/installing/)
 - [PostgreSQL](https://www.postgresql.org/download/)
-
-**Note :**
-Leaflet auto navigation not giving precise location of user that's why we are getting user precise location manually.
 
 <a name="installation"></a>
 # Installation
