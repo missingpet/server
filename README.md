@@ -33,6 +33,16 @@ Migrate
 ```python
 python manage.py migrate
 ```
+Create superuser
+
+```python
+python manage.py createsuperuser
+
+username : # enter your username
+Email address: # enter your email address
+Password: # enter your password
+Password (again): # enter your password again
+```
 Run server
 
 ```python
