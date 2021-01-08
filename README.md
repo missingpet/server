@@ -38,8 +38,8 @@ Create superuser
 ```python
 python manage.py createsuperuser
 
-username : # enter your username
-Email address: # enter your email address
+E-email address: # enter your email address
+Username: # enter your username
 Password: # enter your password
 Password (again): # enter your password again
 ```
