@@ -2,8 +2,9 @@ from datetime import timedelta
 from os.path import abspath
 from os.path import dirname
 from os.path import join
+from os import environ
 
-from .secret_key import *
+SECRET_KEY = environ["SECRET_KEY"]
 
 BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
 
