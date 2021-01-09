@@ -14,7 +14,9 @@ user_urls = [
         UserAnnouncementsListAPIView.as_view(),
         name="user-announcements",
     ),
-    path("<int:user_id>/feed/", FeedForUserListAPIView.as_view(), name="feed-for-user"),
+    path("<int:user_id>/feed/",
+         FeedForUserListAPIView.as_view(),
+         name="feed-for-user"),
     path(
         "<int:user_id>/announcements_map/",
         AnnouncementsMapForUserListAPIView.as_view(),
@@ -28,7 +30,9 @@ announcement_urls = [
         AnnouncementRetrieveDestroyAPIView.as_view(),
         name="retrieve-destroy-announcement",
     ),
-    path("", AnnouncementListCreateAPIView.as_view(), name="list-create-announcement"),
+    path("",
+         AnnouncementListCreateAPIView.as_view(),
+         name="list-create-announcement"),
 ]
 
 announcements_map_urls = [
