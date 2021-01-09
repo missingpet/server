@@ -39,7 +39,7 @@ Activate virtual environment
 # Windows:
 venv\Scripts\activate.bat
 
-# UNIX or MacOS:
+# Unix:
 source venv/bin/activate
 ```
 Install all dependencies
