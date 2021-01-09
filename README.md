@@ -7,21 +7,21 @@
 [![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) 
 
 <a name=""></a>
-# Table of contents
+## Table of contents
 
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Setup](#setup)
 
 <a name="requirements"></a>
-# Requirements 
+## Requirements 
  
 - [Python](https://www.python.org/downloads/)
 - [Pip](https://pip.pypa.io/en/stable/installing/)
 - [PostgreSQL](https://www.postgresql.org/download/)
 
 <a name="installation"></a>
-# Installation
+## Installation
 
 Clone repository
 ```bash
@@ -40,7 +40,7 @@ Activate virtual environment
 # Windows:
 venv\Scripts\activate.bat
 
-# On Unix or MacOS:
+# Linux or MacOS:
 source venv/bin/activate
 ```
 Install all dependencies
@@ -49,7 +49,7 @@ pip install -r requirements.txt
 ```
 
 <a name="setup"></a>
-# Setup
+## Setup
 
 Migrate
 
