@@ -1,5 +1,5 @@
-from rest_framework.generics import GenericAPIView
 from rest_framework.generics import CreateAPIView
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
 from rest_framework.status import HTTP_204_NO_CONTENT
@@ -26,13 +26,11 @@ class SignInAPIView(GenericAPIView):
         return Response(serializer.data, status=HTTP_200_OK)
 
 
-class SignOutAPIView(GenericAPIView):
+class SignOutAPIView(CreateAPIView):
     """Выход из профиля."""
 
     serializer_class = SignOutSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+        super(SignOutAPIView, self).post(request, *args, **kwargs)
         return Response(status=HTTP_204_NO_CONTENT)
