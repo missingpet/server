@@ -10,7 +10,6 @@ Backend for MissingPet project
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Setup](#setup)
-- [Contributing](#contributing)
 
 <a name="requirements"></a>
 ## Requirements 
@@ -65,10 +64,3 @@ Run server
 ```python
 python manage.py runserver
 ```
-
-<a name="contributing"></a>
-## Contributing 
-
-If you have any suggestions, request new features, found bugs
-
-- Fork, clone or make a pull requset to this repository.
