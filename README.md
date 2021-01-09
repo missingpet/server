@@ -32,14 +32,14 @@ cd server/
 ```
 Create virtual environment
 ```bash
-python3 -m venv venv
+python -m venv venv
 ```
 Activate virtual environment
 ```bash
 # Windows:
 venv\Scripts\activate.bat
 
-# Linux or MacOS:
+# UNIX or MacOS:
 source venv/bin/activate
 ```
 Install all dependencies
