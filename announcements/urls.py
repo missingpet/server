@@ -42,6 +42,5 @@ announcements_map_urls = [
 urlpatterns = [
     path("user/", include(user_urls)),
     path("announcement/", include(announcement_urls)),
-    path("announcements_map/",
-         include(announcements_map_urls)),
+    path("announcements_map/", include(announcements_map_urls)),
 ]

@@ -5,16 +5,15 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Announcement
 from .permissions import IsAnnouncementAuthorOrReadOnly
-from .serializers import AnnouncementListCreateSerializer
-from .serializers import AnnouncementRetrieveSerializer
-from .serializers import AnnouncementsMapListSerializer
+from .serializers import AnnouncementSerializer
+from .serializers import AnnouncementsMapSerializer
 
 
 class AnnouncementListCreateAPIView(ListCreateAPIView):
     """Список всех объявлений/Создание объявления."""
 
     queryset = Announcement.objects.all()
-    serializer_class = AnnouncementListCreateSerializer
+    serializer_class = AnnouncementSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def perform_create(self, serializer):
@@ -25,14 +24,14 @@ class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
     """Получение/удаление объявления."""
 
     queryset = Announcement
-    serializer_class = AnnouncementRetrieveSerializer
+    serializer_class = AnnouncementSerializer
     permission_classes = (IsAnnouncementAuthorOrReadOnly, )
 
 
 class UserAnnouncementsListAPIView(ListAPIView):
     """Объявления пользователя с указанным user_id."""
 
-    serializer_class = AnnouncementRetrieveSerializer
+    serializer_class = AnnouncementSerializer
     lookup_url_kwarg = "user_id"
 
     def get_queryset(self):
@@ -43,7 +42,7 @@ class UserAnnouncementsListAPIView(ListAPIView):
 class FeedForUserListAPIView(ListAPIView):
     """Лента объявлений для пользователя с указанным user_id."""
 
-    serializer_class = AnnouncementRetrieveSerializer
+    serializer_class = AnnouncementSerializer
     lookup_url_kwarg = "user_id"
 
     def get_queryset(self):
@@ -55,7 +54,7 @@ class AnnouncementsMapListAPIView(ListAPIView):
     """Карта всех объявлений."""
 
     queryset = Announcement.objects.all()
-    serializer_class = AnnouncementsMapListSerializer
+    serializer_class = AnnouncementsMapSerializer
     pagination_class = None
 
 
@@ -65,7 +64,7 @@ class AnnouncementsMapForUserListAPIView(ListAPIView):
     (без объявлений, созданных пользователем с указанным user_id).
     """
 
-    serializer_class = AnnouncementsMapListSerializer
+    serializer_class = AnnouncementsMapSerializer
     pagination_class = None
     lookup_url_kwarg = "user_id"
 

@@ -9,8 +9,8 @@ from rest_framework.serializers import SerializerMethodField
 from .models import Announcement
 
 
-class AnnouncementRetrieveSerializer(ModelSerializer):
-    """Получение объявления."""
+class AnnouncementSerializer(ModelSerializer):
+    """Объявления."""
 
     user = SerializerMethodField()
 
@@ -21,10 +21,6 @@ class AnnouncementRetrieveSerializer(ModelSerializer):
     def get_user(self, obj):
         user = Announcement.objects.get(id=obj.id).user
         return {"id": user.id, "username": user.username}
-
-
-class AnnouncementListCreateSerializer(AnnouncementRetrieveSerializer):
-    """Список всех объявлений/Создание объявления."""
 
     def validate(self, attrs):
         """Проверяет корректность значений всех полей объявления."""
@@ -66,7 +62,7 @@ class AnnouncementListCreateSerializer(AnnouncementRetrieveSerializer):
         return attrs
 
 
-class AnnouncementsMapListSerializer(ModelSerializer):
+class AnnouncementsMapSerializer(ModelSerializer):
     """Карта объявлений."""
 
     class Meta:
