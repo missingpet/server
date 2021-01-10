@@ -1,4 +1,4 @@
 #!/bin/bash
-. venv/bin/activate
-make migrate
+python manage.py makemigrations
+python manage.py migrate
 python manage.py runserver
