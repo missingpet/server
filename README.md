@@ -33,13 +33,13 @@ git clone git@github.com:MissingPet/server.git
 Change directory
 
 ```bash
-cd server/
+cd server
 ```
 
 Create virtual environment
 
 ```bash
-python -m venv venv
+python3 -m venv venv
 ```
 
 Activate virtual environment
