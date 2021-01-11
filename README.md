@@ -27,7 +27,7 @@ Backend for MissingPet project
 Clone repository
 
 ```bash
-git clone git@github.com:MissingPet/server.git
+git clone git@github.com:missingpet/server.git
 ```
 
 Change directory
