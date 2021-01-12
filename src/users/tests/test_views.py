@@ -1,10 +1,8 @@
 from django.test import tag
 from django.urls import reverse
-from rest_framework.status import HTTP_200_OK
-from rest_framework.status import HTTP_201_CREATED
-from rest_framework.status import HTTP_204_NO_CONTENT
-from rest_framework.test import APIClient
-from rest_framework.test import APITestCase
+from rest_framework.status import (HTTP_200_OK, HTTP_201_CREATED,
+                                   HTTP_204_NO_CONTENT)
+from rest_framework.test import APIClient, APITestCase
 
 from ..models import User
 

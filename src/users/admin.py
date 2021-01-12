@@ -1,5 +1,4 @@
-from django.contrib.admin import ModelAdmin
-from django.contrib.admin import register
+from django.contrib.admin import ModelAdmin, register
 
 from .models import User
 

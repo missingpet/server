@@ -1,6 +1,5 @@
 from configparser import RawConfigParser
-from os.path import dirname
-from os.path import join
+from os.path import dirname, join
 
 ENV_DEVELOPMENT = "development"
 ENV_PRODUCTION = "production"
