@@ -6,19 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('announcements', '0006_auto_20201115_0048'),
+        ("announcements", "0006_auto_20201115_0048"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='announcement',
-            name='address',
+            model_name="announcement",
+            name="address",
             field=models.CharField(
-                blank=True, max_length=1000, null=True, verbose_name='Место пропажи/находки'),
+                blank=True,
+                max_length=1000,
+                null=True,
+                verbose_name="Место пропажи/находки",
+            ),
         ),
         migrations.AlterField(
-            model_name='announcement',
-            name='description',
-            field=models.CharField(max_length=5000, verbose_name='Описание'),
+            model_name="announcement",
+            name="description",
+            field=models.CharField(max_length=5000, verbose_name="Описание"),
         ),
     ]

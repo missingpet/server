@@ -6,20 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('announcements', '0005_auto_20201113_2211'),
+        ("announcements", "0005_auto_20201113_2211"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='announcement',
-            name='animal_type',
+            model_name="announcement",
+            name="animal_type",
             field=models.IntegerField(
-                choices=[(1, 'Собаки'), (2, 'Кошки'), (3, 'Иное')], verbose_name='Тип животного'),
+                choices=[(1, "Собаки"), (2, "Кошки"), (3, "Иное")],
+                verbose_name="Тип животного",
+            ),
         ),
         migrations.AlterField(
-            model_name='announcement',
-            name='photo',
+            model_name="announcement",
+            name="photo",
             field=models.ImageField(
-                upload_to='announcements/%Y/%m/%d/', verbose_name='Фотография животного'),
+                upload_to="announcements/%Y/%m/%d/", verbose_name="Фотография животного"
+            ),
         ),
     ]

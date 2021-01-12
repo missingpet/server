@@ -6,24 +6,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('announcements', '0008_auto_20201115_1127'),
+        ("announcements", "0008_auto_20201115_1127"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='announcement',
-            name='address',
+            model_name="announcement",
+            name="address",
             field=models.CharField(
-                max_length=1000, verbose_name='Место пропажи/находки'),
+                max_length=1000, verbose_name="Место пропажи/находки"
+            ),
         ),
         migrations.AlterField(
-            model_name='announcement',
-            name='latitude',
-            field=models.FloatField(verbose_name='Широта'),
+            model_name="announcement",
+            name="latitude",
+            field=models.FloatField(verbose_name="Широта"),
         ),
         migrations.AlterField(
-            model_name='announcement',
-            name='longitude',
-            field=models.FloatField(verbose_name='Долгота'),
+            model_name="announcement",
+            name="longitude",
+            field=models.FloatField(verbose_name="Долгота"),
         ),
     ]

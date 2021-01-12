@@ -31,11 +31,11 @@ class SignUpSerializer(ModelSerializer):
 
         if not username.isalnum():
             raise ValidationError(
-                _("Username should contains only alphanumeric characters."))
+                _("Username should contains only alphanumeric characters.")
+            )
 
         if User.objects.filter(email=email).first():
-            raise ValidationError(
-                _("User with this email already exists."))
+            raise ValidationError(_("User with this email already exists."))
 
         return attrs
 

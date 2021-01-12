@@ -12,8 +12,7 @@ from ..models import User
 class ApiTestCases(APITestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user_1 = User.objects.create_user("test@email.com", "test",
-                                               "password")
+        self.user_1 = User.objects.create_user("test@email.com", "test", "password")
 
     @tag("sign-up")
     def test_sign_up(self):

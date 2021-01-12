@@ -6,20 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('announcements', '0012_auto_20210102_2218'),
+        ("announcements", "0012_auto_20210102_2218"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='announcement',
-            name='animal_type',
+            model_name="announcement",
+            name="animal_type",
             field=models.IntegerField(
-                choices=[(1, 'Собаки'), (2, 'Кошки'), (3, 'Иные')], verbose_name='Тип животного'),
+                choices=[(1, "Собаки"), (2, "Кошки"), (3, "Иные")],
+                verbose_name="Тип животного",
+            ),
         ),
         migrations.AlterField(
-            model_name='announcement',
-            name='updated_at',
-            field=models.DateTimeField(
-                auto_now=True, verbose_name='Обновлено'),
+            model_name="announcement",
+            name="updated_at",
+            field=models.DateTimeField(auto_now=True, verbose_name="Обновлено"),
         ),
     ]

@@ -6,11 +6,12 @@ from users.models import User
 
 class UserTestCases(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username="user",
-                                             email="user@email.com",
-                                             password="123")
+        self.user = User.objects.create_user(
+            username="user", email="user@email.com", password="123"
+        )
         self.superuser = User.objects.create_superuser(
-            username="superuser", email="superuser@email.com", password="456")
+            username="superuser", email="superuser@email.com", password="456"
+        )
 
     @tag("users-count")
     def test_users_count(self):

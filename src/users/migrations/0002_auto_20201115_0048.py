@@ -6,19 +6,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0001_initial'),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='user',
-            options={'ordering': ['-username', '-email'],
-                     'verbose_name': 'Пользователь', 'verbose_name_plural': 'Пользователи'},
+            name="user",
+            options={
+                "ordering": ["-username", "-email"],
+                "verbose_name": "Пользователь",
+                "verbose_name_plural": "Пользователи",
+            },
         ),
         migrations.AlterField(
-            model_name='user',
-            name='email',
+            model_name="user",
+            name="email",
             field=models.EmailField(
-                db_index=True, max_length=254, unique=True, verbose_name='Адрес электронной почты'),
+                db_index=True,
+                max_length=254,
+                unique=True,
+                verbose_name="Адрес электронной почты",
+            ),
         ),
     ]
