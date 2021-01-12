@@ -111,9 +111,9 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = "users.User"
 
 STATIC_URL = "/static/"
-MEDIA_URL = "/media/"
-
 STATIC_ROOT = join(BASE_DIR, "static/")
+
+MEDIA_URL = "/media/"
 MEDIA_ROOT = join(BASE_DIR, "media/")
 
 MEDIA_SPLIT_DIRS = "/%Y/%m/%d/"

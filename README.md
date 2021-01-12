@@ -27,19 +27,19 @@ Backend for MissingPet project
 Clone repository
 
 ```bash
-git clone git@github.com:MissingPet/server.git
+git clone git@github.com:missingpet/server.git
 ```
 
 Change directory
 
 ```bash
-cd server/
+cd server
 ```
 
 Create virtual environment
 
 ```bash
-python -m venv venv
+python3 -m venv venv
 ```
 
 Activate virtual environment
@@ -49,7 +49,7 @@ Activate virtual environment
 venv\Scripts\activate.bat
 
 # Unix:
-source venv/bin/activate
+. venv/bin/activate
 ```
 
 Install all dependencies
