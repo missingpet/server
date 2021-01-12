@@ -39,7 +39,9 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """Пользователь с email."""
 
-    email = EmailField(_("Адрес электронной почты"), unique=True, db_index=True)
+    email = EmailField(_("Адрес электронной почты"),
+                       unique=True,
+                       db_index=True)
     username = CharField(_("Имя пользователя"), max_length=64)
     is_active = BooleanField(_("Активирован"), default=True)
     is_staff = BooleanField(_("Персонал"), default=False)
