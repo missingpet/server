@@ -12,11 +12,13 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='user',
-            options={'ordering': ['-username', '-email'], 'verbose_name': 'Пользователь', 'verbose_name_plural': 'Пользователи'},
+            options={'ordering': ['-username', '-email'],
+                     'verbose_name': 'Пользователь', 'verbose_name_plural': 'Пользователи'},
         ),
         migrations.AlterField(
             model_name='user',
             name='email',
-            field=models.EmailField(db_index=True, max_length=254, unique=True, verbose_name='Адрес электронной почты'),
+            field=models.EmailField(
+                db_index=True, max_length=254, unique=True, verbose_name='Адрес электронной почты'),
         ),
     ]

@@ -13,11 +13,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='announcement',
             name='animal_type',
-            field=models.IntegerField(choices=[(1, 'Собаки'), (2, 'Кошки'), (3, 'Иные')], verbose_name='Тип животного'),
+            field=models.IntegerField(
+                choices=[(1, 'Собаки'), (2, 'Кошки'), (3, 'Иные')], verbose_name='Тип животного'),
         ),
         migrations.AlterField(
             model_name='announcement',
             name='updated_at',
-            field=models.DateTimeField(auto_now=True, verbose_name='Обновлено'),
+            field=models.DateTimeField(
+                auto_now=True, verbose_name='Обновлено'),
         ),
     ]

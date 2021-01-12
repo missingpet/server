@@ -22,12 +22,15 @@ class Announcement(Model):
     DOGS = 1
     CATS = 2
     OTHERS = 3
-    ANIMAL_TYPES = ((DOGS, _("Собаки")), (CATS, _("Кошки")), (OTHERS, _("Иные")))
+    ANIMAL_TYPES = ((DOGS, _("Собаки")),
+                    (CATS, _("Кошки")), (OTHERS, _("Иные")))
 
     user = ForeignKey(User, on_delete=CASCADE, verbose_name=_("Пользователь"))
     description = CharField(_("Описание"), max_length=5000)
-    photo = ImageField(_("Фотография животного"), upload_to=ANNOUNCEMENTS_PHOTO)
-    announcement_type = IntegerField(_("Тип объявления"), choices=ANNOUNCEMENT_TYPES)
+    photo = ImageField(_("Фотография животного"),
+                       upload_to=ANNOUNCEMENTS_PHOTO)
+    announcement_type = IntegerField(
+        _("Тип объявления"), choices=ANNOUNCEMENT_TYPES)
     animal_type = IntegerField(_("Тип животного"), choices=ANIMAL_TYPES)
     address = CharField(_("Место пропажи или находки"), max_length=1000)
     latitude = FloatField(_("Широта"))

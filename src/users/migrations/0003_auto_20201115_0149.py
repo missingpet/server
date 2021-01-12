@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='email',
-            field=models.CharField(db_index=True, max_length=255, unique=True, verbose_name='Адрес электронной почты'),
+            field=models.CharField(db_index=True, max_length=255,
+                                   unique=True, verbose_name='Адрес электронной почты'),
         ),
     ]

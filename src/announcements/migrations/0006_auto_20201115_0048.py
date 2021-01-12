@@ -13,11 +13,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='announcement',
             name='animal_type',
-            field=models.IntegerField(choices=[(1, 'Собаки'), (2, 'Кошки'), (3, 'Иное')], verbose_name='Тип животного'),
+            field=models.IntegerField(
+                choices=[(1, 'Собаки'), (2, 'Кошки'), (3, 'Иное')], verbose_name='Тип животного'),
         ),
         migrations.AlterField(
             model_name='announcement',
             name='photo',
-            field=models.ImageField(upload_to='announcements/%Y/%m/%d/', verbose_name='Фотография животного'),
+            field=models.ImageField(
+                upload_to='announcements/%Y/%m/%d/', verbose_name='Фотография животного'),
         ),
     ]
