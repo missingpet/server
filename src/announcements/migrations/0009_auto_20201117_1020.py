@@ -13,9 +13,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="announcement",
             name="address",
-            field=models.CharField(
-                max_length=1000, verbose_name="Место пропажи/находки"
-            ),
+            field=models.CharField(max_length=1000,
+                                   verbose_name="Место пропажи/находки"),
         ),
         migrations.AlterField(
             model_name="announcement",

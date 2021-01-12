@@ -6,7 +6,7 @@ from .models import User
 
 @register(User)
 class UserAdmin(ModelAdmin):
-    readonly_fields = ("last_login",)
+    readonly_fields = ("last_login", )
     list_display = ("id", "username", "email", "created_at", "is_active")
     list_display_links = (
         "id",

@@ -21,8 +21,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="announcement",
             name="announcement_type",
-            field=models.IntegerField(
-                choices=[(1, "Потеряно"), (2, "Найдено")], verbose_name="Тип объявления"
-            ),
+            field=models.IntegerField(choices=[(1, "Потеряно"),
+                                               (2, "Найдено")],
+                                      verbose_name="Тип объявления"),
         ),
     ]

@@ -32,9 +32,8 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "photo",
-                    models.ImageField(
-                        upload_to="announcements", verbose_name="Фотография животного"
-                    ),
+                    models.ImageField(upload_to="announcements",
+                                      verbose_name="Фотография животного"),
                 ),
                 (
                     "announcement_type",
@@ -63,23 +62,30 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "latitude",
-                    models.FloatField(blank=True, null=True, verbose_name="Широта"),
+                    models.FloatField(blank=True,
+                                      null=True,
+                                      verbose_name="Широта"),
                 ),
                 (
                     "longitude",
-                    models.FloatField(blank=True, null=True, verbose_name="Долгота"),
+                    models.FloatField(blank=True,
+                                      null=True,
+                                      verbose_name="Долгота"),
                 ),
                 (
                     "contact_phone_number",
-                    models.CharField(max_length=12, verbose_name="Контактный телефон"),
+                    models.CharField(max_length=12,
+                                     verbose_name="Контактный телефон"),
                 ),
                 (
                     "created_at",
-                    models.DateTimeField(auto_now_add=True, verbose_name="Создано"),
+                    models.DateTimeField(auto_now_add=True,
+                                         verbose_name="Создано"),
                 ),
                 (
                     "updated_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Изменено"),
+                    models.DateTimeField(auto_now=True,
+                                         verbose_name="Изменено"),
                 ),
             ],
             options={

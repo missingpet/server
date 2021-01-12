@@ -13,8 +13,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="announcement",
             name="description",
-            field=models.CharField(
-                blank=True, max_length=1000, null=True, verbose_name="Описание"
-            ),
+            field=models.CharField(blank=True,
+                                   max_length=1000,
+                                   null=True,
+                                   verbose_name="Описание"),
         ),
     ]

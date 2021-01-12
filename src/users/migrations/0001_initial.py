@@ -24,12 +24,13 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("password", models.CharField(max_length=128, verbose_name="password")),
+                ("password",
+                 models.CharField(max_length=128, verbose_name="password")),
                 (
                     "last_login",
-                    models.DateTimeField(
-                        blank=True, null=True, verbose_name="last login"
-                    ),
+                    models.DateTimeField(blank=True,
+                                         null=True,
+                                         verbose_name="last login"),
                 ),
                 (
                     "email",
@@ -51,31 +52,35 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "is_active",
-                    models.BooleanField(default=True, verbose_name="Активирован"),
+                    models.BooleanField(default=True,
+                                        verbose_name="Активирован"),
                 ),
                 (
                     "is_staff",
-                    models.BooleanField(default=False, verbose_name="Персонал"),
+                    models.BooleanField(default=False,
+                                        verbose_name="Персонал"),
                 ),
                 (
                     "is_superuser",
-                    models.BooleanField(
-                        default=False, verbose_name="Суперпользователь"
-                    ),
+                    models.BooleanField(default=False,
+                                        verbose_name="Суперпользователь"),
                 ),
                 (
                     "created_at",
-                    models.DateTimeField(auto_now_add=True, verbose_name="Создан"),
+                    models.DateTimeField(auto_now_add=True,
+                                         verbose_name="Создан"),
                 ),
                 (
                     "updated_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Обновлён"),
+                    models.DateTimeField(auto_now=True,
+                                         verbose_name="Обновлён"),
                 ),
                 (
                     "groups",
                     models.ManyToManyField(
                         blank=True,
-                        help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                        help_text=
+                        "The groups this user belongs to. A user will get all permissions granted to each of their groups.",
                         related_name="user_set",
                         related_query_name="user",
                         to="auth.Group",

@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
         migrations.AlterModelOptions(
             name="user",
             options={
-                "ordering": ("-email",),
+                "ordering": ("-email", ),
                 "verbose_name": "Пользователь",
                 "verbose_name_plural": "Пользователи",
             },

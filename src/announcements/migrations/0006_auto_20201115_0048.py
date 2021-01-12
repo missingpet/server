@@ -21,8 +21,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="announcement",
             name="photo",
-            field=models.ImageField(
-                upload_to="announcements/%Y/%m/%d/", verbose_name="Фотография животного"
-            ),
+            field=models.ImageField(upload_to="announcements/%Y/%m/%d/",
+                                    verbose_name="Фотография животного"),
         ),
     ]
