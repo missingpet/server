@@ -1,7 +1,6 @@
 .idea/
 db.sqlite3
 venv/
-*.env
 .vscode/
 secret_key.py
 media/
