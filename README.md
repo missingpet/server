@@ -1,27 +1,3 @@
-# MissingPet Server
-
-Backend for MissingPet project
-
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
-
-<a name=""></a>
-
-## Table of contents
-
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Setup](#setup)
-
-<a name="requirements"></a>
-
-## Requirements
-
-- [Python](https://www.python.org/downloads/)
-- [Pip](https://pip.pypa.io/en/stable/installing/)
-- [PostgreSQL](https://www.postgresql.org/download/)
-
-<a name="installation"></a>
-
 ## Installation
 
 Clone repository
