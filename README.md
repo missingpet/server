@@ -3,13 +3,13 @@
 Clone repository
 
 ```bash
-git clone git@github.com:missingpet/server.git
+git clone git@github.com:missing-pet/server.git
 ```
 
 Change directory
 
 ```bash
-cd server
+cd server/src/
 ```
 
 Create virtual environment
