@@ -31,7 +31,7 @@ pgsql==1.2
 pickleshare==0.7.5
 pilkit==2.0
 Pillow==7.2.0
-prompt-toolkit==3.0.8
+prompt-toolkit==3.0.10
 psycopg2-binary==2.8.6
 ptyprocess==0.6.0
 Pygments==2.7.4
