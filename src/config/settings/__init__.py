@@ -8,8 +8,7 @@ ENV_DEVELOPMENT = "development"
 ENV_PRODUCTION = "production"
 
 config = RawConfigParser()
-path = join(dirname(__file__), "settings.ini")
-config.read(path)
+config.read(join(dirname(__file__), 'settings.ini'))
 
 ENV = config.get("settings", "ENVIRONMENT") or "development"
 
