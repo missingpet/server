@@ -12,7 +12,7 @@ class AnnouncementViewSet(ModelViewSet):
     queryset = Announcement.objects.all()
     serializer_class = AnnouncementSerializer
     pagination_class = AnnouncementPagination
-    permission_classes = (IsAnnouncementAuthorOrAuthenticatedOrReadOnly,)
+    permission_classes = (IsAnnouncementAuthorOrAuthenticatedOrReadOnly, )
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
@@ -26,7 +26,8 @@ class UserAnnouncementsListAPIView(ListAPIView):
     lookup_field = "user_id"
 
     def get_queryset(self):
-        return Announcement.objects.filter(user_id=self.kwargs[self.lookup_field])
+        return Announcement.objects.filter(
+            user_id=self.kwargs[self.lookup_field])
 
 
 class FeedForUserListAPIView(ListAPIView):
@@ -37,7 +38,8 @@ class FeedForUserListAPIView(ListAPIView):
     lookup_field = "user_id"
 
     def get_queryset(self):
-        return Announcement.objects.exclude(user_id=self.kwargs[self.lookup_field])
+        return Announcement.objects.exclude(
+            user_id=self.kwargs[self.lookup_field])
 
 
 class AnnouncementsMapListAPIView(ListAPIView):
@@ -57,4 +59,5 @@ class AnnouncementsMapForUserListAPIView(ListAPIView):
     lookup_field = "user_id"
 
     def get_queryset(self):
-        return Announcement.objects.exclude(user_id=self.kwargs[self.lookup_field])
+        return Announcement.objects.exclude(
+            user_id=self.kwargs[self.lookup_field])

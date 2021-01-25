@@ -27,7 +27,9 @@ class UserManager(BaseUserManager):
         """Создаёт суперпользователя."""
         if not password:
             raise ValueError("Password must be set.")
-        user = self.create_user(username=username, email=email, password=password)
+        user = self.create_user(username=username,
+                                email=email,
+                                password=password)
         user.is_superuser = True
         user.is_staff = True
         user.save()
@@ -37,7 +39,9 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """Пользователь с email."""
 
-    email = EmailField(_("Адрес электронной почты"), unique=True, db_index=True)
+    email = EmailField(_("Адрес электронной почты"),
+                       unique=True,
+                       db_index=True)
     username = CharField(_("Имя пользователя"), max_length=64)
     is_active = BooleanField(_("Активирован"), default=True)
     is_staff = BooleanField(_("Персонал"), default=False)
@@ -46,12 +50,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     updated_at = DateTimeField(_("Обновлён"), auto_now=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ("username",)
+    REQUIRED_FIELDS = ("username", )
 
     objects = UserManager()
 
     class Meta:
-        ordering = ("-email",)
+        ordering = ("-email", )
         verbose_name = _("Пользователь")
         verbose_name_plural = _("Пользователи")
 
