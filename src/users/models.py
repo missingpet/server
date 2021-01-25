@@ -1,5 +1,10 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.db.models import BooleanField, CharField, DateTimeField, EmailField
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
+from django.db.models import BooleanField
+from django.db.models import CharField
+from django.db.models import DateTimeField
+from django.db.models import EmailField
 from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -21,7 +26,7 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, username, password):
         """Создаёт суперпользователя."""
         if not password:
-            raise ValueError('Password must be set.')
+            raise ValueError("Password must be set.")
         user = self.create_user(username=username,
                                 email=email,
                                 password=password)

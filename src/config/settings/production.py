@@ -2,7 +2,7 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = environ['ALLOWED_HOSTS'].split()
+ALLOWED_HOSTS = environ["ALLOWED_HOSTS"].split()
 
 DATABASES = {
     "default": {

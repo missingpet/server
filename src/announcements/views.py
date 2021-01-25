@@ -3,7 +3,8 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Announcement
 from .permissions import IsAnnouncementAuthorOrAuthenticatedOrReadOnly
-from .serializers import AnnouncementSerializer, AnnouncementsMapSerializer
+from .serializers import AnnouncementSerializer
+from .serializers import AnnouncementsMapSerializer
 from .services import AnnouncementPagination
 
 
@@ -22,7 +23,7 @@ class UserAnnouncementsListAPIView(ListAPIView):
 
     serializer_class = AnnouncementSerializer
     pagination_class = AnnouncementPagination
-    lookup_field = 'user_id'
+    lookup_field = "user_id"
 
     def get_queryset(self):
         return Announcement.objects.filter(
@@ -34,7 +35,7 @@ class FeedForUserListAPIView(ListAPIView):
 
     serializer_class = AnnouncementSerializer
     pagination_class = AnnouncementPagination
-    lookup_field = 'user_id'
+    lookup_field = "user_id"
 
     def get_queryset(self):
         return Announcement.objects.exclude(
@@ -55,7 +56,7 @@ class AnnouncementsMapForUserListAPIView(ListAPIView):
     """
 
     serializer_class = AnnouncementsMapSerializer
-    lookup_field = 'user_id'
+    lookup_field = "user_id"
 
     def get_queryset(self):
         return Announcement.objects.exclude(

@@ -1,6 +1,12 @@
 from django.conf import settings
-from django.db.models import CASCADE, CharField, DateTimeField, FloatField, \
-    ForeignKey, ImageField, IntegerField, Model
+from django.db.models import CASCADE
+from django.db.models import CharField
+from django.db.models import DateTimeField
+from django.db.models import FloatField
+from django.db.models import ForeignKey
+from django.db.models import ImageField
+from django.db.models import IntegerField
+from django.db.models import Model
 from django.utils.translation import gettext_lazy as _
 from users.models import User
 
@@ -15,11 +21,12 @@ class Announcement(Model):
     DOGS = 1
     CATS = 2
     OTHERS = 3
-    ANIMAL_TYPES = ((DOGS, _("Собаки")), (CATS, _("Кошки")), (OTHERS, _("Иные")))
+    ANIMAL_TYPES = ((DOGS, _("Собаки")), (CATS, _("Кошки")), (OTHERS,
+                                                              _("Иные")))
 
     user = ForeignKey(User, on_delete=CASCADE, verbose_name=_("Пользователь"))
     description = CharField(_("Описание"), max_length=5000)
-    photo = ImageField(_('Фотография животного'),
+    photo = ImageField(_("Фотография животного"),
                        upload_to=settings.ANNOUNCEMENTS_PHOTO)
     announcement_type = IntegerField(_("Тип объявления"),
                                      choices=ANNOUNCEMENT_TYPES)

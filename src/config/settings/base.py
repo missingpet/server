@@ -1,8 +1,10 @@
 from datetime import timedelta
-from os.path import abspath, dirname, join
 from os import environ
+from os.path import abspath
+from os.path import dirname
+from os.path import join
 
-SECRET_KEY = environ['SECRET_KEY']
+SECRET_KEY = environ["SECRET_KEY"]
 
 BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
 
@@ -13,14 +15,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "drf_yasg",
     "admin_reorder",
-    'django_cleanup.apps.CleanupConfig',
-
+    "django_cleanup.apps.CleanupConfig",
     "users.apps.UsersConfig",
     "announcements.apps.AnnouncementsConfig",
 ]
@@ -33,7 +33,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-
     "admin_reorder.middleware.ModelAdminReorder",
 ]
 
@@ -101,7 +100,7 @@ STATIC_ROOT = join(BASE_DIR, "static/")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = join(BASE_DIR, "media/")
 
-MEDIA_TEST_ROOT = join(MEDIA_ROOT, 'tests/')
+MEDIA_TEST_ROOT = join(MEDIA_ROOT, "tests/")
 
 ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
 

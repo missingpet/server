@@ -1,4 +1,5 @@
-from django.contrib.admin import ModelAdmin, register
+from django.contrib.admin import ModelAdmin
+from django.contrib.admin import register
 from django.utils.html import format_html
 
 from .models import Announcement
@@ -17,19 +18,19 @@ class AnnouncementAdmin(ModelAdmin):
         "id",
         "user",
     )
-    list_filter = ('announcement_type', 'animal_type')
+    list_filter = ("announcement_type", "animal_type")
     readonly_fields = (
         "get_photo",
         "created_at",
         "updated_at",
     )
-    search_fields = ('description', 'address')
+    search_fields = ("description", "address")
 
     def get_photo(self, obj):
         src = obj.photo.url
         width = 200
-        return format_html('<img src={} width={}>'.format(src, width))
+        return format_html("<img src={} width={}>".format(src, width))
 
-    get_photo.short_description = 'Миниатюра'
+    get_photo.short_description = "Миниатюра"
 
     save_on_top = True
