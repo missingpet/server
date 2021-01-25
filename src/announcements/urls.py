@@ -1,13 +1,8 @@
-from django.urls import include
-from django.urls import path
+from django.urls import include, path
 
-from .views import (
-    AnnouncementViewSet,
-    AnnouncementsMapForUserListAPIView,
-    AnnouncementsMapListAPIView,
-    FeedForUserListAPIView,
-    UserAnnouncementsListAPIView,
-)
+from .views import (AnnouncementsMapForUserListAPIView,
+                    AnnouncementsMapListAPIView, AnnouncementViewSet,
+                    FeedForUserListAPIView, UserAnnouncementsListAPIView)
 
 user_urls = [
     path(

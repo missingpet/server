@@ -1,15 +1,8 @@
 from django.conf import settings
-from django.db.models import (
-    CASCADE,
-    CharField,
-    DateTimeField,
-    FloatField,
-    ForeignKey,
-    ImageField,
-    IntegerField,
-    Model,
-)
+from django.db.models import (CASCADE, CharField, DateTimeField, FloatField,
+                              ForeignKey, ImageField, IntegerField, Model)
 from django.utils.translation import gettext_lazy as _
+
 from users.models import User
 
 

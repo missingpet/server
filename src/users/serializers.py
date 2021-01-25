@@ -1,15 +1,9 @@
 from django.contrib import auth
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework.serializers import (
-    CharField,
-    EmailField,
-    IntegerField,
-    ModelSerializer,
-    Serializer,
-    SerializerMethodField,
-    ValidationError,
-)
+from rest_framework.serializers import (CharField, EmailField, IntegerField,
+                                        ModelSerializer, Serializer,
+                                        SerializerMethodField, ValidationError)
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 from .models import User
