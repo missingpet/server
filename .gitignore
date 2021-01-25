@@ -1,7 +1,0 @@
-.idea/
-db.sqlite3
-venv/
-.vscode/
-secret_key.py
-media/
-__pycache__
