@@ -1,9 +1,10 @@
 from datetime import timedelta
+from os import environ
 from os.path import abspath
 from os.path import dirname
 from os.path import join
 
-from .secret_key import *
+SECRET_KEY = environ["SECRET_KEY"]
 
 BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
 
@@ -14,23 +15,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-]
-
-EXTERNAL_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "drf_yasg",
     "admin_reorder",
-]
-
-INTERNAL_APPS = [
+    "django_cleanup.apps.CleanupConfig",
     "users.apps.UsersConfig",
     "announcements.apps.AnnouncementsConfig",
 ]
-
-INSTALLED_APPS += EXTERNAL_APPS
-INSTALLED_APPS += INTERNAL_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -40,13 +33,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
-
-EXTERNAL_MIDDLEWARE = [
     "admin_reorder.middleware.ModelAdminReorder",
 ]
-
-MIDDLEWARE += EXTERNAL_MIDDLEWARE
 
 ROOT_URLCONF = "config.urls"
 
@@ -87,7 +75,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = "ru-RU"
+LANGUAGE_CODE = "ru-ru"
 
 TIME_ZONE = "UTC"
 
@@ -102,10 +90,6 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_PAGINATION_CLASS":
-    "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE":
-    5,
 }
 
 AUTH_USER_MODEL = "users.User"
@@ -116,14 +100,14 @@ STATIC_ROOT = join(BASE_DIR, "static/")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = join(BASE_DIR, "media/")
 
-MEDIA_SPLIT_DIRS = "/%Y/%m/%d/"
-ANNOUNCEMENTS_PHOTO = "announcements{}".format(MEDIA_SPLIT_DIRS)
+MEDIA_TEST_ROOT = join(MEDIA_ROOT, "tests/")
+
+ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
 
 SIMPLE_JWT = {
-    "SIGNING_KEY": SECRET_KEY,
     "AUTH_HEADER_TYPES": "Bearer",
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=3),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken", ),
 }
 

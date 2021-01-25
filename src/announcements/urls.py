@@ -1,10 +1,9 @@
 from django.urls import include
 from django.urls import path
 
-from .views import AnnouncementListCreateAPIView
-from .views import AnnouncementRetrieveDestroyAPIView
 from .views import AnnouncementsMapForUserListAPIView
 from .views import AnnouncementsMapListAPIView
+from .views import AnnouncementViewSet
 from .views import FeedForUserListAPIView
 from .views import UserAnnouncementsListAPIView
 
@@ -27,12 +26,20 @@ user_urls = [
 announcement_urls = [
     path(
         "<int:pk>/",
-        AnnouncementRetrieveDestroyAPIView.as_view(),
+        AnnouncementViewSet.as_view({
+            "delete": "destroy",
+            "get": "retrieve"
+        }),
         name="retrieve-destroy-announcement",
     ),
-    path("",
-         AnnouncementListCreateAPIView.as_view(),
-         name="list-create-announcement"),
+    path(
+        "",
+        AnnouncementViewSet.as_view({
+            "post": "create",
+            "get": "list"
+        }),
+        name="create-announcement",
+    ),
 ]
 
 announcements_map_urls = [
