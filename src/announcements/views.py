@@ -1,53 +1,44 @@
 from rest_framework.generics import ListAPIView
-from rest_framework.generics import ListCreateAPIView
-from rest_framework.generics import RetrieveDestroyAPIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.viewsets import ModelViewSet
 
 from .models import Announcement
-from .permissions import IsAnnouncementAuthorOrReadOnly
-from .serializers import AnnouncementSerializer
-from .serializers import AnnouncementsMapSerializer
+from .permissions import IsAnnouncementAuthorOrAuthenticatedOrReadOnly
+from .serializers import AnnouncementSerializer, AnnouncementsMapSerializer
+from .services import AnnouncementPagination
 
 
-class AnnouncementListCreateAPIView(ListCreateAPIView):
-    """Список всех объявлений/Создание объявления."""
-
+class AnnouncementViewSet(ModelViewSet):
     queryset = Announcement.objects.all()
     serializer_class = AnnouncementSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    pagination_class = AnnouncementPagination
+    permission_classes = (IsAnnouncementAuthorOrAuthenticatedOrReadOnly, )
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
-
-
-class AnnouncementRetrieveDestroyAPIView(RetrieveDestroyAPIView):
-    """Получение/удаление объявления."""
-
-    queryset = Announcement
-    serializer_class = AnnouncementSerializer
-    permission_classes = (IsAnnouncementAuthorOrReadOnly, )
 
 
 class UserAnnouncementsListAPIView(ListAPIView):
     """Объявления пользователя с указанным user_id."""
 
     serializer_class = AnnouncementSerializer
-    lookup_url_kwarg = "user_id"
+    pagination_class = AnnouncementPagination
+    lookup_field = 'user_id'
 
     def get_queryset(self):
         return Announcement.objects.filter(
-            user_id=self.kwargs.get(self.lookup_url_kwarg))
+            user_id=self.kwargs[self.lookup_field])
 
 
 class FeedForUserListAPIView(ListAPIView):
     """Лента объявлений для пользователя с указанным user_id."""
 
     serializer_class = AnnouncementSerializer
-    lookup_url_kwarg = "user_id"
+    pagination_class = AnnouncementPagination
+    lookup_field = 'user_id'
 
     def get_queryset(self):
         return Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_url_kwarg))
+            user_id=self.kwargs[self.lookup_field])
 
 
 class AnnouncementsMapListAPIView(ListAPIView):
@@ -55,19 +46,17 @@ class AnnouncementsMapListAPIView(ListAPIView):
 
     queryset = Announcement.objects.all()
     serializer_class = AnnouncementsMapSerializer
-    pagination_class = None
 
 
 class AnnouncementsMapForUserListAPIView(ListAPIView):
     """
     Карта объявлений \
-    (без объявлений, созданных пользователем с указанным user_id).
+    без объявлений, созданных пользователем с указанным user_id.
     """
 
     serializer_class = AnnouncementsMapSerializer
-    pagination_class = None
-    lookup_url_kwarg = "user_id"
+    lookup_field = 'user_id'
 
     def get_queryset(self):
         return Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_url_kwarg))
+            user_id=self.kwargs[self.lookup_field])
