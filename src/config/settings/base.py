@@ -2,7 +2,7 @@ from datetime import timedelta
 from os.path import abspath, dirname, join
 from os import environ
 
-SECRET_KEY = environ['SECRET_KEY']
+SECRET_KEY = environ["SECRET_KEY"]
 
 BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
 
@@ -13,14 +13,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "drf_yasg",
     "admin_reorder",
-    'django_cleanup.apps.CleanupConfig',
-
+    "django_cleanup.apps.CleanupConfig",
     "users.apps.UsersConfig",
     "announcements.apps.AnnouncementsConfig",
 ]
@@ -33,7 +31,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-
     "admin_reorder.middleware.ModelAdminReorder",
 ]
 
@@ -59,20 +56,16 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME":
-        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        "NAME":
-        "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        "NAME":
-        "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        "NAME":
-        "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -101,7 +94,7 @@ STATIC_ROOT = join(BASE_DIR, "static/")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = join(BASE_DIR, "media/")
 
-MEDIA_TEST_ROOT = join(MEDIA_ROOT, 'tests/')
+MEDIA_TEST_ROOT = join(MEDIA_ROOT, "tests/")
 
 ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
 
@@ -109,17 +102,13 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": "Bearer",
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken", ),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
 }
 
 SWAGGER_SETTINGS = {
     "USE_SESSION_AUTH": True,
     "SECURITY_DEFINITIONS": {
-        "Bearer": {
-            "type": "apiKey",
-            "in": "header",
-            "name": "Authorization"
-        }
+        "Bearer": {"type": "apiKey", "in": "header", "name": "Authorization"}
     },
     "LOGIN_URL": "rest_framework:login",
     "LOGOUT_URL": "rest_framework:logout",
@@ -130,8 +119,5 @@ ADMIN_REORDER = [
         "app": "announcements",
         "label": "Объявления",
     },
-    {
-        "app": "users",
-        "label": "Пользователи"
-    },
+    {"app": "users", "label": "Пользователи"},
 ]
