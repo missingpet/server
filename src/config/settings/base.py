@@ -1,10 +1,9 @@
 from datetime import timedelta
-from os import environ
 from os.path import abspath
 from os.path import dirname
 from os.path import join
 
-SECRET_KEY = environ["SECRET_KEY"]
+from .secret_key import SECRET_KEY
 
 BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
 
@@ -106,6 +105,7 @@ ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": "Bearer",
+    'SIGNING_KEY': SECRET_KEY,
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken", ),
