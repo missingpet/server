@@ -15,7 +15,8 @@ class Announcement(Model):
     DOGS = 1
     CATS = 2
     OTHERS = 3
-    ANIMAL_TYPES = ((DOGS, _("Собаки")), (CATS, _("Кошки")), (OTHERS, _("Иные")))
+    ANIMAL_TYPES = ((DOGS, _("Собаки")),
+                    (CATS, _("Кошки")), (OTHERS, _("Иные")))
 
     user = ForeignKey(User, on_delete=CASCADE, verbose_name=_("Пользователь"))
     description = CharField(_("Описание"), max_length=5000)
