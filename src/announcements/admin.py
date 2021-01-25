@@ -1,4 +1,5 @@
-from django.contrib.admin import ModelAdmin, register
+from django.contrib.admin import ModelAdmin
+from django.contrib.admin import register
 from django.utils.html import format_html
 
 from .models import Announcement

@@ -3,7 +3,8 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Announcement
 from .permissions import IsAnnouncementAuthorOrAuthenticatedOrReadOnly
-from .serializers import AnnouncementSerializer, AnnouncementsMapSerializer
+from .serializers import AnnouncementSerializer
+from .serializers import AnnouncementsMapSerializer
 from .services import AnnouncementPagination
 
 

@@ -1,6 +1,8 @@
 from datetime import timedelta
 from os import environ
-from os.path import abspath, dirname, join
+from os.path import abspath
+from os.path import dirname
+from os.path import join
 
 SECRET_KEY = environ["SECRET_KEY"]
 

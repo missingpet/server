@@ -1,5 +1,6 @@
 from configparser import RawConfigParser
-from os.path import dirname, join
+from os.path import dirname
+from os.path import join
 
 from loguru import logger
 
