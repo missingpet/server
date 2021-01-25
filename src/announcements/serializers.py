@@ -1,10 +1,9 @@
-import imghdr
-import re
+from imghdr import what
+from re import match
 
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
-from rest_framework.serializers import ModelSerializer
-from rest_framework.serializers import SerializerMethodField
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from .models import Announcement
 
@@ -16,42 +15,41 @@ class AnnouncementSerializer(ModelSerializer):
 
     class Meta:
         model = Announcement
-        fields = "__all__"
+        fields = '__all__'
 
     def get_user(self, obj):
         user = Announcement.objects.get(id=obj.id).user
         return {"id": user.id, "username": user.username}
 
-    def validate(self, attrs):
-        """Проверяет корректность значений всех полей объявления."""
-        contact_phone_number = attrs.get("contact_phone_number")
-        photo = attrs.get("photo")
-        latitude = attrs.get("latitude")
-        longitude = attrs.get("longitude")
-        announcement_type = attrs.get("announcement_type")
-        animal_type = attrs.get("animal_type")
+    def validate(self, data):
+        contact_phone_number = data['contact_phone_number']
+        photo = data["photo"]
+        latitude = data["latitude"]
+        longitude = data["longitude"]
+        announcement_type = data["announcement_type"]
+        animal_type = data["animal_type"]
 
-        if not re.match(r"\+7\d{10}$", contact_phone_number):
+        if not match(r"\+7\d{10}$", contact_phone_number):
             raise ValidationError(
                 _("Contact phone number should starts with +7 and contains 12 characters total."
                   ))
 
-        if imghdr.what(photo) not in ("jpeg", "png"):
+        if what(photo) not in ("jpeg", "png"):
             raise ValidationError(_("Image extension should be jpeg or png."))
         if photo.size > 5242880:
             raise ValidationError(
-                _("Image size should be less than 5 megabytes."))
+                _('Image size should be less than 5 megabytes.'))
 
         if latitude < -90.0 or latitude > 90.0:
             raise ValidationError(
-                _("Latitude should take value between -90,0 and 90,0."))
+                _('Latitude should take value between -90,0 and 90,0.'))
         if longitude < -180.0 or longitude > 180.0:
             raise ValidationError(
-                _("Longitude should take value between -180,0 and 180,0."))
+                _('Longitude should take value between -180,0 and 180,0.'))
 
         if announcement_type not in (1, 2):
             raise ValidationError(
-                _("Announcement type should be 1 (if you lost an animal) or 2 (if you found one)."
+                _('Announcement type should be 1 (if you lost an animal) or 2 (if you found one).'
                   ))
 
         if animal_type not in (1, 2, 3):
@@ -59,7 +57,7 @@ class AnnouncementSerializer(ModelSerializer):
                 _("Animal type should be 1 (for dogs), 2 (for cats) or 3 (for other animals)."
                   ))
 
-        return attrs
+        return data
 
 
 class AnnouncementsMapSerializer(ModelSerializer):
@@ -67,4 +65,4 @@ class AnnouncementsMapSerializer(ModelSerializer):
 
     class Meta:
         model = Announcement
-        fields = ("id", "latitude", "longitude")
+        fields = ('id', 'latitude', 'longitude')
