@@ -6,4 +6,4 @@ media
 static
 __pycache__
 secret_key.py
-development.py
+production.py
