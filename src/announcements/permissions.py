@@ -1,7 +1,7 @@
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import permissions
 
 
-class IsAnnouncementAuthorOrAuthenticatedOrReadOnly(IsAuthenticatedOrReadOnly):
+class IsAnnouncementAuthorOrAuthenticatedOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
     def has_object_permission(self, request, view, obj):
         if request.method == "DELETE":
             return obj.user == request.user

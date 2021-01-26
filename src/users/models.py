@@ -1,10 +1,5 @@
-from django.contrib.auth.models import AbstractBaseUser
-from django.contrib.auth.models import BaseUserManager
-from django.contrib.auth.models import PermissionsMixin
-from django.db.models import BooleanField
-from django.db.models import CharField
-from django.db.models import DateTimeField
-from django.db.models import EmailField
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager, PermissionsMixin)
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -39,15 +34,15 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """Пользователь с email."""
 
-    email = EmailField(_("Адрес электронной почты"),
-                       unique=True,
-                       db_index=True)
-    username = CharField(_("Имя пользователя"), max_length=64)
-    is_active = BooleanField(_("Активирован"), default=True)
-    is_staff = BooleanField(_("Персонал"), default=False)
-    is_superuser = BooleanField(_("Суперпользователь"), default=False)
-    created_at = DateTimeField(_("Создан"), auto_now_add=True)
-    updated_at = DateTimeField(_("Обновлён"), auto_now=True)
+    email = models.EmailField(_("Адрес электронной почты"),
+                              unique=True,
+                              db_index=True)
+    username = models.CharField(_("Имя пользователя"), max_length=64)
+    is_active = models.BooleanField(_("Активирован"), default=True)
+    is_staff = models.BooleanField(_("Персонал"), default=False)
+    is_superuser = models.BooleanField(_("Суперпользователь"), default=False)
+    created_at = models.DateTimeField(_("Создан"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("Обновлён"), auto_now=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ("username", )

@@ -1,12 +1,11 @@
-from django.contrib.admin import ModelAdmin
-from django.contrib.admin import register
+from django.contrib import admin
 from django.utils.html import format_html
 
 from .models import Announcement
 
 
-@register(Announcement)
-class AnnouncementAdmin(ModelAdmin):
+@admin.register(Announcement)
+class AnnouncementAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "user",

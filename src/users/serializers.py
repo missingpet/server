@@ -1,40 +1,30 @@
 from django.contrib import auth
-from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework.serializers import CharField
-from rest_framework.serializers import EmailField
-from rest_framework.serializers import IntegerField
-from rest_framework.serializers import ModelSerializer
-from rest_framework.serializers import Serializer
-from rest_framework.serializers import SerializerMethodField
-from rest_framework.serializers import ValidationError
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.tokens import TokenError
+from rest_framework import serializers
+from rest_framework_simplejwt import tokens
 
 from .models import User
 
 
-class SignUpSerializer(ModelSerializer):
-    """Регистрация нового пользователя."""
-
-    email = EmailField()
-    username = CharField(min_length=3, max_length=64)
-    password = CharField(min_length=6, max_length=128, write_only=True)
+class SignUpSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
+    username = serializers.CharField(min_length=3, max_length=64)
+    password = serializers.CharField(min_length=6, max_length=128, write_only=True)
 
     class Meta:
         model = User
         fields = ("email", "username", "password")
 
     def validate(self, data):
-        email = data["email"]
-        username = data["username"]
+        email = data.get("email")
+        username = data.get("username")
 
         if not username.isalnum():
-            raise ValidationError(
-                _("Username should contains only alphanumeric characters."))
+            raise serializers.ValidationError(
+                "Username should contains only alphanumeric characters.")
 
         if User.objects.filter(email=email).first():
-            raise ValidationError(_("User with this email already exists."))
+            raise serializers.ValidationError("User with this email already exists.")
 
         return data
 
@@ -42,14 +32,12 @@ class SignUpSerializer(ModelSerializer):
         return User.objects.create_user(**validated_data)
 
 
-class SignInSerializer(ModelSerializer):
-    """Вход в профиль."""
-
-    id = IntegerField(read_only=True)
-    email = EmailField()
-    password = CharField(min_length=6, max_length=128, write_only=True)
-    username = CharField(min_length=3, max_length=64, read_only=True)
-    tokens = SerializerMethodField()
+class SignInSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    email = serializers.EmailField()
+    password = serializers.CharField(min_length=6, max_length=128, write_only=True)
+    username = serializers.CharField(min_length=3, max_length=64, read_only=True)
+    tokens = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -60,12 +48,12 @@ class SignInSerializer(ModelSerializer):
         return {"refresh": tokens["refresh"], "access": tokens["access"]}
 
     def validate(self, data):
-        email = data["email"]
-        password = data["password"]
+        email = data.get("email")
+        password = data.get("password")
         user = auth.authenticate(email=email, password=password)
 
         if not user:
-            raise AuthenticationFailed(_("Invalid email or password."))
+            raise AuthenticationFailed("Invalid email or password.")
 
         return {
             "id": user.id,
@@ -75,15 +63,13 @@ class SignInSerializer(ModelSerializer):
         }
 
 
-class SignOutSerializer(Serializer):
-    """Выход из профиля."""
+class SignOutSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
 
-    refresh = CharField()
-
-    default_error_messages = {"token_error": _("Invalid token.")}
+    default_error_messages = {"token_error": "Invalid token."}
 
     def save(self, **kwargs):
         try:
-            RefreshToken(self.validated_data["refresh"]).blacklist()
-        except TokenError:
+            tokens.RefreshToken(self.validated_data["refresh"]).blacklist()
+        except tokens.TokenError:
             self.fail("token_error")
