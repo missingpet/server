@@ -1,3 +1,5 @@
+logs:
+	mkdir -p logs
 run:
 	python manage.py runserver 0.0.0.0:8001
 migrate:
@@ -10,3 +12,5 @@ upgrade:
 	python -m pip install --upgrade pip
 superuser:
 	python manage.py createsuperuser
+test:
+	python manage.py test
