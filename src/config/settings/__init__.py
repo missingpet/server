@@ -1,24 +1,16 @@
-from configparser import RawConfigParser
-from os.path import dirname
-from os.path import join
+import os
 
-from loguru import logger
+from django.core.exceptions import ImproperlyConfigured
 
-ENV_DEVELOPMENT = "development"
-ENV_PRODUCTION = "production"
+ENV_DEVELOPMENT = 'development'
+ENV_PRODUCTION = 'production'
 
-config = RawConfigParser()
-config.read(join(dirname(__file__), 'settings.ini'))
+APP_ENV = os.environ.get('APP_ENV', 'development')
 
-ENV = config.get("settings", "ENVIRONMENT") or "development"
+if APP_ENV not in {ENV_DEVELOPMENT, ENV_PRODUCTION}:
+    raise ImproperlyConfigured('Invalid APP_ENV setting.')
 
-ENVIRONMENTS = (ENV_DEVELOPMENT, ENV_PRODUCTION)
-
-if ENV not in ENVIRONMENTS:
-    logger.warning("Invalid environment setting.")
-    ENV = ENV_DEVELOPMENT
-
-if ENV == ENV_DEVELOPMENT:
+if APP_ENV == ENV_DEVELOPMENT:
     from .development import *
-elif ENV == ENV_PRODUCTION:
+elif APP_ENV == ENV_PRODUCTION:
     from .production import *

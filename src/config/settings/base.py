@@ -1,13 +1,50 @@
+import os
 from datetime import timedelta
-from os.path import abspath
-from os.path import dirname
-from os.path import join
 
-from .secret_key import SECRET_KEY
+SECRET_KEY = os.environ['APP_SECRET']
 
-BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-INSTALLED_APPS = [
+LOGS_DIR = os.path.join(BASE_DIR, 'logs/')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGS_DIR, 'debug.log'),
+            'maxBytes': 1024 * 1024 * 20,
+            'backupCount': 4,
+            'formatter': 'verbose'
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.template': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
+
+INSTALLED_APPS = (
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -22,9 +59,9 @@ INSTALLED_APPS = [
     "django_cleanup.apps.CleanupConfig",
     "users.apps.UsersConfig",
     "announcements.apps.AnnouncementsConfig",
-]
+)
 
-MIDDLEWARE = [
+MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -33,29 +70,29 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "admin_reorder.middleware.ModelAdminReorder",
-]
+)
 
 ROOT_URLCONF = "config.urls"
 
-TEMPLATES = [
+TEMPLATES = (
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
-            "context_processors": [
+            "context_processors": (
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-            ],
+            ),
         },
     },
-]
+)
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS = (
     {
         "NAME":
         "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -72,9 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME":
         "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
-]
+)
 
-LANGUAGE_CODE = "ru-ru"
+LANGUAGE_CODE = "ru-RU"
 
 TIME_ZONE = "UTC"
 
@@ -94,17 +131,17 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = "users.User"
 
 STATIC_URL = "/static/"
-STATIC_ROOT = join(BASE_DIR, "static/")
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = join(BASE_DIR, "media/")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
-MEDIA_TEST_ROOT = join(MEDIA_ROOT, "tests/")
+MEDIA_TEST_ROOT = os.path.join(MEDIA_ROOT, 'tests/')
 
 ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
 
 SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES": "Bearer",
+    "AUTH_HEADER_TYPES": ("Bearer", ),
     'SIGNING_KEY': SECRET_KEY,
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
@@ -124,7 +161,7 @@ SWAGGER_SETTINGS = {
     "LOGOUT_URL": "rest_framework:logout",
 }
 
-ADMIN_REORDER = [
+ADMIN_REORDER = (
     {
         "app": "announcements",
         "label": "Объявления",
@@ -133,4 +170,4 @@ ADMIN_REORDER = [
         "app": "users",
         "label": "Пользователи"
     },
-]
+)

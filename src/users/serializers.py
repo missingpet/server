@@ -13,18 +13,17 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("email", "username", "password")
+        fields = ('email', 'username', 'password')
 
     def validate(self, data):
-        email = data.get("email")
-        username = data.get("username")
+        email = data.get('email')
+        username = data.get('username')
 
         if not username.isalnum():
-            raise serializers.ValidationError(
-                "Username should contains only alphanumeric characters.")
+            raise serializers.ValidationError('Username should contains only alphanumeric characters.')
 
-        if User.objects.filter(email=email).first():
-            raise serializers.ValidationError("User with this email already exists.")
+        if User.objects.filter(email=email).exists():
+            raise serializers.ValidationError('User with this email already exists.')
 
         return data
 

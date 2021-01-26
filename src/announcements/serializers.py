@@ -29,7 +29,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "Contact phone number should starts with +7 and contains 12 characters total.")
 
-        if imghdr.what(photo) not in ("jpeg", "png"):
+        if imghdr.what(photo) not in {"jpeg", "png"}:
             raise serializers.ValidationError("Image extension should be jpeg or png.")
         if photo.size > 5242880:
             raise serializers.ValidationError(
@@ -42,11 +42,11 @@ class AnnouncementSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "Longitude should take value between -180,0 and 180,0.")
 
-        if announcement_type not in (1, 2):
+        if announcement_type not in {1, 2}:
             raise serializers.ValidationError(
                 "Announcement type should be 1 (if you lost an animal) or 2 (if you found one).")
 
-        if animal_type not in (1, 2, 3):
+        if animal_type not in {1, 2, 3}:
             raise serializers.ValidationError(
                 "Animal type should be 1 (for dogs), 2 (for cats) or 3 (for other animals).")
 

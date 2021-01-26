@@ -1,7 +1,7 @@
-from rest_framework import (generics, viewsets)
+from rest_framework import generics, viewsets
 
 from .models import Announcement
-from . import (permissions, serializers, services)
+from . import permissions, serializers, services
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):
@@ -15,8 +15,6 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
 
 
 class UserAnnouncementsListAPIView(generics.ListAPIView):
-    """Объявления пользователя с указанным user_id."""
-
     serializer_class = serializers.AnnouncementSerializer
     pagination_class = services.AnnouncementPagination
     lookup_field = "user_id"
@@ -27,8 +25,6 @@ class UserAnnouncementsListAPIView(generics.ListAPIView):
 
 
 class FeedForUserListAPIView(generics.ListAPIView):
-    """Лента объявлений для пользователя с указанным user_id."""
-
     serializer_class = serializers.AnnouncementSerializer
     pagination_class = services.AnnouncementPagination
     lookup_field = "user_id"
@@ -39,18 +35,11 @@ class FeedForUserListAPIView(generics.ListAPIView):
 
 
 class AnnouncementsMapListAPIView(generics.ListAPIView):
-    """Карта всех объявлений."""
-
     queryset = Announcement.objects.all()
     serializer_class = serializers.AnnouncementsMapSerializer
 
 
 class AnnouncementsMapForUserListAPIView(generics.ListAPIView):
-    """
-    Карта объявлений \
-    без объявлений, созданных пользователем с указанным user_id.
-    """
-
     serializer_class = serializers.AnnouncementsMapSerializer
     lookup_field = "user_id"
 

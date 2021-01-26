@@ -4,8 +4,6 @@ from users.models import User
 
 
 class Announcement(models.Model):
-    """Объявление о пропавшем/найденном питомце."""
-
     LOST = 1
     FOUND = 2
     ANNOUNCEMENT_TYPES = ((LOST, "Потеряно"), (FOUND, "Найдено"))
