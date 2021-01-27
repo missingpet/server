@@ -1,3 +1,4 @@
 This is a media root.
-/announcements/ - folder with photos for ads created by users.
-/tests/ - folder with photos for unit-testing.
+
+announcements - folder with photos for ads created by users.
+tests - folder with photos for unit-testing.
