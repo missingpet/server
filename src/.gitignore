@@ -6,6 +6,6 @@ logs/
 venv/
 .vscode/
 media/
-!media/tests/
+!media/tests
 static/
 __pycache__/
