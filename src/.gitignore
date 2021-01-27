@@ -1,9 +1,8 @@
-.idea/
 db.sqlite3
-db.sqlite3-journal
-*.log
+.idea/
+logs/
 venv/
 .vscode/
-media/announcements/
+media/
 static/
 __pycache__/
