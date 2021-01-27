@@ -5,7 +5,6 @@ db.sqlite3-journal
 logs/
 venv/
 .vscode/
-media/
-!media/tests
+media/announcements/
 static/
 __pycache__/
