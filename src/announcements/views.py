@@ -1,7 +1,8 @@
-from rest_framework import generics, viewsets
+from rest_framework import viewsets
+from rest_framework import generics
 
-from .models import Announcement
-from . import permissions, serializers, services
+from announcements.models import Announcement
+from announcements import permissions, serializers, services
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):
@@ -14,33 +15,33 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
         return serializer.save(user=self.request.user)
 
 
-class UserAnnouncementsListAPIView(generics.ListAPIView):
+class BaseAnnouncementUserListAPIView(generics.ListAPIView):
     serializer_class = serializers.AnnouncementSerializer
     pagination_class = services.AnnouncementPagination
-    lookup_field = "user_id"
+    lookup_field = 'user_id'
 
+
+class UserAnnouncementsListAPIView(BaseAnnouncementUserListAPIView):
     def get_queryset(self):
         return Announcement.objects.filter(
             user_id=self.kwargs.get(self.lookup_field))
 
 
-class FeedForUserListAPIView(generics.ListAPIView):
-    serializer_class = serializers.AnnouncementSerializer
-    pagination_class = services.AnnouncementPagination
-    lookup_field = "user_id"
-
+class FeedForUserListAPIView(BaseAnnouncementUserListAPIView):
     def get_queryset(self):
         return Announcement.objects.exclude(
             user_id=self.kwargs.get(self.lookup_field))
 
 
-class AnnouncementsMapListAPIView(generics.ListAPIView):
+class BaseAnnouncementsMapListAPIView(generics.ListAPIView):
+    serializer_class = serializers.AnnouncementsMapSerializer
+
+
+class AnnouncementsMapListAPIView(BaseAnnouncementsMapListAPIView):
     queryset = Announcement.objects.all()
-    serializer_class = serializers.AnnouncementsMapSerializer
 
 
-class AnnouncementsMapForUserListAPIView(generics.ListAPIView):
-    serializer_class = serializers.AnnouncementsMapSerializer
+class AnnouncementsMapForUserListAPIView(BaseAnnouncementsMapListAPIView):
     lookup_field = "user_id"
 
     def get_queryset(self):

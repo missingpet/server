@@ -1,7 +1,7 @@
 from django.contrib import auth
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework import exceptions
 from rest_framework import serializers
-from rest_framework_simplejwt import tokens
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 from .models import User
 
@@ -42,8 +42,8 @@ class SignInSerializer(serializers.ModelSerializer):
         model = User
         fields = ("id", "email", "password", "username", "tokens")
 
-    def get_tokens(self, current_user_instance):
-        tokens = User.objects.get(id=current_user_instance["id"]).tokens()
+    def get_tokens(self, obj):
+        tokens = User.objects.get(id=obj["id"]).tokens()
         return {"refresh": tokens["refresh"], "access": tokens["access"]}
 
     def validate(self, data):
@@ -52,7 +52,7 @@ class SignInSerializer(serializers.ModelSerializer):
         user = auth.authenticate(email=email, password=password)
 
         if not user:
-            raise AuthenticationFailed("Invalid email or password.")
+            raise exceptions.AuthenticationFailed("Invalid email or password.")
 
         return {
             "id": user.id,
@@ -69,6 +69,6 @@ class SignOutSerializer(serializers.Serializer):
 
     def save(self, **kwargs):
         try:
-            tokens.RefreshToken(self.validated_data["refresh"]).blacklist()
-        except tokens.TokenError:
+            RefreshToken(self.validated_data['refresh']).blacklist()
+        except TokenError:
             self.fail("token_error")

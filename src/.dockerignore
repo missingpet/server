@@ -1,0 +1,9 @@
+media/
+static/
+logs/
+__pycache__/
+db.sqlite3
+.idea/
+.vscode/
+.*ignore
+Dockerfile

@@ -1,8 +1,6 @@
 from django.test import tag
 from django.urls import reverse
-from rest_framework.status import HTTP_200_OK
-from rest_framework.status import HTTP_201_CREATED
-from rest_framework.status import HTTP_204_NO_CONTENT
+from rest_framework import status
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
 
@@ -24,14 +22,14 @@ class ApiTestCases(APITestCase):
             "password": "password",
         }
         response = self.client.post(reverse("sign-up"), data)
-        self.assertEqual(response.status_code, HTTP_201_CREATED)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     @tag("sign-in")
     def test_sign_in(self):
         """Тестирует вход в профиль."""
         data = {"email": "test@email.com", "password": "password"}
         response = self.client.post(reverse("sign-in"), data)
-        self.assertEqual(response.status_code, HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     @tag("sign-out")
     def test_sign_out(self):
@@ -40,7 +38,7 @@ class ApiTestCases(APITestCase):
         response = self.client.post(reverse("sign-in"), data)
         data = {"refresh": response.data["tokens"]["refresh"]}
         response = self.client.post(reverse("sign-out"), data)
-        self.assertEqual(response.status_code, HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def tearDown(self):
         pass

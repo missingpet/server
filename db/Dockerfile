@@ -1,4 +1,6 @@
-FROM postgres:12.0-alpine
+FROM postgres:12-alpine
 
+CMD ["postgres"]
 
+EXPOSE 5432
 
