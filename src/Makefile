@@ -12,3 +12,5 @@ superuser:
 	python manage.py createsuperuser
 test:
 	python manage.py test
+app:
+	python manage.py startapp $(name)
