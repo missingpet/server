@@ -1,8 +1,5 @@
-FROM nginx:alpine
+FROM nginx:1.19.6-alpine
 
-ARG SERVER_NAMES
-
-ENV SERVER_NAMES ${SERVER_NAMES}
+COPY ./default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80 443
-
