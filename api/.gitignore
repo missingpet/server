@@ -6,5 +6,3 @@ venv/
 media/
 static/
 __pycache__/
-*.crt
-*.key
