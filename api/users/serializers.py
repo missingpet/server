@@ -55,7 +55,7 @@ class SignInSerializer(serializers.ModelSerializer):
             raise exceptions.AuthenticationFailed("Invalid email and/or password.")
 
         return {
-            "id": user.id,
+            'id': user.id,
             "email": user.email,
             "username": user.username,
             "tokens": user.tokens(),
@@ -67,7 +67,7 @@ class SignOutSerializer(serializers.Serializer):
 
     default_error_messages = {"token_error": "Invalid token."}
 
-    def save(self, **kwargs):
+    def save(self):
         try:
             RefreshToken(self.validated_data['refresh']).blacklist()
         except TokenError:
