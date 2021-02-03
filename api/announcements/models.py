@@ -1,6 +1,15 @@
+from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.db import models
-from users.models import User
+
+
+class AnnouncementManager(models.Manager):
+
+    def get_feed_for_user(self, user_id):
+        return self.get_queryset().exclude(user_id=user_id).order_by('-created_at')
+
+    def get_announcements_of_user(self, user_id):
+        return self.get_queryset().filter(user_id=user_id).order_by('-created_at')
 
 
 class Announcement(models.Model):
@@ -13,7 +22,7 @@ class Announcement(models.Model):
     OTHERS = 3
     ANIMAL_TYPES = ((DOGS, "Собаки"), (CATS, "Кошки"), (OTHERS, "Иные"))
 
-    user = models.ForeignKey(User,
+    user = models.ForeignKey(get_user_model(),
                              models.CASCADE,
                              'announcements',
                              verbose_name="Пользователь")
@@ -30,8 +39,9 @@ class Announcement(models.Model):
     created_at = models.DateTimeField("Создано", auto_now_add=True)
     updated_at = models.DateTimeField("Обновлено", auto_now=True)
 
+    objects = AnnouncementManager()
+
     class Meta:
-        ordering = ('-created_at', )
         verbose_name = "Объявление"
         verbose_name_plural = "Объявления"
 

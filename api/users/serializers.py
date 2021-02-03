@@ -1,7 +1,6 @@
 from django.contrib import auth
 from rest_framework import exceptions
 from rest_framework import serializers
-from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 from .models import User
 
@@ -60,15 +59,3 @@ class SignInSerializer(serializers.ModelSerializer):
             "username": user.username,
             "tokens": user.tokens(),
         }
-
-
-class SignOutSerializer(serializers.Serializer):
-    refresh = serializers.CharField()
-
-    default_error_messages = {"token_error": "Invalid token."}
-
-    def save(self):
-        try:
-            RefreshToken(self.validated_data['refresh']).blacklist()
-        except TokenError:
-            self.fail("token_error")

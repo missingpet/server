@@ -12,7 +12,6 @@ token_urls = [
 auth_urls = [
     path("signup/", views.SignUpAPIView.as_view(), name="sign-up"),
     path("signin/", views.SignInAPIView.as_view(), name="sign-in"),
-    path("signout/", views.SignOutAPIView.as_view(), name="sign-out"),
     path("token/", include(token_urls)),
 ]
 

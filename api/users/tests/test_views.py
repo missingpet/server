@@ -15,7 +15,6 @@ class ApiTestCases(APITestCase):
 
     @tag("sign-up")
     def test_sign_up(self):
-        """Тестирует регистрацию нового пользователя."""
         data = {
             "username": "username",
             "email": "some@email.com",
@@ -24,21 +23,11 @@ class ApiTestCases(APITestCase):
         response = self.client.post(reverse("sign-up"), data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    @tag("sign-in")
+    @tag('sign-in')
     def test_sign_in(self):
-        """Тестирует вход в профиль."""
-        data = {"email": "test@email.com", "password": "password"}
-        response = self.client.post(reverse("sign-in"), data)
+        data = {'email': 'test@email.com', 'password': 'password'}
+        response = self.client.post(reverse('sign-in'), data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    @tag("sign-out")
-    def test_sign_out(self):
-        """Тестирует выход из профиля."""
-        data = {"email": "test@email.com", "password": "password"}
-        response = self.client.post(reverse("sign-in"), data)
-        data = {"refresh": response.data["tokens"]["refresh"]}
-        response = self.client.post(reverse("sign-out"), data)
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def tearDown(self):
         pass

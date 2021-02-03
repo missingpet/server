@@ -51,22 +51,27 @@ LOGGING = {
     },
 }
 
-INSTALLED_APPS = (
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "rest_framework",
-    "rest_framework_simplejwt",
-    "rest_framework_simplejwt.token_blacklist",
-    "drf_yasg",
-    "admin_reorder",
-    "django_cleanup.apps.CleanupConfig",
-    "users.apps.UsersConfig",
-    "announcements.apps.AnnouncementsConfig",
+LOCAL_APPS = (
+    'users.apps.UsersConfig',
+    'announcements.apps.AnnouncementsConfig',
 )
+
+THIRD_PARTY_APPS = (
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_yasg',
+    'admin_reorder',
+    'django_cleanup.apps.CleanupConfig',
+)
+
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+) + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
@@ -102,19 +107,19 @@ WSGI_APPLICATION = "config.wsgi.application"
 AUTH_PASSWORD_VALIDATORS = (
     {
         "NAME":
-        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
         "NAME":
-        "django.contrib.auth.password_validation.MinimumLengthValidator",
+            "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
         "NAME":
-        "django.contrib.auth.password_validation.CommonPasswordValidator",
+            "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
         "NAME":
-        "django.contrib.auth.password_validation.NumericPasswordValidator",
+            "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 )
 
@@ -129,13 +134,17 @@ USE_L10N = True
 USE_TZ = True
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
 
-AUTH_USER_MODEL = "users.User"
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+AUTH_USER_MODEL = 'users.User'
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
@@ -148,11 +157,11 @@ MEDIA_TEST_ROOT = os.path.join(MEDIA_ROOT, 'tests/')
 ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
 
 SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES": ("Bearer", ),
+    "AUTH_HEADER_TYPES": ("Bearer",),
     'SIGNING_KEY': SECRET_KEY,
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken", ),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
 }
 
 SWAGGER_SETTINGS = {
@@ -161,7 +170,8 @@ SWAGGER_SETTINGS = {
         "Bearer": {
             "type": "apiKey",
             "in": "header",
-            "name": "Authorization"
+            "name": "Authorization",
+            'description': 'JWT authorization',
         }
     },
     "LOGIN_URL": "rest_framework:login",

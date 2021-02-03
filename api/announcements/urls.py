@@ -4,15 +4,15 @@ from django.urls import path
 from . import views
 
 user_urls = [
-    path("<int:user_id>/announcements/",
+    path('<int:user_id>/announcements/',
          views.UserAnnouncementsListAPIView.as_view(),
-         name="user-announcements"),
-    path("<int:user_id>/feed/",
+         name='user-announcements'),
+    path('<int:user_id>/feed/',
          views.FeedForUserListAPIView.as_view(),
-         name="feed-for-user"),
-    path("<int:user_id>/announcements_map/",
+         name='feed-for-user'),
+    path('<int:user_id>/announcements_map/',
          views.AnnouncementsMapForUserListAPIView.as_view(),
-         name="announcements-map-for-user"),
+         name='announcements-map-for-user'),
 ]
 
 announcement_urls = [
