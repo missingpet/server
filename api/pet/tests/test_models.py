@@ -38,4 +38,3 @@ class UserModelTestCases(TestCase):
 
     def tearDown(self):
         pass
-

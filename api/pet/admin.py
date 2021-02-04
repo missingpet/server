@@ -26,7 +26,7 @@ class AnnouncementAdmin(admin.ModelAdmin):
                     'announcement_type',
                     'animal_type',
                     'created_at')
-    list_display_links = ('id','user')
+    list_display_links = ('id', 'user')
     list_filter = ('announcement_type', 'animal_type')
     readonly_fields = ('get_photo', 'created_at', 'updated_at')
     search_fields = ('description', 'address')

@@ -9,7 +9,8 @@ class UserManager(BaseUserManager):
     def create_user(self, email, nickname, password, **extra_fields):
         if not email or not nickname:
             raise ValueError('All fields are required.')
-        user = self.model(email=self.normalize_email(email), nickname=nickname, **extra_fields)
+        user = self.model(email=self.normalize_email(email),
+                          nickname=nickname, **extra_fields)
         user.set_password(password)
         user.save()
         return user
@@ -34,7 +35,8 @@ class User(AbstractBaseUser, PermissionsMixin):
                               db_index=True)
     nickname = models.CharField('Никнейм', max_length=64)
     is_staff = models.BooleanField('Статус персонала', default=False)
-    is_superuser = models.BooleanField('Статус суперпользователя', default=False)
+    is_superuser = models.BooleanField(
+        'Статус суперпользователя', default=False)
     is_active = models.BooleanField('Активирован', default=True)
     created_at = models.DateTimeField('Создан', auto_now_add=True)
     updated_at = models.DateTimeField('Обновлён', auto_now=True)
@@ -77,7 +79,8 @@ class Announcement(models.Model):
     address = models.CharField("Место пропажи или находки", max_length=1000)
     latitude = models.FloatField("Широта")
     longitude = models.FloatField("Долгота")
-    contact_phone_number = models.CharField("Контактный телефон", max_length=12)
+    contact_phone_number = models.CharField(
+        "Контактный телефон", max_length=12)
     created_at = models.DateTimeField("Создано", auto_now_add=True)
     updated_at = models.DateTimeField("Обновлено", auto_now=True)
 

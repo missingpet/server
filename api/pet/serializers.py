@@ -11,14 +11,16 @@ class AuthSerializer(TokenObtainPairSerializer):
 
     def validate(self, attrs):
         data = super(AuthSerializer, self).validate(attrs)
-        data.update({'id': self.user.id, 'email': self.user.email, 'nickname': self.user.nickname})
+        data.update({'id': self.user.id, 'email': self.user.email,
+                     'nickname': self.user.nickname})
         return data
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     nickname = serializers.CharField(min_length=3, max_length=64)
-    password = serializers.CharField(min_length=6, max_length=128, write_only=True)
+    password = serializers.CharField(
+        min_length=6, max_length=128, write_only=True)
 
     class Meta:
         model = models.User
@@ -29,10 +31,12 @@ class UserCreateSerializer(serializers.ModelSerializer):
         nickname = attrs.get('nickname')
 
         if not nickname.isalnum():
-            raise serializers.ValidationError('Nickname should contains only alphanumeric characters.')
+            raise serializers.ValidationError(
+                'Nickname should contains only alphanumeric characters.')
 
         if models.User.objects.filter(email=email).exists():
-            raise serializers.ValidationError('User with this email already exists.')
+            raise serializers.ValidationError(
+                'User with this email already exists.')
 
         return attrs
 
@@ -64,7 +68,8 @@ class AnnouncementSerializer(serializers.ModelSerializer):
                 "Contact phone number should starts with +7 and contains 12 characters total.")
 
         if imghdr.what(photo) not in {'jpeg', 'png'}:
-            raise serializers.ValidationError("Image extension should be jpeg or png.")
+            raise serializers.ValidationError(
+                "Image extension should be jpeg or png.")
         if photo.size > 5242880:
             raise serializers.ValidationError(
                 "Image size should be less than 5 megabytes.")
