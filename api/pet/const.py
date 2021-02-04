@@ -1,1 +1,3 @@
-INACTIVE_ACCOUNT_ERROR_MESSAGE = 'Unable to authenticate inactive account.'
+EMAIL_CONFIRMATION_SUBJECT = 'Подтверждение адреса электронной почты'
+
+PASSWORD_RESET_SUBJECT = 'Сброс пароля'
