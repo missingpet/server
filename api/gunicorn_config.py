@@ -1,3 +1,4 @@
+"""Gunicorn http-server configuration module."""
 from multiprocessing import cpu_count
 
 workers = 2 * cpu_count() + 1

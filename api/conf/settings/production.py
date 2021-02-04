@@ -1,3 +1,4 @@
+"""Project settings for production environment."""
 from .base import *
 
 DEBUG = False

@@ -1,3 +1,4 @@
+"""Shared project settings."""
 import os
 from datetime import timedelta
 

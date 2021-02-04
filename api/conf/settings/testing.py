@@ -1,3 +1,4 @@
+"""Project settings for testing environment."""
 from .base import *
 
 DEBUG = False
