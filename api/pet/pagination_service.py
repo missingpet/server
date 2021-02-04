@@ -3,9 +3,12 @@ from rest_framework.response import Response
 
 
 class AnnouncementPagination(PageNumberPagination):
-    """Custom pagination class."""
+    """Custom pagination class which get_paginated_response method \
+    returns integer page numbers instead of links to previous \
+    and next pages. Extends PageNumberPagination. \
+    Attribute \"page_size\" equals to 10."""
 
-    page_size = 6
+    page_size = 10
 
     def get_next_page_number(self):
         return self.page.next_page_number() if self.page.has_next() else None

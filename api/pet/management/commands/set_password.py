@@ -1,3 +1,5 @@
+"""Custom django-admin command to perform password change."""
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management import BaseCommand
 

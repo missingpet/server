@@ -24,7 +24,7 @@ user_urls = [
     ),
     path("<int:user_id>/feed/",
          views.FeedForUserListView.as_view(),
-         name="feed-for-user"),
+         name="feed-for-user",),
     path(
         "<int:user_id>/announcements_map/",
         views.AnnouncementsMapForUserListView.as_view(),

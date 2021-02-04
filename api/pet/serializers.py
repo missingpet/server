@@ -21,9 +21,11 @@ class AuthSerializer(TokenObtainPairSerializer):
 class UserCreateSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     nickname = serializers.CharField(min_length=3, max_length=64)
-    password = serializers.CharField(min_length=6,
-                                     max_length=128,
-                                     write_only=True)
+    password = serializers.CharField(
+        min_length=6,
+        max_length=128,
+        write_only=True,
+    )
 
     class Meta:
         model = models.User
@@ -101,4 +103,4 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 class AnnouncementsMapSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Announcement
-        fields = ("id", "latitude", "longitude")
+        fields = ('id', 'latitude', 'longitude')
