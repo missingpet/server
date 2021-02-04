@@ -17,13 +17,13 @@ auth_urls = [
 user_urls = [
     path('<int:user_id>/announcements/',
          views.UserAnnouncementsListView.as_view(),
-         name='user-pet'),
+         name='user-announcements'),
     path('<int:user_id>/feed/',
          views.FeedForUserListView.as_view(),
          name='feed-for-user'),
     path('<int:user_id>/announcements_map/',
          views.AnnouncementsMapForUserView.as_view(),
-         name='pet-map-for-user'),
+         name='announcements-map-for-user'),
 ]
 
 announcement_urls = [
@@ -34,7 +34,7 @@ announcement_urls = [
 ]
 
 announcements_map_urls = [
-    path("", views.AnnouncementsMapListView.as_view(), name='announcements-map'),
+    path('', views.AnnouncementsMapListView.as_view(), name='announcements-map'),
 ]
 
 urlpatterns = [

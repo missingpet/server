@@ -1,8 +1,8 @@
 from rest_framework import viewsets, generics
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 
-from .models import Announcement, User
+from . import models
 from . import serializers
 from .pagination_service import AnnouncementPagination
 from .permissions import AnnouncementPermission
@@ -11,22 +11,14 @@ from .permissions import AnnouncementPermission
 class AuthView(TokenObtainPairView):
     """Use to authenticate users."""
 
-    serializer_class = serializers.TokenObtainPairCustomSerializer
+    serializer_class = serializers.AuthSerializer
     permission_classes = (AllowAny, )
-
-
-class UserInfoView(generics.RetrieveAPIView):
-    """Use to retrieve user`s account information (id, email and nickname)."""
-
-    queryset = User
-    serializer_class = serializers.UserInfoSerializer
-    permission_classes = (IsAuthenticated,)
 
 
 class UserCreateView(generics.CreateAPIView):
     """Use to create a new user."""
 
-    queryset = User
+    queryset = models.User
     serializer_class = serializers.UserCreateSerializer
     permission_classes = (AllowAny,)
 
@@ -35,7 +27,7 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
     """Use to create a new announcement, \
     retrieve/delete an announcement with given id or to get the whole announcements list."""
 
-    queryset = Announcement.objects.all()
+    queryset = models.Announcement.objects.all()
     serializer_class = serializers.AnnouncementSerializer
     permission_classes = (AnnouncementPermission,)
     pagination_class = AnnouncementPagination
@@ -57,7 +49,7 @@ class UserAnnouncementsListView(BaseAnnouncementUserListView):
     """Use to get announcements that belong to user with given user id."""
 
     def get_queryset(self):
-        return Announcement.objects.get_announcements_of_user(self.kwargs.get(self.lookup_field))
+        return models.Announcement.objects.get_announcements_of_user(self.kwargs.get(self.lookup_field))
 
 
 class FeedForUserListView(BaseAnnouncementUserListView):
@@ -65,7 +57,7 @@ class FeedForUserListView(BaseAnnouncementUserListView):
     (Announcements that belong to this user are excluded)."""
 
     def get_queryset(self):
-        return Announcement.objects.get_feed_for_user(self.kwargs.get(self.lookup_field))
+        return models.Announcement.objects.get_feed_for_user(self.kwargs.get(self.lookup_field))
 
 
 class BaseAnnouncementsMapListView(generics.ListAPIView):
@@ -78,7 +70,7 @@ class BaseAnnouncementsMapListView(generics.ListAPIView):
 class AnnouncementsMapListView(BaseAnnouncementsMapListView):
     """Use to get the whole announcements map."""
 
-    queryset = Announcement.objects.all()
+    queryset = models.Announcement.objects.all()
 
 
 class AnnouncementsMapForUserView(BaseAnnouncementsMapListView):
@@ -88,4 +80,4 @@ class AnnouncementsMapForUserView(BaseAnnouncementsMapListView):
     lookup_field = "user_id"
 
     def get_queryset(self):
-        return Announcement.objects.get_feed_for_user(self.kwargs.get(self.lookup_field))
+        return models.Announcement.objects.get_feed_for_user(self.kwargs.get(self.lookup_field))

@@ -7,6 +7,14 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from . import models
 
 
+class AuthSerializer(TokenObtainPairSerializer):
+
+    def validate(self, attrs):
+        data = super(AuthSerializer, self).validate(attrs)
+        data.update({'id': self.user.id, 'email': self.user.email, 'nickname': self.user.nickname})
+        return data
+
+
 class UserCreateSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     nickname = serializers.CharField(min_length=3, max_length=64)
@@ -16,9 +24,9 @@ class UserCreateSerializer(serializers.ModelSerializer):
         model = models.User
         fields = ('email', 'nickname', 'password')
 
-    def validate(self, data):
-        email = data.get('email')
-        nickname = data.get('nickname')
+    def validate(self, attrs):
+        email = attrs.get('email')
+        nickname = attrs.get('nickname')
 
         if not nickname.isalnum():
             raise serializers.ValidationError('Nickname should contains only alphanumeric characters.')
@@ -26,23 +34,10 @@ class UserCreateSerializer(serializers.ModelSerializer):
         if models.User.objects.filter(email=email).exists():
             raise serializers.ValidationError('User with this email already exists.')
 
-        return data
+        return attrs
 
     def create(self, validated_data):
         return models.User.objects.create_user(**validated_data)
-
-
-class TokenObtainPairCustomSerializer(TokenObtainPairSerializer):
-
-    default_error_messages = {
-        'no_active_account': 'Incorrect authentication information.'
-    }
-
-
-class UserInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.User
-        fields = ('id', 'email', 'nickname')
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):
@@ -56,13 +51,13 @@ class AnnouncementSerializer(serializers.ModelSerializer):
         user = models.Announcement.objects.get(id=obj.id).user
         return {"id": user.id, "username": user.nickname}
 
-    def validate(self, data):
-        contact_phone_number = data.get("contact_phone_number")
-        photo = data.get("photo")
-        latitude = data.get("latitude")
-        longitude = data.get("longitude")
-        announcement_type = data.get("announcement_type")
-        animal_type = data.get("animal_type")
+    def validate(self, attrs):
+        contact_phone_number = attrs.get("contact_phone_number")
+        photo = attrs.get('photo')
+        latitude = attrs.get("latitude")
+        longitude = attrs.get("longitude")
+        announcement_type = attrs.get("announcement_type")
+        animal_type = attrs.get("animal_type")
 
         if not re.match(r"\+7\d{10}$", contact_phone_number):
             raise serializers.ValidationError(
@@ -87,9 +82,9 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 
         if animal_type not in {1, 2, 3}:
             raise serializers.ValidationError(
-                "Animal type should be 1 (for dogs), 2 (for cats) or 3 (for other animals).")
+                'Animal type should be 1 (for dogs), 2 (for cats) or 3 (for other animals).')
 
-        return data
+        return attrs
 
 
 class AnnouncementsMapSerializer(serializers.ModelSerializer):
