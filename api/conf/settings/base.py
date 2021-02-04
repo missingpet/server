@@ -1,14 +1,13 @@
 import os
 from datetime import timedelta
 
-SECRET_KEY = os.environ['APP_SECRET']
+SECRET_KEY = os.environ["APP_SECRET"]
 
-BASE_DIR = os.path.dirname(os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-LOGS_DIR = os.path.join(BASE_DIR, 'logs/')
+LOGS_DIR = os.path.join(BASE_DIR, "logs/")
 
-LOG_FILE_NAME = 'debug.log'
+LOG_FILE_NAME = "debug.log"
 
 try:
     os.mkdir(LOGS_DIR)
@@ -16,62 +15,64 @@ except OSError:
     pass
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
-            'style': '{',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {message}",
+            "style": "{",
         },
     },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(LOGS_DIR, LOG_FILE_NAME),
-            'maxBytes': 1024 * 1024 * 20,
-            'backupCount': 4,
-            'formatter': 'verbose'
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(LOGS_DIR, LOG_FILE_NAME),
+            "maxBytes": 1024 * 1024 * 20,
+            "backupCount": 4,
+            "formatter": "verbose",
         },
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
         },
     },
-    'loggers': {
-        'django': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
-            'propagate': True,
+    "loggers": {
+        "django": {
+            "handlers": ["file", "console"],
+            "level": "DEBUG",
+            "propagate": True,
         },
-        'django.template': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': True,
+        "django.template": {
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": True,
         },
     },
 }
 
-LOCAL_APPS = (
-    'pet.apps.PetConfig',
-)
+LOCAL_APPS = ("pet.apps.PetConfig",)
 
 THIRD_PARTY_APPS = (
-    'rest_framework',
-    'rest_framework_simplejwt',
-    'drf_yasg',
-    'admin_reorder',
-    'django_cleanup.apps.CleanupConfig',
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "drf_yasg",
+    "admin_reorder",
+    "django_cleanup.apps.CleanupConfig",
 )
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-) + THIRD_PARTY_APPS + LOCAL_APPS
+    (
+        "django.contrib.admin",
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.sessions",
+        "django.contrib.messages",
+        "django.contrib.staticfiles",
+    )
+    + THIRD_PARTY_APPS
+    + LOCAL_APPS
+)
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
@@ -106,26 +107,22 @@ WSGI_APPLICATION = "conf.wsgi.application"
 
 AUTH_PASSWORD_VALIDATORS = (
     {
-        "NAME":
-            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        "NAME":
-            "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        "NAME":
-            "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        "NAME":
-            "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 )
 
 LANGUAGE_CODE = "ru-RU"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -134,32 +131,30 @@ USE_L10N = True
 USE_TZ = True
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning'
+    "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.NamespaceVersioning",
 }
 
-AUTHENTICATION_BACKENDS = (
-    'pet.auth.EmailAuthBackend',
-)
+AUTHENTICATION_BACKENDS = ("pet.auth.EmailAuthBackend",)
 
-AUTH_USER_MODEL = 'pet.User'
+AUTH_USER_MODEL = "pet.User"
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
-MEDIA_TEST_ROOT = os.path.join(MEDIA_ROOT, 'tests/')
+MEDIA_TEST_ROOT = os.path.join(MEDIA_ROOT, "tests/")
 
-ANNOUNCEMENTS_PHOTO = 'announcements/%Y/%m/%d/'
+ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
-    'SIGNING_KEY': SECRET_KEY,
+    "SIGNING_KEY": SECRET_KEY,
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
@@ -172,7 +167,7 @@ SWAGGER_SETTINGS = {
             "type": "apiKey",
             "in": "header",
             "name": "Authorization",
-            'description': 'JWT authorization',
+            "description": "JWT authorization",
         }
     },
     "LOGIN_URL": "rest_framework:login",
@@ -184,8 +179,5 @@ ADMIN_REORDER = (
         "app": "pet",
         "label": "Объявления",
     },
-    {
-        "app": "users",
-        "label": "Пользователи"
-    },
+    {"app": "users", "label": "Пользователи"},
 )

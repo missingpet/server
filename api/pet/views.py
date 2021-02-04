@@ -12,7 +12,7 @@ class AuthView(TokenObtainPairView):
     """Use to authenticate users."""
 
     serializer_class = serializers.AuthSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -20,7 +20,7 @@ class UserCreateView(generics.CreateAPIView):
 
     queryset = models.User
     serializer_class = serializers.UserCreateSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):
@@ -41,9 +41,9 @@ class BaseAnnouncementUserListView(generics.ListAPIView):
     """Base announcement user view to extend in subclasses."""
 
     serializer_class = serializers.AnnouncementSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
     pagination_class = AnnouncementPagination
-    lookup_field = 'user_id'
+    lookup_field = "user_id"
 
 
 class UserAnnouncementsListView(BaseAnnouncementUserListView):
@@ -51,7 +51,8 @@ class UserAnnouncementsListView(BaseAnnouncementUserListView):
 
     def get_queryset(self):
         return models.Announcement.objects.filter(
-            user_id=self.kwargs.get(self.lookup_field)).order_by('-created_at')
+            user_id=self.kwargs.get(self.lookup_field)
+        ).order_by("-created_at")
 
 
 class FeedForUserListView(BaseAnnouncementUserListView):
@@ -60,14 +61,15 @@ class FeedForUserListView(BaseAnnouncementUserListView):
 
     def get_queryset(self):
         return models.Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_field)).order_by('-created_at')
+            user_id=self.kwargs.get(self.lookup_field)
+        ).order_by("-created_at")
 
 
 class BaseAnnouncementsMapListView(generics.ListAPIView):
     """Base announcements map view to extend in subclasses."""
 
     serializer_class = serializers.AnnouncementsMapSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
 
 class AnnouncementsMapListView(BaseAnnouncementsMapListView):
@@ -84,4 +86,5 @@ class AnnouncementsMapForUserListView(BaseAnnouncementsMapListView):
 
     def get_queryset(self):
         return models.Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_field)).order_by('-created_at')
+            user_id=self.kwargs.get(self.lookup_field)
+        ).order_by("-created_at")
