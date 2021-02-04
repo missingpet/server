@@ -73,7 +73,7 @@ class AnnouncementsMapListView(BaseAnnouncementsMapListView):
     queryset = models.Announcement.objects.all()
 
 
-class AnnouncementsMapForUserView(BaseAnnouncementsMapListView):
+class AnnouncementsMapForUserListView(BaseAnnouncementsMapListView):
     """Use to get announcements map without announcements \
     that belong to user with given user id."""
 
