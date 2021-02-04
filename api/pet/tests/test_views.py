@@ -6,7 +6,7 @@ class ApiTestCases(APITestCase):
     def setUp(self):
         pass
 
-    @tag('create-announcement')
+    @tag("create-announcement")
     def test_create_announcement(self):
         pass
 
