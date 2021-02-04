@@ -1,0 +1,10 @@
+language: python
+python:
+    - "3.8.6"
+env:
+    - APP_SECRET=testing-secret-key
+    - APP_ENV=testing
+install:
+    - pip install -r requirements.txt
+script:
+    -  python manage.py test
