@@ -1,12 +1,12 @@
 from django.test import tag
 from django.test import TestCase
-from users.models import User
+from ..models import User
 
 
-class UserTestCases(TestCase):
+class UserModelTestCases(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(email="user@email.com",
-                                             username="user",
+                                             nickname="user",
                                              password="123")
         self.superuser = User.objects.create_superuser(
             username="superuser", email="superuser@email.com", password="456")
@@ -37,3 +37,4 @@ class UserTestCases(TestCase):
 
     def tearDown(self):
         pass
+

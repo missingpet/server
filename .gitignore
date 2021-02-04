@@ -1,1 +1,11 @@
 .DS_Store
+db.sqlite3
+.idea/
+logs/
+venv/
+.vscode/
+media/
+static/
+__pycache__/
+*.crt
+*.key

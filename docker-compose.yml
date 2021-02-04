@@ -1,33 +1,15 @@
-version: "3.8"
+version: '3'
 
 services:
   api:
-    environment:
-      - API_PATH=server/api/
-      - MEDIA_PATH=${API_PATH}media/
-      - STATIC_PATH=${API_PATH}static/
-    build: ./api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8001
+    hostname: api
     volumes:
-      - static_volume:${STATIC_PATH}
-      - media_volume:${MEDIA_PATH}
-    depends_on:
-      - db
-  db:
-    image: postgres:12.0-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-  nginx:
-    build: ./nginx
-    volumes:
-      - static_volume:${STATIC_PATH}
-      - media_volume:${MEDIA_PATH}
+      - ./api:/api
+      - ./api/static:/api/static
+      - ./api/media:/api/media
     ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - api
-
-volumes:
-  static_volume:
-  media_volume:
-  postgres_data:
+      - "8001:8001"
