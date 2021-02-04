@@ -22,9 +22,11 @@ user_urls = [
         views.UserAnnouncementsListView.as_view(),
         name="user-announcements",
     ),
-    path("<int:user_id>/feed/",
-         views.FeedForUserListView.as_view(),
-         name="feed-for-user",),
+    path(
+        "<int:user_id>/feed/",
+        views.FeedForUserListView.as_view(),
+        name="feed-for-user",
+    ),
     path(
         "<int:user_id>/announcements_map/",
         views.AnnouncementsMapForUserListView.as_view(),

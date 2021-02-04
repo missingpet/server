@@ -103,4 +103,4 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 class AnnouncementsMapSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Announcement
-        fields = ('id', 'latitude', 'longitude')
+        fields = ("id", "latitude", "longitude")

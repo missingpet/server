@@ -51,7 +51,7 @@ LOGGING = {
     },
 }
 
-LOCAL_APPS = ('pet.apps.PetConfig', )
+LOCAL_APPS = ("pet.apps.PetConfig", )
 
 THIRD_PARTY_APPS = (
     "rest_framework",
@@ -60,14 +60,14 @@ THIRD_PARTY_APPS = (
     "django_cleanup.apps.CleanupConfig",
 )
 
-INSTALLED_APPS = (
+INSTALLED_APPS = ((
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-) + THIRD_PARTY_APPS + LOCAL_APPS
+) + THIRD_PARTY_APPS + LOCAL_APPS)
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
@@ -93,7 +93,7 @@ TEMPLATES = ({
             "django.contrib.messages.context_processors.messages",
         ),
     },
-},)
+}, )
 
 WSGI_APPLICATION = "conf.wsgi.application"
 
