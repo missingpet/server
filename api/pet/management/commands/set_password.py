@@ -8,7 +8,10 @@ from ...models import User
 class Command(BaseCommand):
     def add_arguments(self, parser):
 
-        parser.add_argument("-e", "--email", type=str, help="Адрес электронной почты")
+        parser.add_argument("-e",
+                            "--email",
+                            type=str,
+                            help="Адрес электронной почты")
 
         parser.add_argument("-p", "--password", type=str, help="Пароль")
 

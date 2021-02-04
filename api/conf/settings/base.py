@@ -4,7 +4,8 @@ from datetime import timedelta
 
 SECRET_KEY = os.environ["APP_SECRET"]
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 LOGS_DIR = os.path.join(BASE_DIR, "logs/")
 
@@ -50,7 +51,7 @@ LOGGING = {
     },
 }
 
-LOCAL_APPS = ("pet.apps.PetConfig",)
+LOCAL_APPS = ("pet.apps.PetConfig", )
 
 THIRD_PARTY_APPS = (
     "rest_framework",
@@ -59,18 +60,14 @@ THIRD_PARTY_APPS = (
     "django_cleanup.apps.CleanupConfig",
 )
 
-INSTALLED_APPS = (
-    (
-        "django.contrib.admin",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.sessions",
-        "django.contrib.messages",
-        "django.contrib.staticfiles",
-    )
-    + THIRD_PARTY_APPS
-    + LOCAL_APPS
-)
+INSTALLED_APPS = ((
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+) + THIRD_PARTY_APPS + LOCAL_APPS)
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
@@ -84,36 +81,38 @@ MIDDLEWARE = (
 
 ROOT_URLCONF = "conf.urls"
 
-TEMPLATES = (
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": (
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ),
-        },
+TEMPLATES = ({
+    "BACKEND": "django.template.backends.django.DjangoTemplates",
+    "DIRS": [],
+    "APP_DIRS": True,
+    "OPTIONS": {
+        "context_processors": (
+            "django.template.context_processors.debug",
+            "django.template.context_processors.request",
+            "django.contrib.auth.context_processors.auth",
+            "django.contrib.messages.context_processors.messages",
+        ),
     },
-)
+}, )
 
 WSGI_APPLICATION = "conf.wsgi.application"
 
 AUTH_PASSWORD_VALIDATORS = (
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 )
 
@@ -134,7 +133,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-AUTHENTICATION_BACKENDS = ("pet.auth.EmailAuthBackend",)
+AUTHENTICATION_BACKENDS = ("pet.auth.EmailAuthBackend", )
 
 AUTH_USER_MODEL = "pet.User"
 
@@ -149,11 +148,11 @@ MEDIA_TEST_ROOT = os.path.join(MEDIA_ROOT, "tests/")
 ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
 
 SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_TYPES": ("Bearer", ),
     "SIGNING_KEY": SECRET_KEY,
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken", ),
 }
 
 SWAGGER_SETTINGS = {

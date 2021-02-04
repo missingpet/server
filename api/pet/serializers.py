@@ -10,13 +10,11 @@ from . import models
 class AuthSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super(AuthSerializer, self).validate(attrs)
-        data.update(
-            {
-                "id": self.user.id,
-                "email": self.user.email,
-                "nickname": self.user.nickname,
-            }
-        )
+        data.update({
+            "id": self.user.id,
+            "email": self.user.email,
+            "nickname": self.user.nickname,
+        })
         return data
 
 
@@ -39,11 +37,11 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
         if not nickname.isalnum():
             raise serializers.ValidationError(
-                "Nickname should contains only alphanumeric characters."
-            )
+                "Nickname should contains only alphanumeric characters.")
 
         if models.User.objects.filter(email=email).exists():
-            raise serializers.ValidationError("User with this email already exists.")
+            raise serializers.ValidationError(
+                "User with this email already exists.")
 
         return attrs
 
@@ -76,20 +74,18 @@ class AnnouncementSerializer(serializers.ModelSerializer):
             )
 
         if imghdr.what(photo) not in {"jpeg", "png"}:
-            raise serializers.ValidationError("Image extension should be jpeg or png.")
+            raise serializers.ValidationError(
+                "Image extension should be jpeg or png.")
         if photo.size > 5242880:
             raise serializers.ValidationError(
-                "Image size should be less than 5 megabytes."
-            )
+                "Image size should be less than 5 megabytes.")
 
         if latitude < -90.0 or latitude > 90.0:
             raise serializers.ValidationError(
-                "Latitude should take value between -90,0 and 90,0."
-            )
+                "Latitude should take value between -90,0 and 90,0.")
         if longitude < -180.0 or longitude > 180.0:
             raise serializers.ValidationError(
-                "Longitude should take value between -180,0 and 180,0."
-            )
+                "Longitude should take value between -180,0 and 180,0.")
 
         if announcement_type not in {1, 2}:
             raise serializers.ValidationError(
