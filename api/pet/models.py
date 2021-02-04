@@ -7,13 +7,12 @@ from django.db import models
 
 class UserManager(BaseUserManager):
     """Custom user manager."""
-
     def create_user(self, email, nickname, password, **extra_fields):
         if not email or not nickname:
             raise ValueError("All fields are required.")
-        user = self.model(
-            email=self.normalize_email(email), nickname=nickname, **extra_fields
-        )
+        user = self.model(email=self.normalize_email(email),
+                          nickname=nickname,
+                          **extra_fields)
         user.set_password(password)
         user.save()
         return user
@@ -33,16 +32,19 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom user with email as a username."""
 
-    email = models.EmailField("Адрес электронной почты", unique=True, db_index=True)
+    email = models.EmailField("Адрес электронной почты",
+                              unique=True,
+                              db_index=True)
     nickname = models.CharField("Никнейм", max_length=64)
     is_staff = models.BooleanField("Статус персонала", default=False)
-    is_superuser = models.BooleanField("Статус суперпользователя", default=False)
+    is_superuser = models.BooleanField("Статус суперпользователя",
+                                       default=False)
     is_active = models.BooleanField("Активирован", default=True)
     created_at = models.DateTimeField("Создан", auto_now_add=True)
     updated_at = models.DateTimeField("Обновлён", auto_now=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ("nickname",)
+    REQUIRED_FIELDS = ("nickname", )
 
     objects = UserManager()
 
@@ -66,21 +68,21 @@ class Announcement(models.Model):
     OTHERS = 3
     ANIMAL_TYPES = ((DOGS, "Собаки"), (CATS, "Кошки"), (OTHERS, "Иные"))
 
-    user = models.ForeignKey(
-        User, models.CASCADE, "announcements", verbose_name="Пользователь"
-    )
+    user = models.ForeignKey(User,
+                             models.CASCADE,
+                             "announcements",
+                             verbose_name="Пользователь")
     description = models.CharField("Описание", max_length=5000)
-    photo = models.ImageField(
-        "Фотография животного", upload_to=settings.ANNOUNCEMENTS_PHOTO
-    )
-    announcement_type = models.IntegerField(
-        "Тип объявления", choices=ANNOUNCEMENT_TYPES
-    )
+    photo = models.ImageField("Фотография животного",
+                              upload_to=settings.ANNOUNCEMENTS_PHOTO)
+    announcement_type = models.IntegerField("Тип объявления",
+                                            choices=ANNOUNCEMENT_TYPES)
     animal_type = models.IntegerField("Тип животного", choices=ANIMAL_TYPES)
     address = models.CharField("Место пропажи или находки", max_length=1000)
     latitude = models.FloatField("Широта")
     longitude = models.FloatField("Долгота")
-    contact_phone_number = models.CharField("Контактный телефон", max_length=12)
+    contact_phone_number = models.CharField("Контактный телефон",
+                                            max_length=12)
     created_at = models.DateTimeField("Создано", auto_now_add=True)
     updated_at = models.DateTimeField("Обновлено", auto_now=True)
 
