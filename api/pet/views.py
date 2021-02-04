@@ -1,6 +1,8 @@
+from rest_framework.views import APIView
 from rest_framework import viewsets, generics
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import AllowAny
+from rest_framework.renderers import TemplateHTMLRenderer
 
 from . import models
 from . import serializers
@@ -20,11 +22,11 @@ class UserCreateView(generics.CreateAPIView):
 
     queryset = models.User
     serializer_class = serializers.UserCreateSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):
-    """Use to create a new announcement, \
+    """Use to create a new announcement,
     retrieve/delete an announcement with given id or to get the whole announcements list."""
 
     queryset = models.Announcement.objects.all()
@@ -40,7 +42,7 @@ class BaseAnnouncementUserListView(generics.ListAPIView):
     """Base announcement user view to extend in subclasses."""
 
     serializer_class = serializers.AnnouncementSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
     pagination_class = AnnouncementPagination
     lookup_field = 'user_id'
 
@@ -53,7 +55,7 @@ class UserAnnouncementsListView(BaseAnnouncementUserListView):
 
 
 class FeedForUserListView(BaseAnnouncementUserListView):
-    """Use to get feed for user with given user id \
+    """Use to get feed for user with given user id
     (Announcements that belong to this user are excluded)."""
 
     def get_queryset(self):
@@ -64,7 +66,7 @@ class BaseAnnouncementsMapListView(generics.ListAPIView):
     """Base announcements map view to extend in subclasses."""
 
     serializer_class = serializers.AnnouncementsMapSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
 
 
 class AnnouncementsMapListView(BaseAnnouncementsMapListView):
@@ -74,10 +76,22 @@ class AnnouncementsMapListView(BaseAnnouncementsMapListView):
 
 
 class AnnouncementsMapForUserListView(BaseAnnouncementsMapListView):
-    """Use to get announcements map without announcements \
+    """Use to get announcements map without announcements
     that belong to user with given user id."""
 
     lookup_field = "user_id"
 
     def get_queryset(self):
         return models.Announcement.objects.get_feed_for_user(self.kwargs.get(self.lookup_field))
+
+
+class SetNewPasswordView(APIView):
+    """Use to set new password for user.
+    Not implemented yet."""
+
+    serializer_class = serializers.SetNewPasswordSerializer
+    renderer_classes = (TemplateHTMLRenderer, )
+    template_name = 'set_new_password.html'
+
+    def post(self, request):
+        pass
