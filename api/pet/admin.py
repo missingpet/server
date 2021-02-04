@@ -7,7 +7,7 @@ from . import forms
 
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
-    form = forms.UserForm
+    form = forms.UserAdminForm
     readonly_fields = ('last_login', )
     list_display = ('id', 'nickname', 'email', 'created_at', 'is_active')
     list_display_links = ('id',
@@ -20,7 +20,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(models.Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
-    form = forms.AnnouncementForm
+    form = forms.AnnouncementAdminForm
     list_display = ('id',
                     'user',
                     'announcement_type',
