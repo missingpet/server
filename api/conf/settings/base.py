@@ -124,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = (
 
 LANGUAGE_CODE = "ru-RU"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -137,6 +137,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning'
 }
 
 AUTHENTICATION_BACKENDS = (
@@ -148,12 +149,12 @@ AUTH_USER_MODEL = 'pet.User'
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 MEDIA_TEST_ROOT = os.path.join(MEDIA_ROOT, 'tests/')
 
-ANNOUNCEMENTS_PHOTO = "pet/%Y/%m/%d/"
+ANNOUNCEMENTS_PHOTO = 'announcements/%Y/%m/%d/'
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
