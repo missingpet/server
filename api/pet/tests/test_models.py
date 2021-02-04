@@ -1,40 +1,54 @@
 from django.test import tag
 from django.test import TestCase
 
-from ..models import User
+from .. import models
+
+from . import test_data
 
 
-class UserModelTestCases(TestCase):
+class ModelsTestCases(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user("user", "user@email.com",
-                                             "User123*")
-        self.superuser = User.objects.create_superuser("superuser",
-                                                       "superuser@email.com",
-                                                       "Superuser456*")
+        self.user = models.User.objects.create_user(
+            test_data.TEST_USER_EMAIL,
+            test_data.TEST_USER_NICKNAME,
+            test_data.TEST_USER_PASSWORD,
+        )
+        self.superuser = models.User.objects.create_superuser(
+            test_data.TEST_SUPERUSER_EMAIL,
+            test_data.TEST_SUPERUSER_NICKNAME,
+            test_data.TEST_SUPERUSER_PASSWORD,
+        )
 
-    @tag("users-count")
+    @tag('users-count')
     def test_users_count(self):
-        pass
+        self.assertEqual(models.User.objects.count(), 2)
 
-    @tag("nickname")
+    @tag('nickname')
     def test_nickname(self):
-        pass
+        self.assertEqual(self.user.nickname, test_data.TEST_USER_NICKNAME)
+        self.assertEqual(self.superuser.nickname, test_data.TEST_SUPERUSER_NICKNAME)
 
-    @tag("email")
+    @tag('email')
     def test_email(self):
-        pass
+        self.assertEqual(self.user.email, test_data.TEST_USER_EMAIL)
+        self.assertEqual(self.superuser.email, test_data.TEST_SUPERUSER_EMAIL)
 
-    @tag("password")
+    @tag('password')
     def test_password(self):
-        pass
+        self.assertTrue(self.user.check_password(test_data.TEST_USER_PASSWORD))
+        self.assertTrue(self.superuser.check_password(test_data.TEST_SUPERUSER_PASSWORD))
 
-    @tag("is-active")
+    @tag('is-active')
     def test_is_active(self):
-        pass
+        self.assertTrue(self.user.is_active)
+        self.assertTrue(self.superuser.is_active)
 
-    @tag("user-rights")
+    @tag('user-rights')
     def test_user_rights(self):
-        pass
+        self.assertTrue(self.superuser.is_superuser)
+        self.assertFalse(self.user.is_superuser)
+        self.assertTrue(self.superuser.is_staff)
+        self.assertFalse(self.user.is_staff)
 
     def tearDown(self):
         pass

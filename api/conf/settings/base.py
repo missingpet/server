@@ -8,8 +8,6 @@ BASE_DIR = os.path.dirname(
 
 LOGS_DIR = os.path.join(BASE_DIR, "logs/")
 
-LOG_FILE_NAME = "debug.log"
-
 try:
     os.mkdir(LOGS_DIR)
 except OSError:
@@ -28,7 +26,7 @@ LOGGING = {
         "file": {
             "level": "DEBUG",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": os.path.join(LOGS_DIR, LOG_FILE_NAME),
+            "filename": os.path.join(LOGS_DIR, "debug.log"),
             "maxBytes": 1024 * 1024 * 20,
             "backupCount": 4,
             "formatter": "verbose",
@@ -52,24 +50,23 @@ LOGGING = {
     },
 }
 
-LOCAL_APPS = ("pet.apps.PetConfig", )
+LOCAL_APPS = ('pet.apps.PetConfig', )
 
 THIRD_PARTY_APPS = (
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_yasg",
-    "admin_reorder",
     "django_cleanup.apps.CleanupConfig",
 )
 
-INSTALLED_APPS = ((
+INSTALLED_APPS = (
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-) + THIRD_PARTY_APPS + LOCAL_APPS)
+) + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
@@ -79,7 +76,6 @@ MIDDLEWARE = (
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "admin_reorder.middleware.ModelAdminReorder",
 )
 
 ROOT_URLCONF = "conf.urls"
@@ -96,7 +92,7 @@ TEMPLATES = ({
             "django.contrib.messages.context_processors.messages",
         ),
     },
-}, )
+},)
 
 WSGI_APPLICATION = "conf.wsgi.application"
 
@@ -134,8 +130,6 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_VERSIONING_CLASS":
-    "rest_framework.versioning.NamespaceVersioning",
 }
 
 AUTHENTICATION_BACKENDS = ("pet.auth.EmailAuthBackend", )
@@ -173,14 +167,3 @@ SWAGGER_SETTINGS = {
     "LOGIN_URL": "rest_framework:login",
     "LOGOUT_URL": "rest_framework:logout",
 }
-
-ADMIN_REORDER = (
-    {
-        "app": "pet",
-        "label": "Объявления",
-    },
-    {
-        "app": "users",
-        "label": "Пользователи"
-    },
-)

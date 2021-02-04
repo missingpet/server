@@ -14,11 +14,9 @@ schema_view = get_schema_view(Info("MissingPet API", ""),
 
 api_urls = [
     path("", include("pet.urls")),
-    path(
-        "swagger/",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="schema-swagger-ui",
-    ),
+    path('swagger/',
+         schema_view.with_ui("swagger", cache_timeout=0),
+         name="schema-swagger-ui"),
     path("", include("rest_framework.urls", namespace="rest_framework")),
 ]
 
