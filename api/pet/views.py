@@ -2,7 +2,6 @@ from rest_framework.views import APIView
 from rest_framework import viewsets, generics
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import AllowAny
-from rest_framework.renderers import TemplateHTMLRenderer
 
 from . import models
 from . import serializers
@@ -86,12 +85,5 @@ class AnnouncementsMapForUserListView(BaseAnnouncementsMapListView):
 
 
 class SetNewPasswordView(APIView):
-    """Use to set new password for user.
-    Not implemented yet."""
-
-    serializer_class = serializers.SetNewPasswordSerializer
-    renderer_classes = (TemplateHTMLRenderer, )
-    template_name = 'set_new_password.html'
-
-    def post(self, request):
-        pass
+    """Use to set new password for user. Not implemented yet."""
+    pass

@@ -94,21 +94,21 @@ class AnnouncementsMapSerializer(serializers.ModelSerializer):
         fields = ('id', 'latitude', 'longitude')
 
 
-class SetNewPasswordSerializer(serializers.Serializer):
-    new_password = serializers.CharField(min_length=6,
-                                         max_length=128,
-                                         style={'input_type': 'password',
-                                                'placeholder': _('Введите новый пароль')})
-    repeat_new_password = serializers.CharField(min_length=6,
-                                                max_length=128,
-                                                style={'input_type': 'password',
-                                                       'placeholder': _('Повторите новый пароль')})
-
-    def validate(self, attrs):
-        new_password = attrs.get('new_password')
-        repeat_new_password = attrs.get('repeat_new_password')
-
-        if new_password != repeat_new_password:
-            raise serializers.ValidationError(_('Пароли не совпадают'))
-
-        return attrs
+# class SetNewPasswordSerializer(serializers.Serializer):
+#     new_password = serializers.CharField(min_length=6,
+#                                          max_length=128,
+#                                          style={'input_type': 'password',
+#                                                 'placeholder': _('Введите новый пароль')})
+#     repeat_new_password = serializers.CharField(min_length=6,
+#                                                 max_length=128,
+#                                                 style={'input_type': 'password',
+#                                                        'placeholder': _('Повторите новый пароль')})
+#
+#     def validate(self, attrs):
+#         new_password = attrs.get('new_password')
+#         repeat_new_password = attrs.get('repeat_new_password')
+#
+#         if new_password != repeat_new_password:
+#             raise serializers.ValidationError(_('Пароли не совпадают'))
+#
+#         return attrs
