@@ -22,9 +22,11 @@ user_urls = [
         views.UserAnnouncementsListView.as_view(),
         name="user-announcements",
     ),
-    path("<int:user_id>/feed/",
-         views.FeedForUserListView.as_view(),
-         name="feed-for-user",),
+    path(
+        "<int:user_id>/feed/",
+        views.FeedForUserListView.as_view(),
+        name="feed-for-user",
+    ),
     path(
         "<int:user_id>/announcements_map/",
         views.AnnouncementsMapForUserListView.as_view(),
@@ -35,26 +37,18 @@ user_urls = [
 announcement_urls = [
     path(
         "<int:pk>/",
-        views.AnnouncementViewSet.as_view({
-            "get": "retrieve",
-            "delete": "destroy"
-        }),
+        views.AnnouncementViewSet.as_view({"get": "retrieve", "delete": "destroy"}),
         name="retrieve-destroy-announcement",
     ),
     path(
         "",
-        views.AnnouncementViewSet.as_view({
-            "get": "list",
-            "post": "create"
-        }),
+        views.AnnouncementViewSet.as_view({"get": "list", "post": "create"}),
         name="list-create-announcement",
     ),
 ]
 
 announcements_map_urls = [
-    path("",
-         views.AnnouncementsMapListView.as_view(),
-         name="announcements-map"),
+    path("", views.AnnouncementsMapListView.as_view(), name="announcements-map"),
 ]
 
 urlpatterns = [
