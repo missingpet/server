@@ -1,5 +1,4 @@
 """Test cases for views."""
-
 from django.test import tag
 from rest_framework.test import APITestCase
 

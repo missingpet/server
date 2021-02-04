@@ -1,9 +1,8 @@
 """Test cases for models."""
-
 from django import test
 
-from .. import models
 from . import test_data
+from .. import models
 
 
 class ModelsTestCases(test.TestCase):

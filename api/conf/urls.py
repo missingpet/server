@@ -1,10 +1,10 @@
 """URL configuration module."""
-
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.admin import sites
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import include, path
+from django.urls import include
+from django.urls import path
 from drf_yasg.openapi import Info
 from drf_yasg.views import get_schema_view
 from rest_framework.permissions import AllowAny
