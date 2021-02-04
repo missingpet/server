@@ -1,6 +1,4 @@
-from django.contrib.auth import backends
-from django.contrib.auth import get_user_model
-
+from django.contrib.auth import backends, get_user_model
 
 UserModel = get_user_model()
 
