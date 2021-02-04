@@ -52,18 +52,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class AnnouncementManager(models.Manager):
-    """Custom announcement manager."""
-
-    def get_feed_for_user(self, user_id):
-        return self.get_queryset().exclude(user_id=user_id).order_by('-created_at')
-
-    def get_announcements_of_user(self, user_id):
-        return self.get_queryset().filter(user_id=user_id).order_by('-created_at')
-
-
 class Announcement(models.Model):
-    """Announcement of a missing or found pet."""
+    """Announcement about lost or found pet."""
 
     LOST = 1
     FOUND = 2
@@ -90,8 +80,6 @@ class Announcement(models.Model):
     contact_phone_number = models.CharField("Контактный телефон", max_length=12)
     created_at = models.DateTimeField("Создано", auto_now_add=True)
     updated_at = models.DateTimeField("Обновлено", auto_now=True)
-
-    objects = AnnouncementManager()
 
     class Meta:
         verbose_name = 'Объявление'

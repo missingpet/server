@@ -1,4 +1,3 @@
-from rest_framework.views import APIView
 from rest_framework import viewsets, generics
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import AllowAny
@@ -25,8 +24,9 @@ class UserCreateView(generics.CreateAPIView):
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):
-    """Use to create a new announcement,
-    retrieve/delete an announcement with given id or to get the whole announcements list."""
+    """Use to create a new announcement, \
+    retrieve/delete an announcement \
+    with given id or to get the whole announcements list."""
 
     queryset = models.Announcement.objects.all()
     serializer_class = serializers.AnnouncementSerializer
@@ -50,15 +50,17 @@ class UserAnnouncementsListView(BaseAnnouncementUserListView):
     """Use to get announcements that belong to user with given user id."""
 
     def get_queryset(self):
-        return models.Announcement.objects.get_announcements_of_user(self.kwargs.get(self.lookup_field))
+        return models.Announcement.objects.filter(
+            user_id=self.kwargs.get(self.lookup_field)).order_by('-created_at')
 
 
 class FeedForUserListView(BaseAnnouncementUserListView):
-    """Use to get feed for user with given user id
+    """Use to get feed for user with given user id \
     (Announcements that belong to this user are excluded)."""
 
     def get_queryset(self):
-        return models.Announcement.objects.get_feed_for_user(self.kwargs.get(self.lookup_field))
+        return models.Announcement.objects.exclude(
+            user_id=self.kwargs.get(self.lookup_field)).order_by('-created_at')
 
 
 class BaseAnnouncementsMapListView(generics.ListAPIView):
@@ -75,15 +77,11 @@ class AnnouncementsMapListView(BaseAnnouncementsMapListView):
 
 
 class AnnouncementsMapForUserListView(BaseAnnouncementsMapListView):
-    """Use to get announcements map without announcements
+    """Use to get announcements map without announcements \
     that belong to user with given user id."""
 
     lookup_field = "user_id"
 
     def get_queryset(self):
-        return models.Announcement.objects.get_feed_for_user(self.kwargs.get(self.lookup_field))
-
-
-class SetNewPasswordView(APIView):
-    """Use to set new password for user. Not implemented yet."""
-    pass
+        return models.Announcement.objects.exclude(
+            user_id=self.kwargs.get(self.lookup_field)).order_by('-created_at')

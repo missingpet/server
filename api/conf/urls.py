@@ -7,10 +7,7 @@ from drf_yasg.openapi import Info
 from drf_yasg.views import get_schema_view
 from rest_framework.permissions import AllowAny
 
-API_NAME = 'MissingPet API'
-DEFAULT_API_VERSION = ''
-
-schema_view = get_schema_view(Info(API_NAME, DEFAULT_API_VERSION),
+schema_view = get_schema_view(Info('MissingPet API', ''),
                               permission_classes=(AllowAny,),
                               public=True)
 
