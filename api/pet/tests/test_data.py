@@ -1,9 +1,19 @@
-"""Test data for unit-testing."""
+"""Data for unit-testing."""
 
-TEST_USER_EMAIL = 'user@email.com'
-TEST_USER_NICKNAME = 'user'
-TEST_USER_PASSWORD = 'User123*'
+test_user_email = 'user@email.com'
+test_user_nickname = 'user'
+test_user_password = 'User123*'
+test_user_data = {
+    'email': test_user_email,
+    'nickname': test_user_nickname,
+    'password': test_user_password,
+}
 
-TEST_SUPERUSER_EMAIL = 'superuser@email.com'
-TEST_SUPERUSER_NICKNAME = 'superuser'
-TEST_SUPERUSER_PASSWORD = 'SuperUser456*'
+test_superuser_email = 'superuser@email.com'
+test_superuser_nickname = 'superuser'
+test_superuser_password = 'SuperUser456*'
+test_superuser_data = {
+    'email': test_superuser_email,
+    'nickname': test_superuser_nickname,
+    'password': test_superuser_password,
+}

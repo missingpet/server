@@ -16,3 +16,5 @@ app:
 	python manage.py startapp $(name)
 start:
 	sh start-gunicorn.sh
+show:
+	python manage.py showmigrations

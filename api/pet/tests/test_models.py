@@ -9,14 +9,10 @@ class ModelsTestCases(test.TestCase):
 
     def setUp(self):
         self.user = models.User.objects.create_user(
-            test_data.TEST_USER_EMAIL,
-            test_data.TEST_USER_NICKNAME,
-            test_data.TEST_USER_PASSWORD,
+            **test_data.test_user_data,
         )
         self.superuser = models.User.objects.create_superuser(
-            test_data.TEST_SUPERUSER_EMAIL,
-            test_data.TEST_SUPERUSER_NICKNAME,
-            test_data.TEST_SUPERUSER_PASSWORD,
+            **test_data.test_superuser_data,
         )
 
     @test.tag('users-count')
@@ -25,18 +21,18 @@ class ModelsTestCases(test.TestCase):
 
     @test.tag('nickname')
     def test_nickname(self):
-        self.assertEqual(self.user.nickname, test_data.TEST_USER_NICKNAME)
-        self.assertEqual(self.superuser.nickname, test_data.TEST_SUPERUSER_NICKNAME)
+        self.assertEqual(self.user.nickname, test_data.test_user_nickname)
+        self.assertEqual(self.superuser.nickname, test_data.test_superuser_nickname)
 
     @test.tag('email')
     def test_email(self):
-        self.assertEqual(self.user.email, test_data.TEST_USER_EMAIL)
-        self.assertEqual(self.superuser.email, test_data.TEST_SUPERUSER_EMAIL)
+        self.assertEqual(self.user.email, test_data.test_user_email)
+        self.assertEqual(self.superuser.email, test_data.test_superuser_email)
 
     @test.tag('password')
     def test_password(self):
-        self.assertTrue(self.user.check_password(test_data.TEST_USER_PASSWORD))
-        self.assertTrue(self.superuser.check_password(test_data.TEST_SUPERUSER_PASSWORD))
+        self.assertTrue(self.user.check_password(test_data.test_user_password))
+        self.assertTrue(self.superuser.check_password(test_data.test_superuser_password))
 
     @test.tag('is-active')
     def test_is_active(self):
