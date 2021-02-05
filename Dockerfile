@@ -3,12 +3,6 @@ FROM python:3.8.6-slim-buster
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
-ENV APP_SECRET development-secret-key
-ENV APP_ENV development
-
-ARG APP_HOSTS
-ENV APP_HOSTS ${APP_HOSTS}
-
 WORKDIR /api
 
 RUN pip install --upgrade pip

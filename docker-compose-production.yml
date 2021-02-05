@@ -1,25 +1,31 @@
 version: "3"
 
 services:
-  ngunx:
+  nginx:
     build:
       context: ./nginx
       dockerfile: Dockerfile
     hostname: nginx
+    restart: on-failure
     volumes:
       - ./api/static:/api/static
       - ./api/media:/api/media
-      ports:
-        - "80:80"
-        - "443:443"
-      depends_on:
-        - api
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
   api:
     build:
       context: .
       dockerfile: Dockerfile
     command: exec gunicorn -c "gunicorn_config.py" conf.wsgi
     hostname: api
+    restart: on-failure
+    environment:
+      APP_ENV: production
+    env_file:
+      - ./production.env
     volumes:
       - ./api/static:/api/static
       - ./api/media:/api/media
@@ -30,5 +36,6 @@ services:
   postgres:
     image: postgres:12.0-alpine
     hostname: postgres
+    restart: on-failure
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - ./pgdata:/var/lib/postgresql/data/

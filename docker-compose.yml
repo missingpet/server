@@ -5,8 +5,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: python manage.py runserver 0.0.0.0:8001
+    command: python manage.py runserver 127.0.0.1:8001
     hostname: api
+    restart: always
+    environment:
+      APP_ENV: development
+    env_file:
+      - ./development.env
     volumes:
       - ./api:/api
       - ./api/static:/api/static
