@@ -1,5 +1,4 @@
-"""WSGI configuration module."""
-
+"""Project`s WSGI config."""
 import os
 
 from django.core.wsgi import get_wsgi_application

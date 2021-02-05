@@ -1,5 +1,4 @@
 """Test cases for models."""
-
 from django import test
 
 from .. import models
