@@ -1,4 +1,4 @@
-## Development
+## Installation
 
 Clone repository
 
