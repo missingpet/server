@@ -7,6 +7,7 @@ from django.db import models
 
 class UserManager(BaseUserManager):
     """Custom user manager."""
+
     def create_user(self, email, nickname, password, **extra_fields):
         if not email or not nickname:
             raise ValueError('All fields are required.')

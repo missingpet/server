@@ -22,7 +22,8 @@ class ModelsTestCases(test.TestCase):
     @test.tag('nickname')
     def test_nickname(self):
         self.assertEqual(self.user.nickname, test_data.test_user_nickname)
-        self.assertEqual(self.superuser.nickname, test_data.test_superuser_nickname)
+        self.assertEqual(self.superuser.nickname,
+                         test_data.test_superuser_nickname)
 
     @test.tag('email')
     def test_email(self):
@@ -32,7 +33,8 @@ class ModelsTestCases(test.TestCase):
     @test.tag('password')
     def test_password(self):
         self.assertTrue(self.user.check_password(test_data.test_user_password))
-        self.assertTrue(self.superuser.check_password(test_data.test_superuser_password))
+        self.assertTrue(self.superuser.check_password(
+            test_data.test_superuser_password))
 
     @test.tag('is-active')
     def test_is_active(self):
