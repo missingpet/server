@@ -14,8 +14,6 @@ test:
 	python manage.py test
 app:
 	python manage.py startapp $(name)
-start:
-	sh start-gunicorn.sh
 show:
 	python manage.py showmigrations
 venv:
