@@ -1,5 +1,5 @@
 FROM nginx:1.19.6-alpine
 
-COPY ./default.conf /etc/nginx/conf.d/default.conf
+EXPOSE 90
 
-EXPOSE 80 443
+COPY ./default.conf /etc/nginx/conf.d/default.conf

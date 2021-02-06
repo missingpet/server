@@ -1,20 +1,47 @@
-version: "3"
+version: '3.8'
 
 services:
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: python manage.py runserver 127.0.0.1:8001
-    hostname: api
-    restart: always
-    environment:
-      APP_ENV: development
-    env_file:
-      - ./development.env
+  nginx:
+    build: ./nginx
+    hostname: nginx
+    container_name: nginx_missing_pet
+    restart: on-failure
     volumes:
-      - ./api:/api
-      - ./api/static:/api/static
-      - ./api/media:/api/media
+      - static:/app/static
+      - media:/app/media
+    ports:
+      - "90:90"
+    depends_on:
+      - app
+  app:
+    build: ./app
+    hostname: app
+    container_name: app_missing_pet
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_PORT=5432
+    volumes:
+      - static:/app/static
+      - media:/app/media
     ports:
       - "8001:8001"
+    depends_on:
+      - db
+  db:
+    build: ./db
+    hostname: $POSTGRES_HOST
+    container_name: db_missing_pet
+    restart: on-failure
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    ports:
+    - "5432:5432"
+
+volumes:
+  static:
+  media:
+  pgdata:
