@@ -10,7 +10,7 @@ services:
       - static:/app/static
       - media:/app/media
     ports:
-      - "90:90"
+      - "80:80"
     depends_on:
       - app
   app:
