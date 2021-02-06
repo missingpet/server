@@ -1,3 +1,4 @@
+"""Custom django-admin command to perform password change."""
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management import BaseCommand
 
@@ -5,7 +6,6 @@ from ...models import User
 
 
 class Command(BaseCommand):
-    """Custom django-admin command to perform password change."""
     def add_arguments(self, parser):
 
         parser.add_argument(
