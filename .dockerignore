@@ -1,11 +1,11 @@
 media/
-logs/
 __pycache__/
 db.sqlite3
 .idea/
 .vscode/
+venv/
 .*ignore
 Dockerfile
 Makefile
-.env.template
+*.env.template
 *.md
