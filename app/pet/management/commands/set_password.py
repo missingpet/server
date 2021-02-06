@@ -6,7 +6,6 @@ from ...models import User
 
 class Command(BaseCommand):
     """Custom django-admin command to perform password change."""
-
     def add_arguments(self, parser):
 
         parser.add_argument(

@@ -7,12 +7,10 @@ from .. import models
 
 class ModelsTestCases(test.TestCase):
     def setUp(self):
-        self.user = models.User.objects.create_user(
-            **test_data.test_user_data,
-        )
+        self.user = models.User.objects.create_user(**test_data.test_user_data,
+                                                    )
         self.superuser = models.User.objects.create_superuser(
-            **test_data.test_superuser_data,
-        )
+            **test_data.test_superuser_data, )
 
     @test.tag("users-count")
     def test_users_count(self):
@@ -21,7 +19,8 @@ class ModelsTestCases(test.TestCase):
     @test.tag("nickname")
     def test_nickname(self):
         self.assertEqual(self.user.nickname, test_data.test_user_nickname)
-        self.assertEqual(self.superuser.nickname, test_data.test_superuser_nickname)
+        self.assertEqual(self.superuser.nickname,
+                         test_data.test_superuser_nickname)
 
     @test.tag("email")
     def test_email(self):
@@ -32,8 +31,7 @@ class ModelsTestCases(test.TestCase):
     def test_password(self):
         self.assertTrue(self.user.check_password(test_data.test_user_password))
         self.assertTrue(
-            self.superuser.check_password(test_data.test_superuser_password)
-        )
+            self.superuser.check_password(test_data.test_superuser_password))
 
     @test.tag("is-active")
     def test_is_active(self):

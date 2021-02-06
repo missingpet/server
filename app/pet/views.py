@@ -13,7 +13,7 @@ class AuthView(TokenObtainPairView):
     """Use to authenticate users."""
 
     serializer_class = serializers.AuthSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -21,7 +21,7 @@ class UserCreateView(generics.CreateAPIView):
 
     queryset = models.User
     serializer_class = serializers.UserCreateSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):
@@ -31,7 +31,7 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
 
     queryset = models.Announcement.objects.all()
     serializer_class = serializers.AnnouncementSerializer
-    permission_classes = (AnnouncementPermission,)
+    permission_classes = (AnnouncementPermission, )
     pagination_class = AnnouncementPagination
 
     def perform_create(self, serializer):
@@ -42,35 +42,31 @@ class BaseAnnouncementUserListView(generics.ListAPIView):
     """Base announcement user view to extend in subclasses."""
 
     serializer_class = serializers.AnnouncementSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
     pagination_class = AnnouncementPagination
     lookup_field = "user_id"
 
 
 class UserAnnouncementsListView(BaseAnnouncementUserListView):
     """Use to get announcements that belong to user with given user id."""
-
     def get_queryset(self):
         return models.Announcement.objects.filter(
-            user_id=self.kwargs.get(self.lookup_field)
-        ).order_by("-created_at")
+            user_id=self.kwargs.get(self.lookup_field)).order_by("-created_at")
 
 
 class FeedForUserListView(BaseAnnouncementUserListView):
     """Use to get feed for user with given user id \
     (Announcements that belong to this user are excluded)."""
-
     def get_queryset(self):
         return models.Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_field)
-        ).order_by("-created_at")
+            user_id=self.kwargs.get(self.lookup_field)).order_by("-created_at")
 
 
 class BaseAnnouncementsMapListView(generics.ListAPIView):
     """Base announcements map view to extend in subclasses."""
 
     serializer_class = serializers.AnnouncementsMapSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
 
 
 class AnnouncementsMapListView(BaseAnnouncementsMapListView):
@@ -87,5 +83,4 @@ class AnnouncementsMapForUserListView(BaseAnnouncementsMapListView):
 
     def get_queryset(self):
         return models.Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_field)
-        ).order_by("-created_at")
+            user_id=self.kwargs.get(self.lookup_field)).order_by("-created_at")
