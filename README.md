@@ -3,13 +3,13 @@
 Clone repository
 
 ```bash
-git clone https://github.com/missing-pet/server.git
+$ git clone https://github.com/missing-pet/server.git
 ```
 
 Change directory
 
 ```bash
-cd server/
+$ cd server/
 ```
 
 Create the following files from templates
@@ -23,5 +23,5 @@ app/conf/local_settings.py
 Build docker image
 
 ```bash
-docker-compose up --build
+$ docker-compose up --build
 ```
