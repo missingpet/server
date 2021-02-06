@@ -5,8 +5,7 @@ from datetime import timedelta
 from .credentials import *
 from .local_settings import *
 
-BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DATABASES = {
     "default": {
