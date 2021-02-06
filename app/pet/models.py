@@ -9,7 +9,7 @@ class UserManager(BaseUserManager):
     """Custom user manager."""
     def create_user(self, email, nickname, password, **extra_fields):
         if not email or not nickname:
-            raise ValueError('All fields are required.')
+            raise ValueError("All fields are required.")
         user = self.model(email=self.normalize_email(email),
                           nickname=nickname,
                           **extra_fields)

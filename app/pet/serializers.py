@@ -11,7 +11,7 @@ class AuthSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super(AuthSerializer, self).validate(attrs)
         data.update({
-            'id': self.user.id,
+            "id": self.user.id,
             "email": self.user.email,
             "nickname": self.user.nickname,
         })
@@ -29,7 +29,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.User
-        fields = ('email', 'nickname', 'password')
+        fields = ("email", "nickname", "password")
 
     def validate(self, attrs):
         email = attrs.get("email")
@@ -103,4 +103,4 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 class AnnouncementsMapSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Announcement
-        fields = ('id', 'latitude', 'longitude')
+        fields = ("id", "latitude", "longitude")

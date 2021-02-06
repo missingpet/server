@@ -6,8 +6,8 @@ from rest_framework_simplejwt.views import TokenVerifyView
 from . import views
 
 token_urls = [
-    path('refresh/', TokenRefreshView.as_view(), name="refresh"),
-    path('verify/', TokenVerifyView.as_view(), name="verify"),
+    path("refresh/", TokenRefreshView.as_view(), name="refresh"),
+    path("verify/", TokenVerifyView.as_view(), name="verify"),
 ]
 
 auth_urls = [
@@ -22,9 +22,11 @@ user_urls = [
         views.UserAnnouncementsListView.as_view(),
         name="user-announcements",
     ),
-    path("<int:user_id>/feed/",
-         views.FeedForUserListView.as_view(),
-         name="feed-for-user",),
+    path(
+        "<int:user_id>/feed/",
+        views.FeedForUserListView.as_view(),
+        name="feed-for-user",
+    ),
     path(
         "<int:user_id>/announcements_map/",
         views.AnnouncementsMapForUserListView.as_view(),

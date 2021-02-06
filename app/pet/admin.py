@@ -8,7 +8,7 @@ from . import models
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
     form = forms.UserAdminForm
-    readonly_fields = ('last_login', )
+    readonly_fields = ("last_login", )
     list_display = ("id", "nickname", "email", "created_at", "is_active")
     list_display_links = ("id", "nickname", "email")
     list_filter = ("is_staff", "is_superuser")

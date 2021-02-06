@@ -9,33 +9,33 @@ BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ['POSTGRES_DB'],
-        'USER': os.environ['POSTGRES_USER'],
-        'PASSWORD': os.environ['POSTGRES_PASSWORD'],
-        'HOST': os.environ['POSTGRES_HOST'],
-        'PORT': os.environ['POSTGRES_PORT'],
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.environ["POSTGRES_DB"],
+        "USER": os.environ["POSTGRES_USER"],
+        "PASSWORD": os.environ["POSTGRES_PASSWORD"],
+        "HOST": os.environ["POSTGRES_HOST"],
+        "PORT": os.environ["POSTGRES_PORT"],
     }
 }
 
-LOCAL_APPS = ('pet.apps.PetConfig', )
+LOCAL_APPS = ("pet.apps.PetConfig", )
 
 THIRD_PARTY_APPS = (
-    'rest_framework',
-    'rest_framework_simplejwt',
-    'drf_yasg',
-    'django_cleanup.apps.CleanupConfig',
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "drf_yasg",
+    "django_cleanup.apps.CleanupConfig",
 )
 
-INSTALLED_APPS = (
+INSTALLED_APPS = ((
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-) + THIRD_PARTY_APPS + LOCAL_APPS
+) + THIRD_PARTY_APPS + LOCAL_APPS)
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
@@ -47,7 +47,7 @@ MIDDLEWARE = (
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 )
 
-ROOT_URLCONF = 'conf.urls'
+ROOT_URLCONF = "conf.urls"
 
 TEMPLATES = ({
     "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -61,7 +61,7 @@ TEMPLATES = ({
             "django.contrib.messages.context_processors.messages",
         ),
     },
-},)
+}, )
 
 WSGI_APPLICATION = "conf.wsgi.application"
 
@@ -84,9 +84,9 @@ AUTH_PASSWORD_VALIDATORS = (
     },
 )
 
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = "ru-RU"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -101,9 +101,9 @@ REST_FRAMEWORK = {
     ),
 }
 
-AUTHENTICATION_BACKENDS = ('pet.auth.EmailAuthBackend', )
+AUTHENTICATION_BACKENDS = ("pet.auth.EmailAuthBackend", )
 
-AUTH_USER_MODEL = 'pet.User'
+AUTH_USER_MODEL = "pet.User"
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")

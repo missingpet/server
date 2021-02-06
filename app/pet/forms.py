@@ -6,10 +6,9 @@ from . import models
 class UserAdminForm(forms.ModelForm):
     """Form which uses to provide more detailed\
     information for \"User\" model in admin site."""
-
     class Meta:
         model = models.User
-        fields = '__all__'
+        fields = "__all__"
         help_texts = {
             "is_active": "Вместо удаления аккауна отключите этот пункт.",
             "is_staff":
@@ -26,7 +25,6 @@ class UserAdminForm(forms.ModelForm):
 class AnnouncementAdminForm(forms.ModelForm):
     """Form which uses to provide more detailed\
     information for \"Announcement\" model in admin site."""
-
     class Meta:
         model = models.Announcement
         fields = "__all__"
