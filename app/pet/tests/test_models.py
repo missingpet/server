@@ -6,7 +6,6 @@ from . import test_data
 
 
 class ModelsTestCases(test.TestCase):
-
     def setUp(self):
         self.user = models.User.objects.create_user(
             **test_data.test_user_data,
@@ -15,33 +14,33 @@ class ModelsTestCases(test.TestCase):
             **test_data.test_superuser_data,
         )
 
-    @test.tag('users-count')
+    @test.tag("users-count")
     def test_users_count(self):
         self.assertEqual(models.User.objects.count(), 2)
 
-    @test.tag('nickname')
+    @test.tag("nickname")
     def test_nickname(self):
         self.assertEqual(self.user.nickname, test_data.test_user_nickname)
-        self.assertEqual(self.superuser.nickname,
-                         test_data.test_superuser_nickname)
+        self.assertEqual(self.superuser.nickname, test_data.test_superuser_nickname)
 
-    @test.tag('email')
+    @test.tag("email")
     def test_email(self):
         self.assertEqual(self.user.email, test_data.test_user_email)
         self.assertEqual(self.superuser.email, test_data.test_superuser_email)
 
-    @test.tag('password')
+    @test.tag("password")
     def test_password(self):
         self.assertTrue(self.user.check_password(test_data.test_user_password))
-        self.assertTrue(self.superuser.check_password(
-            test_data.test_superuser_password))
+        self.assertTrue(
+            self.superuser.check_password(test_data.test_superuser_password)
+        )
 
-    @test.tag('is-active')
+    @test.tag("is-active")
     def test_is_active(self):
         self.assertTrue(self.user.is_active)
         self.assertTrue(self.superuser.is_active)
 
-    @test.tag('user-rights')
+    @test.tag("user-rights")
     def test_user_rights(self):
         self.assertTrue(self.superuser.is_superuser)
         self.assertFalse(self.user.is_superuser)

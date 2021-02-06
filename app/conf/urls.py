@@ -9,15 +9,17 @@ from drf_yasg.openapi import Info
 from drf_yasg.views import get_schema_view
 from rest_framework.permissions import AllowAny
 
-schema_view = get_schema_view(Info('MissingPet API', ''),
-                              permission_classes=(AllowAny, ),
-                              public=True)
+schema_view = get_schema_view(
+    Info("MissingPet API", ""), permission_classes=(AllowAny,), public=True
+)
 
 api_urls = [
     path("", include("pet.urls")),
-    path('swagger/',
-         schema_view.with_ui("swagger", cache_timeout=0),
-         name="schema-swagger-ui",),
+    path(
+        "swagger/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
     path("", include("rest_framework.urls", namespace="rest_framework")),
 ]
 

@@ -26,13 +26,12 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("password",
-                 models.CharField(max_length=128, verbose_name="password")),
+                ("password", models.CharField(max_length=128, verbose_name="password")),
                 (
                     "last_login",
-                    models.DateTimeField(blank=True,
-                                         null=True,
-                                         verbose_name="last login"),
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="last login"
+                    ),
                 ),
                 (
                     "email",
@@ -43,33 +42,28 @@ class Migration(migrations.Migration):
                         verbose_name="Адрес электронной почты",
                     ),
                 ),
-                ("nickname",
-                 models.CharField(max_length=64, verbose_name="Никнейм")),
+                ("nickname", models.CharField(max_length=64, verbose_name="Никнейм")),
                 (
                     "is_staff",
-                    models.BooleanField(default=False,
-                                        verbose_name="Статус персонала"),
+                    models.BooleanField(default=False, verbose_name="Статус персонала"),
                 ),
                 (
                     "is_superuser",
                     models.BooleanField(
-                        default=False,
-                        verbose_name="Статус суперпользователя"),
+                        default=False, verbose_name="Статус суперпользователя"
+                    ),
                 ),
                 (
                     "is_active",
-                    models.BooleanField(default=True,
-                                        verbose_name="Активирован"),
+                    models.BooleanField(default=True, verbose_name="Активирован"),
                 ),
                 (
                     "created_at",
-                    models.DateTimeField(auto_now_add=True,
-                                         verbose_name="Создан"),
+                    models.DateTimeField(auto_now_add=True, verbose_name="Создан"),
                 ),
                 (
                     "updated_at",
-                    models.DateTimeField(auto_now=True,
-                                         verbose_name="Обновлён"),
+                    models.DateTimeField(auto_now=True, verbose_name="Обновлён"),
                 ),
                 (
                     "groups",
@@ -117,8 +111,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "photo",
-                    models.ImageField(upload_to="pet/%Y/%m/%d/",
-                                      verbose_name="Фотография животного"),
+                    models.ImageField(
+                        upload_to="pet/%Y/%m/%d/", verbose_name="Фотография животного"
+                    ),
                 ),
                 (
                     "announcement_type",
@@ -136,25 +131,23 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "address",
-                    models.CharField(max_length=1000,
-                                     verbose_name="Место пропажи или находки"),
+                    models.CharField(
+                        max_length=1000, verbose_name="Место пропажи или находки"
+                    ),
                 ),
                 ("latitude", models.FloatField(verbose_name="Широта")),
                 ("longitude", models.FloatField(verbose_name="Долгота")),
                 (
                     "contact_phone_number",
-                    models.CharField(max_length=12,
-                                     verbose_name="Контактный телефон"),
+                    models.CharField(max_length=12, verbose_name="Контактный телефон"),
                 ),
                 (
                     "created_at",
-                    models.DateTimeField(auto_now_add=True,
-                                         verbose_name="Создано"),
+                    models.DateTimeField(auto_now_add=True, verbose_name="Создано"),
                 ),
                 (
                     "updated_at",
-                    models.DateTimeField(auto_now=True,
-                                         verbose_name="Обновлено"),
+                    models.DateTimeField(auto_now=True, verbose_name="Обновлено"),
                 ),
                 (
                     "user",
