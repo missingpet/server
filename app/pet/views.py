@@ -1,8 +1,10 @@
-from rest_framework import generics, viewsets
+from rest_framework import generics
+from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from . import models, serializers
+from . import models
+from . import serializers
 from .pagination_service import AnnouncementPagination
 from .permissions import AnnouncementPermission
 
