@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from . import forms
-from . import models
+from . import forms, models
 
 
 @admin.register(models.User)
