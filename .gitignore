@@ -1,11 +1,11 @@
 .DS_Store
+*.env
 db.sqlite3
 .idea/
-logs/
 venv/
 .vscode/
 media/
 __pycache__/
-*.crt
-*.key
-*.env
+credentials.py
+local_settings.py
+
