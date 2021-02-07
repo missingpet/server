@@ -1,24 +1,23 @@
 ## Development
 
-Clone repository
+**Clone repository**
 
 ```bash
 $ git clone https://github.com/missing-pet/server.git
 ```
 
-Change directory
+**Change directory**
 
 ```bash
 $ cd server/
 ```
 
-Create the following files from templates
+**Create the following files from templates**
 
- - .env
- - app/conf/credentials.py
- - app/conf/local_settings.py
+ - `app.env`
+ - `postgres.env`
 
-Build docker image
+**Build Docker image**
 
 ```bash
 $ docker-compose up --build
