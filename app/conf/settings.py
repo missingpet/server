@@ -1,29 +1,25 @@
 """Shared project settings."""
 import os
-from datetime import timedelta
+import datetime
 
 from .credentials import *
 from .local_settings import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-LOCAL_APPS = ("pet.apps.PetConfig", )
-
-THIRD_PARTY_APPS = (
-    "rest_framework",
-    "rest_framework_simplejwt",
-    "drf_yasg",
-    "django_cleanup.apps.CleanupConfig",
-)
-
-INSTALLED_APPS = ((
+INSTALLED_APPS = (
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-) + THIRD_PARTY_APPS + LOCAL_APPS)
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "drf_yasg",
+    "django_cleanup.apps.CleanupConfig",
+    "pet.apps.PetConfig",
+)
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
@@ -106,8 +102,8 @@ ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer", ),
     "SIGNING_KEY": SECRET_KEY,
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=7),
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken", ),
 }
 
