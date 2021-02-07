@@ -1,4 +1,5 @@
-from decouple import Csv, config
+from decouple import config
+from decouple import Csv
 
 DEBUG = config("DEBUG", default=False, cast=bool)
 
