@@ -1,4 +1,4 @@
-## Local Installation
+## Development
 
 #### Clone repository
 
