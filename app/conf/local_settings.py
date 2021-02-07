@@ -1,10 +1,11 @@
-from decouple import Csv, config
+from decouple import config
+from decouple import Csv
 
 DEBUG = config("DEBUG", default=False, cast=bool)
 
 SECRET_KEY = config("SECRET_KEY")
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv(post_process=tuple))
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv(post_process=tuple))
 
 DATABASES = {
     "default": {
