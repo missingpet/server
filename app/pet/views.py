@@ -51,7 +51,7 @@ class UserAnnouncementsListView(BaseAnnouncementUserListView):
     """Use to get announcements that belong to user with given user id."""
     def get_queryset(self):
         return models.Announcement.objects.filter(
-            user_id=self.kwargs.get(self.lookup_field)).order_by("-created_at")
+            user_id=self.kwargs.get(self.lookup_field))
 
 
 class FeedForUserListView(BaseAnnouncementUserListView):
@@ -59,7 +59,7 @@ class FeedForUserListView(BaseAnnouncementUserListView):
     (Announcements that belong to this user are excluded)."""
     def get_queryset(self):
         return models.Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_field)).order_by("-created_at")
+            user_id=self.kwargs.get(self.lookup_field))
 
 
 class BaseAnnouncementsMapListView(generics.ListAPIView):
@@ -83,4 +83,4 @@ class AnnouncementsMapForUserListView(BaseAnnouncementsMapListView):
 
     def get_queryset(self):
         return models.Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_field)).order_by("-created_at")
+            user_id=self.kwargs.get(self.lookup_field))
