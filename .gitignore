@@ -6,5 +6,3 @@ venv/
 .vscode/
 media/
 __pycache__/
-credentials.py
-local_settings.py
