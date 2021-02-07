@@ -4,7 +4,7 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 SECRET_KEY = config("SECRET_KEY")
 
-ALLOWED_HOSTS = tuple(config("ALLOWED_HOSTS", cast=Csv()))
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv(post_process=tuple))
 
 DATABASES = {
     "default": {
