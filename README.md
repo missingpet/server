@@ -1,4 +1,4 @@
-## Installation
+## Development
 
 Clone repository
 
@@ -14,11 +14,9 @@ $ cd server/
 
 Create the following files from templates
 
-```
-.env
-app/conf/credentials.py
-app/conf/local_settings.py
-```
+ - .env
+ - app/conf/credentials.py
+ - app/conf/local_settings.py
 
 Build docker image
 
