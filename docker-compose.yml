@@ -31,9 +31,9 @@ services:
     depends_on:
       - db
   db:
-    build: ./db
     hostname: db
     container_name: db_missing_pet
+    image: postgres:12.5-alpine
     restart: on-failure
     env_file:
       - .env
