@@ -20,13 +20,13 @@ class CustomUserAdmin(UserAdmin):
         ("Дополнительно", {
             'classes': ('collapse',),
             'fields': ("created_at", 'updated_at')}
-        ),
+         ),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
             'fields': ("email", 'nickname', "password1", "password2", 'is_active')}
-        ),
+         ),
         ("Особые права", {
             'classes': ('collapse',),
             'fields': ('is_superuser', 'is_staff')}
