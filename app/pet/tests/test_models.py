@@ -12,12 +12,12 @@ from .test_data import test_user_password
 
 class ModelsTestCases(test.TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(
-            test_user_email, test_user_nickname, test_user_password
-        )
+        self.user = User.objects.create_user(test_user_email,
+                                             test_user_nickname,
+                                             test_user_password)
         self.superuser = User.objects.create_superuser(
-            test_superuser_email, test_superuser_nickname, test_superuser_password
-        )
+            test_superuser_email, test_superuser_nickname,
+            test_superuser_password)
 
     @test.tag("users-count")
     def test_users_count(self):
