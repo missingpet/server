@@ -43,9 +43,9 @@ class AuthSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super(AuthSerializer, self).validate(attrs)
         data.update({
-            'id': self.user.id,
-            'email': self.user.email,
-            'nickname': self.user.nickname,
+            "id": self.user.id,
+            "email": self.user.email,
+            "nickname": self.user.nickname,
         })
         return data
 
@@ -79,7 +79,8 @@ class AnnouncementSerializer(serializers.ModelSerializer):
                 "Image extension should be jpeg or png.")
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE_IN_BYTES:
             raise serializers.ValidationError(
-                f'Image size should be less than {settings.MAX_PHOTO_UPLOAD_SIZE_IN_BYTES} megabytes.')
+                f"Image size should be less than {settings.MAX_PHOTO_UPLOAD_SIZE_IN_BYTES} megabytes."
+            )
 
         if latitude < -90.0 or latitude > 90.0:
             raise serializers.ValidationError(

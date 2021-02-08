@@ -76,8 +76,7 @@ class Announcement(models.Model):
                              "announcements",
                              verbose_name="Пользователь")
     description = models.CharField("Описание", max_length=5000)
-    photo = models.ImageField('Фотография животного',
-                              upload_to=upload_photo)
+    photo = models.ImageField("Фотография животного", upload_to=upload_photo)
     announcement_type = models.IntegerField("Тип объявления",
                                             choices=ANNOUNCEMENT_TYPES)
     animal_type = models.IntegerField("Тип животного", choices=ANIMAL_TYPES)

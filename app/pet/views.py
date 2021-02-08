@@ -44,7 +44,7 @@ class BaseAnnouncementUserListView(generics.ListAPIView):
     serializer_class = serializers.AnnouncementSerializer
     permission_classes = (AllowAny, )
     pagination_class = AnnouncementPagination
-    lookup_field = 'user_id'
+    lookup_field = "user_id"
 
 
 class UserAnnouncementsListView(BaseAnnouncementUserListView):
@@ -79,7 +79,7 @@ class MapForUserListView(BaseMapListView):
     """Use to get announcements map without announcements \
     that belong to user with given user id."""
 
-    lookup_field = 'user_id'
+    lookup_field = "user_id"
 
     def get_queryset(self):
         return models.Announcement.objects.exclude(
