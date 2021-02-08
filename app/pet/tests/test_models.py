@@ -2,14 +2,9 @@
 from django import test
 
 from ..models import User
-from .test_data import (
-    test_user_email,
-    test_user_nickname,
-    test_user_password,
-    test_superuser_email,
-    test_superuser_nickname,
-    test_superuser_password,
-)
+from .test_data import (test_superuser_email, test_superuser_nickname,
+                        test_superuser_password, test_user_email,
+                        test_user_nickname, test_user_password)
 
 
 class ModelsTestCases(test.TestCase):
