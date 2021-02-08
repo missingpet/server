@@ -4,6 +4,8 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
+from .photo_service import upload_photo
+
 
 class UserManager(BaseUserManager):
     """Custom user manager."""
@@ -74,8 +76,7 @@ class Announcement(models.Model):
                              "announcements",
                              verbose_name="Пользователь")
     description = models.CharField("Описание", max_length=5000)
-    photo = models.ImageField("Фотография животного",
-                              upload_to=settings.ANNOUNCEMENTS_PHOTO)
+    photo = models.ImageField("Фотография животного", upload_to=upload_photo)
     announcement_type = models.IntegerField("Тип объявления",
                                             choices=ANNOUNCEMENT_TYPES)
     animal_type = models.IntegerField("Тип животного", choices=ANIMAL_TYPES)

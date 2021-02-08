@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from . import models
 from . import serializers
-from .pagination_service import AnnouncementPagination
+from .pagination import AnnouncementPagination
 from .permissions import AnnouncementPermission
 
 
@@ -62,20 +62,20 @@ class FeedForUserListView(BaseAnnouncementUserListView):
             user_id=self.kwargs.get(self.lookup_field))
 
 
-class BaseAnnouncementsMapListView(generics.ListAPIView):
+class BaseMapListView(generics.ListAPIView):
     """Base announcements map view to extend in subclasses."""
 
     serializer_class = serializers.AnnouncementsMapSerializer
     permission_classes = (AllowAny, )
 
 
-class AnnouncementsMapListView(BaseAnnouncementsMapListView):
+class MapListView(BaseMapListView):
     """Use to get the whole announcements map."""
 
     queryset = models.Announcement.objects.all()
 
 
-class AnnouncementsMapForUserListView(BaseAnnouncementsMapListView):
+class MapForUserListView(BaseMapListView):
     """Use to get announcements map without announcements \
     that belong to user with given user id."""
 
