@@ -1,21 +1,11 @@
 import imghdr
 import re
 
+from django.conf import settings
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from . import models
-
-
-class AuthSerializer(TokenObtainPairSerializer):
-    def validate(self, attrs):
-        data = super(AuthSerializer, self).validate(attrs)
-        data.update({
-            "id": self.user.id,
-            "email": self.user.email,
-            "nickname": self.user.nickname,
-        })
-        return data
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -49,6 +39,17 @@ class UserCreateSerializer(serializers.ModelSerializer):
         return models.User.objects.create_user(**validated_data)
 
 
+class AuthSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super(AuthSerializer, self).validate(attrs)
+        data.update({
+            'id': self.user.id,
+            'email': self.user.email,
+            'nickname': self.user.nickname,
+        })
+        return data
+
+
 class AnnouncementSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
 
@@ -76,9 +77,9 @@ class AnnouncementSerializer(serializers.ModelSerializer):
         if imghdr.what(photo) not in {"jpeg", "png"}:
             raise serializers.ValidationError(
                 "Image extension should be jpeg or png.")
-        if photo.size > 5242880:
+        if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE_IN_BYTES:
             raise serializers.ValidationError(
-                "Image size should be less than 5 megabytes.")
+                f'Image size should be less than {settings.MAX_PHOTO_UPLOAD_SIZE_IN_BYTES} megabytes.')
 
         if latitude < -90.0 or latitude > 90.0:
             raise serializers.ValidationError(

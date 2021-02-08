@@ -97,7 +97,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 MEDIA_TEST_ROOT = os.path.join(MEDIA_ROOT, "tests/")
 
-ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
+ANNOUNCEMENTS_PHOTO = 'announcements/%Y/%m/%d/'
+
+MAX_PHOTO_UPLOAD_SIZE_IN_BYTES = 5242880
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer", ),

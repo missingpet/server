@@ -20,17 +20,17 @@ user_urls = [
     path(
         "<int:user_id>/announcements/",
         views.UserAnnouncementsListView.as_view(),
-        name="user-announcements",
+        name="user-announcements"
     ),
     path(
         "<int:user_id>/feed/",
         views.FeedForUserListView.as_view(),
-        name="feed-for-user",
+        name="feed-for-user"
     ),
     path(
-        "<int:user_id>/announcements_map/",
-        views.AnnouncementsMapForUserListView.as_view(),
-        name="announcements-map-for-user",
+        '<int:user_id>/map/',
+        views.MapForUserListView.as_view(),
+        name="map-for-user"
     ),
 ]
 
@@ -41,7 +41,7 @@ announcement_urls = [
             "get": "retrieve",
             "delete": "destroy"
         }),
-        name="retrieve-destroy-announcement",
+        name="retrieve-destroy-announcement"
     ),
     path(
         "",
@@ -49,19 +49,19 @@ announcement_urls = [
             "get": "list",
             "post": "create"
         }),
-        name="list-create-announcement",
+        name="list-create-announcement"
     ),
 ]
 
-announcements_map_urls = [
+map_urls = [
     path("",
-         views.AnnouncementsMapListView.as_view(),
-         name="announcements-map"),
+         views.MapListView.as_view(),
+         name="map"),
 ]
 
 urlpatterns = [
     path("user/", include(user_urls)),
     path("announcement/", include(announcement_urls)),
-    path("announcements_map/", include(announcements_map_urls)),
+    path("map/", include(map_urls)),
     path("auth/", include(auth_urls)),
 ]
