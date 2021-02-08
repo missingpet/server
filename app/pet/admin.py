@@ -1,24 +1,44 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.contrib.auth.admin import UserAdmin
 
-from . import forms
-from . import models
+from .forms import UserChangeCustomForm, UserCreationCustomForm
+from .models import User, Announcement
 
 
-@admin.register(models.User)
-class UserAdmin(admin.ModelAdmin):
-    form = forms.UserAdminForm
-    readonly_fields = ("last_login", )
-    list_display = ("id", "nickname", "email", "created_at", "is_active")
-    list_display_links = ("id", "nickname", "email")
-    list_filter = ("is_staff", "is_superuser")
-    search_fields = ("nickname", "email")
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    form = UserChangeCustomForm
+    add_form = UserCreationCustomForm
+    readonly_fields = ("last_login", 'created_at', "updated_at")
+    list_display = ("id", "email", "nickname", "created_at", 'updated_at')
+    list_display_links = ("id", "email", "nickname", )
+    list_filter = ("is_staff", "is_superuser", "is_active")
+    fieldsets = (
+        (None, {"fields": ("password", "email", "nickname", "is_active")}),
+        ("Особые права", {'fields': ("is_superuser", 'is_staff')}),
+        ("Дополнительно", {
+            'classes': ('collapse',),
+            'fields': ("created_at", 'updated_at')}
+        ),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ("email", 'nickname', "password1", "password2", 'is_active')}
+        ),
+        ("Особые права", {
+            'classes': ('collapse',),
+            'fields': ('is_superuser', 'is_staff')}
+         ),
+    )
+    search_fields = ("email", "nickname")
+    ordering = ("email", )
     save_on_top = True
 
 
-@admin.register(models.Announcement)
+@admin.register(Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
-    form = forms.AnnouncementAdminForm
     list_display = ("id", "user", "announcement_type", "animal_type",
                     "created_at")
     list_display_links = ("id", "user")
