@@ -27,7 +27,9 @@ class AnnouncementAdmin(admin.ModelAdmin):
     search_fields = ("description", "address")
 
     def get_photo(self, obj):
-        return format_html("<img src={} width={}>".format(obj.photo.url, 200))
+        src = obj.photo.url
+        width = 200
+        return format_html(f"<img src={src} width={width}>")
 
     get_photo.short_description = "Миниатюра"
 
