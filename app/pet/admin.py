@@ -1,36 +1,56 @@
 from django.contrib import admin
-from django.utils.html import format_html
 from django.contrib.auth.admin import UserAdmin
+from django.utils.html import format_html
 
-from .forms import UserChangeCustomForm, UserCreationCustomForm
-from .models import User, Announcement
+from .forms import UserChangeCustomForm
+from .forms import UserCreationCustomForm
+from .models import Announcement
+from .models import User
 
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     form = UserChangeCustomForm
     add_form = UserCreationCustomForm
-    readonly_fields = ("last_login", 'created_at', "updated_at")
-    list_display = ("id", "email", "nickname", "created_at", 'updated_at')
-    list_display_links = ("id", "email", "nickname", )
+    readonly_fields = ("last_login", "created_at", "updated_at")
+    list_display = ("id", "email", "nickname", "created_at", "updated_at")
+    list_display_links = (
+        "id",
+        "email",
+        "nickname",
+    )
     list_filter = ("is_staff", "is_superuser", "is_active")
     fieldsets = (
-        (None, {"fields": ("password", "email", "nickname", "is_active")}),
-        ("Особые права", {'fields': ("is_superuser", 'is_staff')}),
-        ("Дополнительно", {
-            'classes': ('collapse',),
-            'fields': ("created_at", 'updated_at')}
+        (None, {
+            "fields": ("password", "email", "nickname", "is_active")
+        }),
+        ("Особые права", {
+            "fields": ("is_superuser", "is_staff")
+        }),
+        (
+            "Дополнительно",
+            {
+                "classes": ("collapse", ),
+                "fields": ("created_at", "updated_at")
+            },
         ),
     )
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ("email", 'nickname', "password1", "password2", 'is_active')}
+        (
+            None,
+            {
+                "classes": ("wide", ),
+                "fields":
+                ("email", "nickname", "password1", "password2", "is_active"),
+            },
         ),
-        ("Особые права", {
-            'classes': ('collapse',),
-            'fields': ('is_superuser', 'is_staff')}
-         ),
+        (
+            "Особые права",
+            {
+                "classes": ("collapse", ),
+                "fields": ("is_superuser", "is_staff")
+            },
+        ),
     )
     search_fields = ("email", "nickname")
     ordering = ("email", )

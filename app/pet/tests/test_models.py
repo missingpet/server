@@ -2,14 +2,12 @@
 from django import test
 
 from ..models import User
-from .test_data import (
-    test_user_email,
-    test_user_nickname,
-    test_user_password,
-    test_superuser_email,
-    test_superuser_nickname,
-    test_superuser_password,
-)
+from .test_data import test_superuser_email
+from .test_data import test_superuser_nickname
+from .test_data import test_superuser_password
+from .test_data import test_user_email
+from .test_data import test_user_nickname
+from .test_data import test_user_password
 
 
 class ModelsTestCases(test.TestCase):
@@ -17,9 +15,9 @@ class ModelsTestCases(test.TestCase):
         self.user = User.objects.create_user(test_user_email,
                                              test_user_nickname,
                                              test_user_password)
-        self.superuser = User.objects.create_superuser(test_superuser_email,
-                                                       test_superuser_nickname,
-                                                       test_superuser_password)
+        self.superuser = User.objects.create_superuser(
+            test_superuser_email, test_superuser_nickname,
+            test_superuser_password)
 
     @test.tag("users-count")
     def test_users_count(self):
@@ -28,8 +26,7 @@ class ModelsTestCases(test.TestCase):
     @test.tag("nickname")
     def test_nickname(self):
         self.assertEqual(self.user.nickname, test_user_nickname)
-        self.assertEqual(self.superuser.nickname,
-                         test_superuser_nickname)
+        self.assertEqual(self.superuser.nickname, test_superuser_nickname)
 
     @test.tag("email")
     def test_email(self):
@@ -39,8 +36,7 @@ class ModelsTestCases(test.TestCase):
     @test.tag("password")
     def test_password(self):
         self.assertTrue(self.user.check_password(test_user_password))
-        self.assertTrue(
-            self.superuser.check_password(test_superuser_password))
+        self.assertTrue(self.superuser.check_password(test_superuser_password))
 
     @test.tag("is-active")
     def test_is_active(self):
