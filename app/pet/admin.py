@@ -2,8 +2,10 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 
-from .forms import UserChangeCustomForm, UserCreationCustomForm
-from .models import Announcement, User
+from .forms import UserChangeCustomForm
+from .forms import UserCreationCustomForm
+from .models import Announcement
+from .models import User
 
 
 @admin.register(User)
