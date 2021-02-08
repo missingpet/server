@@ -1,8 +1,8 @@
 .DS_Store
 *.env
 db.sqlite3
-.idea/
-venv/
-.vscode/
-media/
-__pycache__/
+.idea
+venv
+.vscode
+media
+__pycache__
