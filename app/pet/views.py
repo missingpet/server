@@ -13,7 +13,7 @@ class AuthView(TokenObtainPairView):
     """Use to authenticate users."""
 
     serializer_class = serializers.AuthSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -21,7 +21,7 @@ class UserCreateView(generics.CreateAPIView):
 
     queryset = models.User
     serializer_class = serializers.UserCreateSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):
@@ -31,7 +31,7 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
 
     queryset = models.Announcement.objects.all()
     serializer_class = serializers.AnnouncementSerializer
-    permission_classes = (AnnouncementPermission, )
+    permission_classes = (AnnouncementPermission,)
     pagination_class = AnnouncementPagination
 
     def perform_create(self, serializer):
@@ -42,9 +42,9 @@ class BaseAnnouncementUserListView(generics.ListAPIView):
     """Base announcement user view to extend in subclasses."""
 
     serializer_class = serializers.AnnouncementSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
     pagination_class = AnnouncementPagination
-    lookup_field = 'user_id'
+    lookup_field = "user_id"
 
 
 class UserAnnouncementsListView(BaseAnnouncementUserListView):
@@ -52,7 +52,8 @@ class UserAnnouncementsListView(BaseAnnouncementUserListView):
 
     def get_queryset(self):
         return models.Announcement.objects.filter(
-            user_id=self.kwargs.get(self.lookup_field))
+            user_id=self.kwargs.get(self.lookup_field)
+        )
 
 
 class FeedForUserListView(BaseAnnouncementUserListView):
@@ -61,14 +62,15 @@ class FeedForUserListView(BaseAnnouncementUserListView):
 
     def get_queryset(self):
         return models.Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_field))
+            user_id=self.kwargs.get(self.lookup_field)
+        )
 
 
 class BaseMapListView(generics.ListAPIView):
     """Base announcements map view to extend in subclasses."""
 
     serializer_class = serializers.AnnouncementsMapSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
 
 class MapListView(BaseMapListView):
@@ -81,8 +83,9 @@ class MapForUserListView(BaseMapListView):
     """Use to get announcements map without announcements \
     that belong to user with given user id."""
 
-    lookup_field = 'user_id'
+    lookup_field = "user_id"
 
     def get_queryset(self):
         return models.Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_field))
+            user_id=self.kwargs.get(self.lookup_field)
+        )
