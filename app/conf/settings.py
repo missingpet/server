@@ -1,6 +1,6 @@
 """Shared project settings."""
-import os
 import datetime
+import os
 
 from .credentials import *
 from .local_settings import *
