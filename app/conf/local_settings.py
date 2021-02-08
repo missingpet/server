@@ -10,10 +10,10 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv(post_process=tuple))
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": config("POSTGRES_DB", default="postgres"),
-        "USER": config("POSTGRES_USER", default="postgres"),
-        "PASSWORD": config("POSTGRES_PASSWORD"),
-        "HOST": config("POSTGRES_HOST", default="postgres"),
-        "PORT": config("POSTGRES_PORT", default="5432"),
+        "NAME": config('POSTGRES_DB'),
+        "USER": config('POSTGRES_USER'),
+        "PASSWORD": config('POSTGRES_PASSWORD'),
+        "HOST": config('POSTGRES_HOST'),
+        "PORT": config('POSTGRES_PORT'),
     }
 }
