@@ -1,46 +1,39 @@
-version: "3.8"
+version: '3.8'
 
 services:
   nginx:
     build: ./nginx
-    hostname: nginx
-    container_name: nginx_missing_pet
     restart: on-failure
     volumes:
       - static:/app/static
-      - media:/app/media
+      - ./app/media:/app/media
     ports:
-      - "80:80"
+      - 80:80
     depends_on:
       - app
   app:
     build: ./app
-    hostname: app
-    container_name: app_missing_pet
     restart: on-failure
     env_file:
-      - app.env
-      - postgres.env
+      - .env
     volumes:
       - static:/app/static
-      - media:/app/media
+      - ./app/media:/app/media
     ports:
-      - "8001:8001"
+      - 8001:8001
     depends_on:
       - postgres
   postgres:
-    hostname: postgres
-    container_name: postgres_missing_pet
     image: postgres:12.5-alpine
     restart: on-failure
-    env_file:
-      - postgres.env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
-      - pgdata:/var/lib/postgresql/data/
+      - ./pgdata:/var/lib/postgresql/data/
     ports:
-      - "5432:5432"
+      - 5432:5432
 
 volumes:
   static:
-  media:
-  pgdata:
