@@ -77,9 +77,9 @@ class AnnouncementSerializer(serializers.ModelSerializer):
         if imghdr.what(photo) not in {"jpeg", "png"}:
             raise serializers.ValidationError(
                 "Image extension should be jpeg or png.")
-        if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE_IN_BYTES:
+        if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
             raise serializers.ValidationError(
-                f"Image size should be less than {settings.MAX_PHOTO_UPLOAD_SIZE_IN_BYTES} megabytes."
+                f"Image size should be less than {settings.MAX_PHOTO_UPLOAD_SIZE} megabytes."
             )
 
         if latitude < -90.0 or latitude > 90.0:

@@ -78,13 +78,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
-}
-
 AUTHENTICATION_BACKENDS = ("pet.auth.EmailAuthBackend", )
 
 AUTH_USER_MODEL = "pet.User"
@@ -100,6 +93,13 @@ MEDIA_TEST_ROOT = os.path.join(MEDIA_ROOT, "tests/")
 ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
 
 MAX_PHOTO_UPLOAD_SIZE = 5242880
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer", ),
