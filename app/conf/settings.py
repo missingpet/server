@@ -33,38 +33,36 @@ MIDDLEWARE = (
 
 ROOT_URLCONF = "conf.urls"
 
-TEMPLATES = ({
-    "BACKEND": "django.template.backends.django.DjangoTemplates",
-    "DIRS": [],
-    "APP_DIRS": True,
-    "OPTIONS": {
-        "context_processors": (
-            "django.template.context_processors.debug",
-            "django.template.context_processors.request",
-            "django.contrib.auth.context_processors.auth",
-            "django.contrib.messages.context_processors.messages",
-        ),
+TEMPLATES = (
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": (
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ),
+        },
     },
-}, )
+)
 
 WSGI_APPLICATION = "conf.wsgi.application"
 
 AUTH_PASSWORD_VALIDATORS = (
     {
-        "NAME":
-        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        "NAME":
-        "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        "NAME":
-        "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        "NAME":
-        "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 )
 
@@ -78,7 +76,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-AUTHENTICATION_BACKENDS = ("pet.auth.EmailAuthBackend", )
+AUTHENTICATION_BACKENDS = ("pet.auth.EmailAuthBackend",)
 
 AUTH_USER_MODEL = "pet.User"
 
@@ -95,18 +93,18 @@ ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
 MAX_PHOTO_UPLOAD_SIZE = 5242880
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
 
 SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES": ("Bearer", ),
+    "AUTH_HEADER_TYPES": ("Bearer",),
     "SIGNING_KEY": SECRET_KEY,
     "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=7),
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken", ),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
 }
 
 SWAGGER_SETTINGS = {
