@@ -7,7 +7,7 @@ venv
 .*ignore
 Dockerfile
 Makefile
-*.env.template
+.env.template
 *.md
 .git
 .DS_Store
