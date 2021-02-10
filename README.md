@@ -1,5 +1,4 @@
 ## Development
 
-- Create `app.env` and `postgres.env` files from templates located at `contrib`
-  directory
+- Create `.env` file from `.env.template`
 - Execute command `docker-compose up`
