@@ -59,7 +59,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 
     def get_user(self, obj):
         user = models.Announcement.objects.get(id=obj.id).user
-        return {"id": user.id, "username": user.nickname}
+        return {"id": user.id, "nickname": user.nickname}
 
     def validate(self, attrs):
         contact_phone_number = attrs.get("contact_phone_number")
@@ -79,7 +79,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
                 "Image extension should be jpeg or png.")
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
             raise serializers.ValidationError(
-                f"Image size should be less than {settings.MAX_PHOTO_UPLOAD_SIZE} megabytes."
+                f"Image size should be less than {settings.MAX_PHOTO_UPLOAD_SIZE} bytes."
             )
 
         if latitude < -90.0 or latitude > 90.0:
