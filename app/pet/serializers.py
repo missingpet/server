@@ -1,4 +1,3 @@
-import imghdr
 import re
 
 from django.conf import settings
@@ -74,9 +73,6 @@ class AnnouncementSerializer(serializers.ModelSerializer):
                 "Contact phone number should starts with +7 and contains 12 characters total."
             )
 
-        if imghdr.what(photo) not in {"jpeg", "png"}:
-            raise serializers.ValidationError(
-                "Image extension should be jpeg or png.")
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
             raise serializers.ValidationError(
                 f"Image size should be less than {settings.MAX_PHOTO_UPLOAD_SIZE} bytes."

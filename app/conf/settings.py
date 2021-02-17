@@ -90,7 +90,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 MEDIA_TEST_ROOT = os.path.join(MEDIA_ROOT, "tests/")
 
-ANNOUNCEMENTS_PHOTO = "announcements/%Y/%m/%d/"
+ANNOUNCEMENTS_PHOTO = "announcements/"
 
 MAX_PHOTO_UPLOAD_SIZE = 5242880
 
