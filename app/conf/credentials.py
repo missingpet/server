@@ -1,5 +1,5 @@
-from decouple import config
+import decouple
 
-ADMIN_EMAIL = config("ADMIN_EMAIL")
-ADMIN_NICKNAME = config("ADMIN_NICKNAME")
-ADMIN_PASSWORD = config("ADMIN_PASSWORD")
+ADMIN_EMAIL = decouple.config("ADMIN_EMAIL")
+ADMIN_NICKNAME = decouple.config("ADMIN_NICKNAME")
+ADMIN_PASSWORD = decouple.config("ADMIN_PASSWORD")

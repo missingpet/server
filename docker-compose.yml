@@ -7,8 +7,10 @@ services:
     volumes:
       - static:/app/static
       - ./app/media:/app/media
+      - ./ssl:/ssl
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - app
   app:
