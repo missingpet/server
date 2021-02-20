@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   nginx:
@@ -14,7 +14,9 @@ services:
     depends_on:
       - app
   app:
-    build: ./app
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: on-failure
     env_file:
       - .env

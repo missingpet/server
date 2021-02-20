@@ -88,6 +88,7 @@ class Announcement(models.Model):
     updated_at = models.DateTimeField("Обновлено", auto_now=True)
 
     class Meta:
+        ordering = ('-created_at', )
         verbose_name = "Объявление"
         verbose_name_plural = "Объявления"
 
