@@ -10,4 +10,5 @@ Makefile
 .env.template
 *.md
 .git
+.github
 .DS_Store
