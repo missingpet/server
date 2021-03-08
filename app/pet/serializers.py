@@ -10,7 +10,8 @@ from . import models
 class UserCreateSerializer(serializers.ModelSerializer):
 
     default_error_messages = {
-        'no_active_account': 'Аккаунт с предоставленными учетными данными не найден'
+        "no_active_account":
+        "Аккаунт с предоставленными учетными данными не найден"
     }
 
     email = serializers.EmailField()
@@ -31,11 +32,13 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
         if not nickname.isalnum():
             raise serializers.ValidationError(
-                'Имя пользователя должно содержать только буквенно-цифровые символы')
+                "Имя пользователя должно содержать только буквенно-цифровые символы"
+            )
 
         if models.User.objects.filter(email=email).exists():
             raise serializers.ValidationError(
-                'Пользователь с таким адресом электронной почты уже зарегистрирован')
+                "Пользователь с таким адресом электронной почты уже зарегистрирован"
+            )
 
         return attrs
 
@@ -75,23 +78,24 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 
         if not re.match(r"\+7\d{10}$", contact_phone_number):
             raise serializers.ValidationError(
-                'Номер телефона обязан начинаться с +7 и всего должен содержать ровно 12 символов')
+                "Номер телефона обязан начинаться с +7 и всего должен содержать ровно 12 символов"
+            )
 
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
             raise serializers.ValidationError(
-                f'Размер изображения не должен превышать {settings.MAX_PHOTO_UPLOAD_SIZE} байт'
+                f"Размер изображения не должен превышать {settings.MAX_PHOTO_UPLOAD_SIZE} байт"
             )
 
         if latitude < -90.0 or latitude > 90.0:
-            raise serializers.ValidationError('Неверное значение широты')
+            raise serializers.ValidationError("Неверное значение широты")
         if longitude < -180.0 or longitude > 180.0:
-            raise serializers.ValidationError('Неверное значение долготы')
+            raise serializers.ValidationError("Неверное значение долготы")
 
         if announcement_type not in {1, 2}:
-            raise serializers.ValidationError('Неверный тип объявления')
+            raise serializers.ValidationError("Неверный тип объявления")
 
         if animal_type not in {1, 2, 3}:
-            raise serializers.ValidationError('Неверный тип животного')
+            raise serializers.ValidationError("Неверный тип животного")
 
         return attrs
 
