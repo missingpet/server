@@ -2,12 +2,17 @@ import re
 
 from django.conf import settings
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.serializers import TokenObtainSlidingSerializer
 
 from . import models
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
+
+    default_error_messages = {
+        'no_active_account': 'Аккаунт с предоставленными учетными данными не найден'
+    }
+
     email = serializers.EmailField()
     nickname = serializers.CharField(min_length=3, max_length=64)
     password = serializers.CharField(
@@ -26,11 +31,11 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
         if not nickname.isalnum():
             raise serializers.ValidationError(
-                "Nickname should contains only alphanumeric characters.")
+                'Имя пользователя должно содержать только буквенно-цифровые символы')
 
         if models.User.objects.filter(email=email).exists():
             raise serializers.ValidationError(
-                "User with this email already exists.")
+                'Пользователь с таким адресом электронной почты уже зарегистрирован')
 
         return attrs
 
@@ -38,7 +43,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         return models.User.objects.create_user(**validated_data)
 
 
-class AuthSerializer(TokenObtainPairSerializer):
+class AuthSerializer(TokenObtainSlidingSerializer):
     def validate(self, attrs):
         data = super(AuthSerializer, self).validate(attrs)
         data.update({
@@ -70,30 +75,23 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 
         if not re.match(r"\+7\d{10}$", contact_phone_number):
             raise serializers.ValidationError(
-                "Contact phone number should starts with +7 and contains 12 characters total."
-            )
+                'Номер телефона обязан начинаться с +7 и всего должен содержать ровно 12 символов')
 
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
             raise serializers.ValidationError(
-                f"Image size should be less than {settings.MAX_PHOTO_UPLOAD_SIZE} bytes."
+                f'Размер изображения не должен превышать {settings.MAX_PHOTO_UPLOAD_SIZE} байт'
             )
 
         if latitude < -90.0 or latitude > 90.0:
-            raise serializers.ValidationError(
-                "Latitude should take value between -90,0 and 90,0.")
+            raise serializers.ValidationError('Неверное значение широты')
         if longitude < -180.0 or longitude > 180.0:
-            raise serializers.ValidationError(
-                "Longitude should take value between -180,0 and 180,0.")
+            raise serializers.ValidationError('Неверное значение долготы')
 
         if announcement_type not in {1, 2}:
-            raise serializers.ValidationError(
-                "Announcement type should be 1 (if you lost an animal) or 2 (if you found one)."
-            )
+            raise serializers.ValidationError('Неверный тип объявления')
 
         if animal_type not in {1, 2, 3}:
-            raise serializers.ValidationError(
-                "Animal type should be 1 (for dogs), 2 (for cats) or 3 (for other animals)."
-            )
+            raise serializers.ValidationError('Неверный тип животного')
 
         return attrs
 
