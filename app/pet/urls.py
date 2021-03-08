@@ -1,19 +1,11 @@
 from django.urls import include
 from django.urls import path
-from rest_framework_simplejwt.views import TokenRefreshView
-from rest_framework_simplejwt.views import TokenVerifyView
 
 from . import views
 
-token_urls = [
-    path("refresh/", TokenRefreshView.as_view(), name="refresh"),
-    path("verify/", TokenVerifyView.as_view(), name="verify"),
-]
-
 auth_urls = [
-    path("register/", views.UserCreateView.as_view(), name="register"),
-    path("login/", views.AuthView.as_view(), name="login"),
-    path("token/", include(token_urls)),
+    path('register/', views.UserCreateView.as_view(), name='register'),
+    path('login/', views.AuthView.as_view(), name='login'),
 ]
 
 user_urls = [
