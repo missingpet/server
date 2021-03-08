@@ -8,12 +8,6 @@ from . import models
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
-
-    default_error_messages = {
-        "no_active_account":
-        "Аккаунт с предоставленными учетными данными не найден"
-    }
-
     email = serializers.EmailField()
     nickname = serializers.CharField(min_length=3, max_length=64)
     password = serializers.CharField(
@@ -47,6 +41,11 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 
 class AuthSerializer(TokenObtainSlidingSerializer):
+
+    default_error_messages = {
+        'no_active_account': 'Аккаунт с предоставленными учетными данными не найден'
+    }
+
     def validate(self, attrs):
         data = super(AuthSerializer, self).validate(attrs)
         data.update({
