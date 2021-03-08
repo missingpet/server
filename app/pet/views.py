@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainSlidingView
 
 from . import models
 from . import serializers
@@ -9,15 +9,15 @@ from .pagination import AnnouncementPagination
 from .permissions import AnnouncementPermission
 
 
-class AuthView(TokenObtainPairView):
-    """Use to authenticate users."""
+class AuthView(TokenObtainSlidingView):
+    """Авторизация пользователя"""
 
     serializer_class = serializers.AuthSerializer
     permission_classes = (AllowAny, )
 
 
 class UserCreateView(generics.CreateAPIView):
-    """Use to create a new user."""
+    """Регистрация пользователя"""
 
     queryset = models.User
     serializer_class = serializers.UserCreateSerializer
@@ -25,9 +25,19 @@ class UserCreateView(generics.CreateAPIView):
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):
-    """Use to create a new announcement, \
-    retrieve/delete an announcement \
-    with given id or to get the whole announcements list."""
+    """
+    create:
+    Создание объявления
+
+    retrieve:
+    Получение объявления по идентификатору
+
+    destroy:
+    Удаление объявления
+
+    list:
+    Получение списка всех объявлений
+    """
 
     queryset = models.Announcement.objects.all()
     serializer_class = serializers.AnnouncementSerializer
@@ -48,15 +58,14 @@ class BaseAnnouncementUserListView(generics.ListAPIView):
 
 
 class UserAnnouncementsListView(BaseAnnouncementUserListView):
-    """Use to get announcements that belong to user with given user id."""
+    """Получение списка объявлений принадлежащих пользователю с указанным user_id"""
     def get_queryset(self):
         return models.Announcement.objects.filter(
             user_id=self.kwargs.get(self.lookup_field))
 
 
 class FeedForUserListView(BaseAnnouncementUserListView):
-    """Use to get feed for user with given user id \
-    (Announcements that belong to this user are excluded)."""
+    """Получение ленты объявлений для пользователя с указанным user_id"""
     def get_queryset(self):
         return models.Announcement.objects.exclude(
             user_id=self.kwargs.get(self.lookup_field))
@@ -70,14 +79,13 @@ class BaseMapListView(generics.ListAPIView):
 
 
 class MapListView(BaseMapListView):
-    """Use to get the whole announcements map."""
+    """Получение всей карты объявлений"""
 
     queryset = models.Announcement.objects.all()
 
 
 class MapForUserListView(BaseMapListView):
-    """Use to get announcements map without announcements \
-    that belong to user with given user id."""
+    """Получение карты объявлений из ленты для пользователя с указанным user_id"""
 
     lookup_field = "user_id"
 
