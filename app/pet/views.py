@@ -59,6 +59,7 @@ class BaseAnnouncementUserListView(generics.ListAPIView):
 
 class UserAnnouncementsListView(BaseAnnouncementUserListView):
     """Получение списка объявлений принадлежащих пользователю с указанным user_id"""
+
     def get_queryset(self):
         return models.Announcement.objects.filter(
             user_id=self.kwargs.get(self.lookup_field))
@@ -66,6 +67,7 @@ class UserAnnouncementsListView(BaseAnnouncementUserListView):
 
 class FeedForUserListView(BaseAnnouncementUserListView):
     """Получение ленты объявлений для пользователя с указанным user_id"""
+
     def get_queryset(self):
         return models.Announcement.objects.exclude(
             user_id=self.kwargs.get(self.lookup_field))
