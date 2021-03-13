@@ -43,18 +43,17 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class AuthSerializer(TokenObtainSlidingSerializer):
 
     default_error_messages = {
-        "no_active_account": "Аккаунт с предоставленными учетными данными не найден"
+        "no_active_account":
+        "Аккаунт с предоставленными учетными данными не найден"
     }
 
     def validate(self, attrs):
         data = super(AuthSerializer, self).validate(attrs)
-        data.update(
-            {
-                "id": self.user.id,
-                "email": self.user.email,
-                "nickname": self.user.nickname,
-            }
-        )
+        data.update({
+            "id": self.user.id,
+            "email": self.user.email,
+            "nickname": self.user.nickname,
+        })
         return data
 
 
