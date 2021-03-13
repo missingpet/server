@@ -1,0 +1,13 @@
+.DS_Store
+*.env
+db.sqlite3
+pgdata
+.idea
+venv
+.vscode
+media
+__pycache__
+*.crt
+*.key
+!dev-server.crt
+!dev-server.key

@@ -1,0 +1,14 @@
+media
+__pycache__
+db.sqlite3
+.idea
+.vscode
+venv
+.*ignore
+Dockerfile
+Makefile
+.env.template
+*.md
+.git
+.github
+.DS_Store

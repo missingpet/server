@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  nginx:
+    build: ./nginx
+    restart: on-failure
+    volumes:
+      - static:/app/static
+      - ./app/media:/app/media
+      - ./ssl:/ssl
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - app
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file:
+      - .env
+    volumes:
+      - static:/app/static
+      - ./app/media:/app/media
+    ports:
+      - 8001:8001
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:12.5-alpine
+    restart: on-failure
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+
+volumes:
+  static:
