@@ -78,7 +78,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 
         if not re.match(r"\+7\d{10}$", contact_phone_number):
             raise serializers.ValidationError(
-                "Номер телефона обязан начинаться с +7 и всего должен содержать ровно 12 символов"
+                'Номер телефона обязан начинаться с +7 и должен содержать ровно 12 символов'
             )
 
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
@@ -91,10 +91,10 @@ class AnnouncementSerializer(serializers.ModelSerializer):
         if longitude < -180.0 or longitude > 180.0:
             raise serializers.ValidationError("Неверное значение долготы")
 
-        if announcement_type not in {1, 2}:
-            raise serializers.ValidationError("Неверный тип объявления")
+        if announcement_type not in (1, 2):
+            raise serializers.ValidationError('Неверный тип объявления')
 
-        if animal_type not in {1, 2, 3}:
+        if animal_type not in (1, 2, 3):
             raise serializers.ValidationError("Неверный тип животного")
 
         return attrs

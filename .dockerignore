@@ -6,8 +6,9 @@ db.sqlite3
 venv
 .*ignore
 Dockerfile
+*.dockerfile
 Makefile
-.env.template
+*.template
 *.md
 .git
 .github
