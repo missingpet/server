@@ -6,6 +6,7 @@ pgdata
 venv
 .vscode
 media
+/static
 __pycache__
 *.crt
 *.key
