@@ -15,6 +15,3 @@ if APPLICATION_ENVIRONMENT == ENV_DEVELOPMENT:
     from .development import *
 elif APPLICATION_ENVIRONMENT == ENV_PRODUCTION:
     from .production import *
-
-if APPLICATION_ENVIRONMENT == ENV_PRODUCTION and not IS_PRODUCTION:
-    raise ImproperlyConfigured('Unable to run development environment in production mode')

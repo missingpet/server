@@ -4,7 +4,6 @@ from .base import *
 import decouple
 
 DEBUG = False
-IS_PRODUCTION = True
 
 SECRET_KEY = decouple.config('SECRET_KEY')
 

@@ -2,7 +2,6 @@
 from .base import *
 
 DEBUG = True
-IS_PRODUCTION = False
 
 SECRET_KEY = 'q!%*q6__xj96xzhdm8i7()3cd1z2@_j0%_!-(r94w2i!2uj++%'
 
