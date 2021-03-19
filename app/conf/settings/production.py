@@ -1,7 +1,7 @@
 """Production environment settings."""
-from .base import *
-
 import decouple
+
+from .base import *
 
 DEBUG = False
 
