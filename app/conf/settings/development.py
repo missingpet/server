@@ -1,5 +1,5 @@
 """Development environment settings."""
-from .base import *
+from .base import *  # NOQA
 
 DEBUG = True
 

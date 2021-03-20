@@ -12,6 +12,6 @@ if APPLICATION_ENVIRONMENT not in ENVIRONMENTS:
     raise ImproperlyConfigured("Invalid APPLICATION_ENVIRONMENT setting")
 
 if APPLICATION_ENVIRONMENT == ENV_DEVELOPMENT:
-    from .development import *
+    from .development import *  # NOQA
 elif APPLICATION_ENVIRONMENT == ENV_PRODUCTION:
-    from .production import *
+    from .production import *  # NOQA

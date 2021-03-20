@@ -1,7 +1,7 @@
 """Production environment settings."""
 import decouple
 
-from .base import *
+from .base import *  # NOQA
 
 DEBUG = False
 

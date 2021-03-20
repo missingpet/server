@@ -2,7 +2,7 @@
 from django import test
 
 from ..models import User
-from .test_data import *
+from .test_data import *  # NOQA
 
 
 class UserTestCases(test.TestCase):
