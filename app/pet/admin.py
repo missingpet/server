@@ -22,7 +22,7 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ("is_staff", "is_superuser", "is_active")
     fieldsets = (
         (None, {
-            "fields": ("password", "email", "nickname", "is_active")
+            "fields": ("password", "email", "nickname", "is_active", 'groups')
         }),
         ("Особые права", {
             "fields": ("is_superuser", "is_staff")

@@ -49,8 +49,6 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
 
 
 class BaseAnnouncementUserListView(generics.ListAPIView):
-    """Base announcement user view to extend in subclasses."""
-
     serializer_class = serializers.AnnouncementSerializer
     permission_classes = (AllowAny, )
     pagination_class = AnnouncementPagination
@@ -72,8 +70,6 @@ class FeedForUserListView(BaseAnnouncementUserListView):
 
 
 class BaseMapListView(generics.ListAPIView):
-    """Base announcements map view to extend in subclasses."""
-
     serializer_class = serializers.AnnouncementsMapSerializer
     permission_classes = (AllowAny, )
 
