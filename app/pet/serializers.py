@@ -65,7 +65,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_user(self, obj):
-        user = models.Announcement.objects.get(id=obj.id).user
+        user = obj.user
         return {"id": user.id, "nickname": user.nickname}
 
     def validate(self, attrs):
