@@ -10,8 +10,10 @@ from django.conf import settings
 from ..photo_service import upload_photo
 from . import enums
 
+
 class UserManager(BaseUserManager):
     """Custom user manager"""
+
     def create_user(self, email, nickname, password, **extra_fields):
         if not email or not nickname:
             raise ValueError('All fields are required.')
@@ -111,7 +113,8 @@ def generate_password_reset_confirmation_code():
 
 def get_expired_in_time():
     """Возвращает время устаревания кода в секундах"""
-    seconds = round(time.time()) + settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH
+    seconds = round(time.time()) + \
+        settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH
     return seconds
 
 

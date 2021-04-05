@@ -16,10 +16,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PasswordResetConfirmationCode',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('code', models.IntegerField(default=pet.models.objects.generate_password_reset_confirmation_code, verbose_name='Код подтвержения')),
-                ('expired_in', models.BigIntegerField(default=pet.models.objects.get_expired_in_time, verbose_name='Время устаревания кода')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='password_reset_codes', to=settings.AUTH_USER_MODEL, verbose_name='Пользователь, которому принадлежит этот код')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('code', models.IntegerField(
+                    default=pet.models.objects.generate_password_reset_confirmation_code, verbose_name='Код подтвержения')),
+                ('expired_in', models.BigIntegerField(
+                    default=pet.models.objects.get_expired_in_time, verbose_name='Время устаревания кода')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='password_reset_codes',
+                                           to=settings.AUTH_USER_MODEL, verbose_name='Пользователь, которому принадлежит этот код')),
             ],
             options={
                 'verbose_name': 'Код подтверждения сброса пароля',
