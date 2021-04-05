@@ -7,7 +7,8 @@ DEBUG = False
 
 SECRET_KEY = decouple.config("SECRET_KEY")
 
-ALLOWED_HOSTS = decouple.config("ALLOWED_HOSTS", cast=decouple.Csv(post_process=tuple))
+ALLOWED_HOSTS = decouple.config("ALLOWED_HOSTS",
+                                cast=decouple.Csv(post_process=tuple))
 
 DATABASES = {
     "default": {

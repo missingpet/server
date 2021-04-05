@@ -28,7 +28,8 @@ class Migration(migrations.Migration):
                 (
                     "code",
                     models.IntegerField(
-                        default=pet.models.objects.generate_password_reset_confirmation_code,
+                        default=pet.models.objects.
+                        generate_password_reset_confirmation_code,
                         verbose_name="Код подтвержения",
                     ),
                 ),
@@ -45,7 +46,8 @@ class Migration(migrations.Migration):
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="password_reset_codes",
                         to=settings.AUTH_USER_MODEL,
-                        verbose_name="Пользователь, которому принадлежит этот код",
+                        verbose_name=
+                        "Пользователь, которому принадлежит этот код",
                     ),
                 ),
             ],
