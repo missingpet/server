@@ -113,7 +113,7 @@ def generate_password_reset_confirmation_code():
 def get_expired_in_time():
     """Возвращает время устаревания кода в секундах"""
     seconds = round(
-        time.time()) + settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH
+        time.time()) + settings.PASSWORD_RESET_CONFIRMATION_CODE_LIFE_TIME
     return seconds
 
 
