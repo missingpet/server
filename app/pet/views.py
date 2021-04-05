@@ -41,8 +41,8 @@ class PasswordResetRequestView(generics.GenericAPIView):
         send_email_message(**email_message_data)
 
         return Response(
-            data={'detail': f'Сообщение для сброса пароля отправлено на адрес {user.email}. '
-                            f'Если вам не удалось найти код для сброса пароля, проверте папку "Спам".'},
+            data={'detail': f'Письмо с инструкцией для сброса пароля отправлено на адрес {user.email}. '
+                            f'Если вам не удалось найти данное письмо, пожалуйста, проверьте папку «Спам».'},
             status=status.HTTP_201_CREATED,
         )
 
