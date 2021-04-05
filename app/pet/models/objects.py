@@ -108,3 +108,25 @@ def generate_password_reset_confirmation_code():
 def get_password_reset_configuration_code_life_time():
     life_time = round(time.time()) + settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH
     return life_time
+
+
+class PasswordResetConfirmationCode(models.Model):
+    user = models.ForeignKey(
+        User,
+        models.CASCADE,
+        'password_reset_codes',
+        verbose_name='Пользователь, которому принадлежит этот код',
+    )
+    code = models.IntegerField(
+        'Код подтвержения', default=generate_password_reset_confirmation_code
+    )
+    expired_in = models.BigIntegerField(
+        'Время устаревания кода', default=get_password_reset_confirmation_code_life_time
+    )
+
+    class Meta:
+        verbose_name = 'Код подтверждения сброса пароля'
+        verbose_name_plural = 'Коды подтверждения сброса паролей'
+
+    def __str__(self):
+        return f'{user}_{code}'
