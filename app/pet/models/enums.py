@@ -1,5 +1,6 @@
 from django.db.models import IntegerChoices
 
+
 class AnnouncementTypeChoices(IntegerChoices):
     """Тип объявления"""
 

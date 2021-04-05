@@ -1,5 +1,7 @@
 from rest_framework import generics
 from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenObtainSlidingView
 
@@ -7,6 +9,65 @@ from . import models
 from . import serializers
 from .pagination import AnnouncementPagination
 from .permissions import AnnouncementPermission
+from . import const
+from .email_logic import send_email_message
+
+
+class PasswordResetRequestView(generics.GenericAPIView):
+    """Запрос на сброс пароля"""
+
+    serializer_class = serializers.PasswordResetRequestSerializer
+    permission_classes = (AllowAny, )
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = models.User.objects.get(
+            email=serializer.validated_data['email'],
+        )
+        code = models.PasswordResetConfirmationCode.objects.create(
+            user=user,
+        )
+
+        email_message_data = {
+            'subject': const.PASSWORD_RESET_REQUEST_SUBJECT,
+            'body': const.PASSWORD_RESET_REQUEST_BODY.format(
+                user.nickname,
+                code.code,
+            ),
+            'recipient': user.email,
+        }
+        send_email_message(**email_message_data)
+
+        return Response(
+            data={'detail': f'Сообщение для сброса пароля отправлено на адрес {user.email}. '
+                            f'Если вам не удалось найти код для сброса пароля, проверте папку "Спам".'},
+            status=status.HTTP_201_CREATED,
+        )
+
+
+class PasswordResetConfirmView(generics.GenericAPIView):
+    """Подтверждение сброса пароля"""
+
+    serializer_class = serializers.PasswordResetConfirmSerializer
+    permission_classes = (AllowAny, )
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        validated_data = serializer.validated_data
+
+        user = models.User.objects.get(email=validated_data['email'])
+        user.set_password(validated_data['new_password'])
+        user.save()
+
+        return Response(
+            data={'detail': 'Пароль успешно сброшен'},
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class AuthView(TokenObtainSlidingView):

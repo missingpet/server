@@ -1,10 +1,70 @@
 import re
+import imghdr
+import time
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainSlidingSerializer
 
 from . import models
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    new_password = serializers.CharField(
+        min_length=6,
+        max_length=128,
+    )
+    email = serializers.EmailField()
+    code = serializers.IntegerField()
+
+    def validate(self, attrs):
+        code = attrs.get('code')
+        email = attrs.get('email')
+
+        try:
+            user = models.User.objects.get(email=email)
+        except ObjectDoesNotExist:
+            raise serializers.ValidationError('Пользователь с таким адресом электронной почты не найден')
+        else:
+            try:
+                password_reset_confirmation_code = models.PasswordResetConfirmationCode.objects.get(
+                    user=user,
+                    code=code,
+                )
+            except ObjectDoesNotExist:
+                raise serializers.ValidationError(
+                    'Предоставленный код не привязан к пользователю с данным адресом электронной почты'
+                )
+            else:
+                if round(time.time()) > password_reset_confirmation_code.expired_in:
+                    raise serializers.ValidationError('Код подтверждения больше недействителен')
+
+        return attrs
+
+    def save(self):
+        email = self.validated_data['email']
+        code = self.validated_data['code']
+
+        code_object = models.PasswordResetConfirmationCode.objects.get(
+            user=models.User.objects.get(email=email),
+            code=code,
+        )
+        code_object.delete()
+
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+
+        try:
+            models.User.objects.get(email=email)
+        except ObjectDoesNotExist:
+            raise serializers.ValidationError('Пользователь с таким адресом электронной почты не найден')
+
+        return attrs
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -28,12 +88,13 @@ class UserCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "Имя пользователя должно содержать только буквенно-цифровые символы"
             )
-        
 
-        if models.User.objects.filter(email=email).exists():
-            raise serializers.ValidationError(
-                "Пользователь с таким адресом электронной почты уже зарегистрирован"
-            )
+        try:
+            models.User.objects.get(email=email)
+        except ObjectDoesNotExist:
+            pass
+        else:
+            raise serializers.ValidationError('Пользователь с таким адресом электронной почты уже зарегистирован')
 
         return attrs
 
@@ -81,10 +142,9 @@ class AnnouncementSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Номер телефона обязан начинаться с +7 и должен содержать ровно 12 символов'
             )
-        if what(photo)!='jpeg' and what(photo)!='png':
-            raise serializers.ValidationError(
-                "Расширение изображения должно быть jpeg или png"
-        )    
+
+        if imghdr.what(photo) not in settings.ALLOWED_UPLOAD_IMAGE_EXTENSIONS:
+            raise serializers.ValidationError('Неправильное расширение изображения')
 
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
             raise serializers.ValidationError(

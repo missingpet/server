@@ -24,7 +24,7 @@ services:
       - ./static:/static
       - ./media:/media
     ports:
-      - 8001:8001
+      - 8001:8000
     depends_on:
       - postgres
   postgres:
@@ -37,4 +37,4 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data/
     ports:
-      - 5432:5432
+      - 5555:5432

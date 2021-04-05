@@ -117,6 +117,10 @@ def get_expired_in_time():
     return seconds
 
 
+class PasswordResetConfirmationCodeManager(models.Manager):
+    pass
+
+
 class PasswordResetConfirmationCode(models.Model):
     """Код подтверждения сброса пароля"""
 
@@ -131,9 +135,11 @@ class PasswordResetConfirmationCode(models.Model):
         default=generate_password_reset_confirmation_code,
     )
     expired_in = models.BigIntegerField(
-        "Время устаревания кода",
+        'Время устаревания кода',
         default=get_expired_in_time,
     )
+
+    objects = PasswordResetConfirmationCodeManager()
 
     class Meta:
         verbose_name = "Код подтверждения сброса пароля"

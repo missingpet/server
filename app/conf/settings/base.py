@@ -86,8 +86,6 @@ STATIC_URL = "/static/"
 
 ANNOUNCEMENTS_PHOTO = "announcements/"
 
-MAX_PHOTO_UPLOAD_SIZE = 5242880
-
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
@@ -116,6 +114,10 @@ SWAGGER_SETTINGS = {
     "LOGIN_URL": "rest_framework:login",
     "LOGOUT_URL": "rest_framework:logout",
 }
+
+MAX_PHOTO_UPLOAD_SIZE = 1024 * 1024 * 5
+
+ALLOWED_UPLOAD_IMAGE_EXTENSIONS = ('jpeg', 'png')
 
 PASSWORD_RESET_CONFIRMATION_CODE_LIFE_TIME = 60 * 10
 PASSWORD_RESET_CONFIRMATION_CODE_LENGTH = 6
