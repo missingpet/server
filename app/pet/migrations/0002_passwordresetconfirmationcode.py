@@ -28,8 +28,7 @@ class Migration(migrations.Migration):
                 (
                     "code",
                     models.IntegerField(
-                        default=pet.models.objects.
-                        generate_password_reset_confirmation_code,
+                        default=pet.models.objects.generate_password_reset_confirmation_code,
                         verbose_name="Код подтвержения",
                     ),
                 ),
