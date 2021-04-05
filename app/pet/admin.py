@@ -6,6 +6,7 @@ from .forms import UserChangeCustomForm
 from .forms import UserCreationCustomForm
 from .models import Announcement
 from .models import User
+from .models import PasswordResetConfirmationCode
 
 
 @admin.register(User)
@@ -74,3 +75,10 @@ class AnnouncementAdmin(admin.ModelAdmin):
     get_photo.short_description = "Миниатюра"
 
     save_on_top = True
+
+
+@admin.register(PasswordResetConfirmationCode)
+class PasswordResetConfirmationCodeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'code', 'expired_in')
+    list_display_links = ('id', 'user', 'code')
+    readonly_fields = ('code', 'expired_in')

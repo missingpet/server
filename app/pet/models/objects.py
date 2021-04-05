@@ -1,7 +1,11 @@
+import time
+from random import randint
+
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
+from django.conf import settings
 
 from ..photo_service import upload_photo
 from . import enums
@@ -94,3 +98,44 @@ class Announcement(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+def generate_password_reset_confirmation_code():
+    """Возвращает случайный (заданной в настройках длины) код"""
+    code = randint(
+        10 ** (settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH - 1),
+        (10 ** settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH) - 1
+    )
+    return code
+
+
+def get_expired_in_time():
+    """Возвращает время устаревания кода в секундах"""
+    seconds = round(time.time()) + settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH
+    return seconds
+
+
+class PasswordResetConfirmationCode(models.Model):
+    """Код подтверждения сброса пароля"""
+
+    user = models.ForeignKey(
+        User,
+        models.CASCADE,
+        'password_reset_codes',
+        verbose_name='Пользователь, которому принадлежит этот код',
+    )
+    code = models.IntegerField(
+        'Код подтвержения',
+        default=generate_password_reset_confirmation_code,
+    )
+    expired_in = models.BigIntegerField(
+        'Время устаревания кода',
+        default=get_expired_in_time,
+    )
+
+    class Meta:
+        verbose_name = 'Код подтверждения сброса пароля'
+        verbose_name_plural = 'Коды подтверждения сброса паролей'
+
+    def __str__(self):
+        return f'{self.user} - {self.code}'
