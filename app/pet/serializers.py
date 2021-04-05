@@ -43,17 +43,18 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class AuthSerializer(TokenObtainSlidingSerializer):
 
     default_error_messages = {
-        "no_active_account":
-        "Аккаунт с предоставленными учетными данными не найден"
+        "no_active_account": "Аккаунт с предоставленными учетными данными не найден"
     }
 
     def validate(self, attrs):
         data = super(AuthSerializer, self).validate(attrs)
-        data.update({
-            "id": self.user.id,
-            "email": self.user.email,
-            "nickname": self.user.nickname,
-        })
+        data.update(
+            {
+                "id": self.user.id,
+                "email": self.user.email,
+                "nickname": self.user.nickname,
+            }
+        )
         return data
 
 
@@ -78,7 +79,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 
         if not re.match(r"\+7\d{10}$", contact_phone_number):
             raise serializers.ValidationError(
-                'Номер телефона обязан начинаться с +7 и должен содержать ровно 12 символов'
+                "Номер телефона обязан начинаться с +7 и должен содержать ровно 12 символов"
             )
 
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
@@ -92,7 +93,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Неверное значение долготы")
 
         if announcement_type not in (1, 2):
-            raise serializers.ValidationError('Неверный тип объявления')
+            raise serializers.ValidationError("Неверный тип объявления")
 
         if animal_type not in (1, 2, 3):
             raise serializers.ValidationError("Неверный тип животного")
