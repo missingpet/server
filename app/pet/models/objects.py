@@ -1,7 +1,11 @@
+import time
+from random import randint
+
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
+from django.conf import settings
 
 from ..photo_service import upload_photo
 from . import enums
@@ -94,3 +98,13 @@ class Announcement(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+def generate_password_reset_confirmation_code():
+    code = randint(10 ** (settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH - 1),
+                   (10 ** settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH) - 1)
+    return code
+
+def get_password_reset_configuration_code_life_time():
+    life_time = round(time.time()) + settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH
+    return life_time
