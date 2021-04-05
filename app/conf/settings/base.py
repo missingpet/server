@@ -2,7 +2,8 @@
 import datetime
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 INSTALLED_APPS = (
     "django.contrib.admin",
@@ -79,9 +80,9 @@ AUTHENTICATION_BACKENDS = ("pet.auth.EmailAuthBackend", )
 
 AUTH_USER_MODEL = "pet.User"
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 ANNOUNCEMENTS_PHOTO = "announcements/"
 
@@ -92,7 +93,8 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+    "DEFAULT_VERSIONING_CLASS":
+    "rest_framework.versioning.URLPathVersioning",
 }
 
 SIMPLE_JWT = {
