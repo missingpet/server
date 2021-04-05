@@ -28,6 +28,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "Имя пользователя должно содержать только буквенно-цифровые символы"
             )
+        
 
         if models.User.objects.filter(email=email).exists():
             raise serializers.ValidationError(
@@ -80,6 +81,10 @@ class AnnouncementSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Номер телефона обязан начинаться с +7 и должен содержать ровно 12 символов'
             )
+        if what(photo)!='jpeg' and what(photo)!='png':
+            raise serializers.ValidationError(
+                "Расширение изображения должно быть jpeg или png"
+        )    
 
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
             raise serializers.ValidationError(
