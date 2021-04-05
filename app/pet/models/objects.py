@@ -101,16 +101,23 @@ class Announcement(models.Model):
 
 
 def generate_password_reset_confirmation_code():
-    code = randint(10 ** (settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH - 1),
-                   (10 ** settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH) - 1)
+    """Возвращает случайный (заданной в настройках длины) код"""
+    code = randint(
+        10 ** (settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH - 1),
+        (10 ** settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH) - 1
+    )
     return code
 
-def get_password_reset_configuration_code_life_time():
-    life_time = round(time.time()) + settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH
-    return life_time
+
+def get_expired_in_time():
+    """Возвращает время устаревания кода в секундах"""
+    seconds = round(time.time()) + settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH
+    return seconds
 
 
 class PasswordResetConfirmationCode(models.Model):
+    """Код подтверждения сброса пароля"""
+
     user = models.ForeignKey(
         User,
         models.CASCADE,
@@ -118,10 +125,12 @@ class PasswordResetConfirmationCode(models.Model):
         verbose_name='Пользователь, которому принадлежит этот код',
     )
     code = models.IntegerField(
-        'Код подтвержения', default=generate_password_reset_confirmation_code
+        'Код подтвержения',
+        default=generate_password_reset_confirmation_code,
     )
     expired_in = models.BigIntegerField(
-        'Время устаревания кода', default=get_password_reset_confirmation_code_life_time
+        'Время устаревания кода',
+        default=get_expired_in_time,
     )
 
     class Meta:
@@ -129,4 +138,4 @@ class PasswordResetConfirmationCode(models.Model):
         verbose_name_plural = 'Коды подтверждения сброса паролей'
 
     def __str__(self):
-        return f'{user}_{code}'
+        return f'{self.user} - {self.code}'
