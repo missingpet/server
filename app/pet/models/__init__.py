@@ -1,1 +1,1 @@
-from .objects import User, Announcement, PasswordResetConfirmationCode
+from .objects import Announcement, PasswordResetConfirmationCode, User
