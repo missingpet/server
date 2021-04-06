@@ -27,6 +27,6 @@ jobs:
         pip install -r app/requirements.txt
     - name: Run Tests
       env:
-        APPLICATION_ENVIRONMENT: development
+        DJANGO_ENV: development
       run: |
         python app/manage.py test pet
