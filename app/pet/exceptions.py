@@ -9,7 +9,6 @@ def catch_email_message_exception_for_views(func):
     Декоратор для отлавливания ошибок при обращения к почтовому сервису.
     Оборачивает исключение в 400 ответ во view.
     """
-
     def wrapper(*args, **kwargs):
         try:
             return func(*args, **kwargs)

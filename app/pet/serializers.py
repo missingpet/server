@@ -26,23 +26,22 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
             user = models.User.objects.get(email=email)
         except ObjectDoesNotExist:
             raise serializers.ValidationError(
-                "Пользователь с таким адресом электронной почты не найден"
-            )
+                "Пользователь с таким адресом электронной почты не найден")
         else:
             try:
                 password_reset_confirmation_code = (
                     models.PasswordResetConfirmationCode.objects.get(
                         user=user,
                         code=code,
-                    )
-                )
+                    ))
             except ObjectDoesNotExist:
-                raise serializers.ValidationError("Неправильный код сброса пароля")
+                raise serializers.ValidationError(
+                    "Неправильный код сброса пароля")
             else:
-                if round(time.time()) > password_reset_confirmation_code.expired_in:
+                if round(time.time()
+                         ) > password_reset_confirmation_code.expired_in:
                     raise serializers.ValidationError(
-                        "Код подтверждения больше недействителен"
-                    )
+                        "Код подтверждения больше недействителен")
 
         return attrs
 
@@ -67,8 +66,7 @@ class PasswordResetRequestSerializer(serializers.Serializer):
             models.User.objects.get(email=email)
         except ObjectDoesNotExist:
             raise serializers.ValidationError(
-                "Пользователь с таким адресом электронной почты не найден"
-            )
+                "Пользователь с таким адресом электронной почты не найден")
 
         return attrs
 
@@ -124,18 +122,17 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class AuthSerializer(TokenObtainSlidingSerializer):
 
     default_error_messages = {
-        "no_active_account": "Аккаунт с предоставленными учетными данными не найден"
+        "no_active_account":
+        "Аккаунт с предоставленными учетными данными не найден"
     }
 
     def validate(self, attrs):
         data = super(AuthSerializer, self).validate(attrs)
-        data.update(
-            {
-                "id": self.user.id,
-                "email": self.user.email,
-                "nickname": self.user.nickname,
-            }
-        )
+        data.update({
+            "id": self.user.id,
+            "email": self.user.email,
+            "nickname": self.user.nickname,
+        })
         return data
 
 
@@ -164,7 +161,8 @@ class AnnouncementSerializer(serializers.ModelSerializer):
             )
 
         if imghdr.what(photo) not in settings.ALLOWED_UPLOAD_IMAGE_EXTENSIONS:
-            raise serializers.ValidationError("Неправильное расширение изображения")
+            raise serializers.ValidationError(
+                "Неправильное расширение изображения")
 
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
             raise serializers.ValidationError(
