@@ -4,8 +4,8 @@ from .objects import User
 from .objects import Settings
 
 __all__ = (
-    'Announcement',
-    'PasswordResetConfirmationCode',
-    'User',
-    'Settings',
+    "Announcement",
+    "PasswordResetConfirmationCode",
+    "User",
+    "Settings",
 )

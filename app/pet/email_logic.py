@@ -10,6 +10,6 @@ def send_email_message(subject: str, body: str, recipient: str) -> None:
     email_message = EmailMessage(
         subject=subject,
         body=body,
-        to=(recipient, ),
+        to=(recipient,),
     )
     email_message.send()

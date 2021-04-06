@@ -19,33 +19,36 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
     code = serializers.IntegerField()
 
     def validate(self, attrs):
-        code = attrs.get('code')
-        email = attrs.get('email')
+        code = attrs.get("code")
+        email = attrs.get("email")
 
         try:
             user = models.User.objects.get(email=email)
         except ObjectDoesNotExist:
             raise serializers.ValidationError(
-                'Пользователь с таким адресом электронной почты не найден')
+                "Пользователь с таким адресом электронной почты не найден"
+            )
         else:
             try:
-                password_reset_confirmation_code = models.PasswordResetConfirmationCode.objects.get(
-                    user=user,
-                    code=code,
+                password_reset_confirmation_code = (
+                    models.PasswordResetConfirmationCode.objects.get(
+                        user=user,
+                        code=code,
+                    )
                 )
             except ObjectDoesNotExist:
-                raise serializers.ValidationError(
-                    'Неправильный код сброса пароля')
+                raise serializers.ValidationError("Неправильный код сброса пароля")
             else:
                 if round(time.time()) > password_reset_confirmation_code.expired_in:
                     raise serializers.ValidationError(
-                        'Код подтверждения больше недействителен')
+                        "Код подтверждения больше недействителен"
+                    )
 
         return attrs
 
     def save(self):
-        email = self.validated_data['email']
-        code = self.validated_data['code']
+        email = self.validated_data["email"]
+        code = self.validated_data["code"]
 
         code_object = models.PasswordResetConfirmationCode.objects.get(
             user=models.User.objects.get(email=email),
@@ -58,26 +61,26 @@ class PasswordResetRequestSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
     def validate(self, attrs):
-        email = attrs.get('email')
+        email = attrs.get("email")
 
         try:
             models.User.objects.get(email=email)
         except ObjectDoesNotExist:
             raise serializers.ValidationError(
-                'Пользователь с таким адресом электронной почты не найден')
+                "Пользователь с таким адресом электронной почты не найден"
+            )
 
         return attrs
 
 
 class SettingsSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.Settings
         fields = (
-            'id',
-            'settings_name',
-            'actual_app_version_ios',
-            'min_app_version_ios',
+            "id",
+            "settings_name",
+            "actual_app_version_ios",
+            "min_app_version_ios",
         )
 
 
@@ -109,7 +112,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
             pass
         else:
             raise serializers.ValidationError(
-                'Пользователь с таким адресом электронной почты уже зарегистирован')
+                "Пользователь с таким адресом электронной почты уже зарегистирован"
+            )
 
         return attrs
 
@@ -120,17 +124,18 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class AuthSerializer(TokenObtainSlidingSerializer):
 
     default_error_messages = {
-        "no_active_account":
-        "Аккаунт с предоставленными учетными данными не найден"
+        "no_active_account": "Аккаунт с предоставленными учетными данными не найден"
     }
 
     def validate(self, attrs):
         data = super(AuthSerializer, self).validate(attrs)
-        data.update({
-            "id": self.user.id,
-            "email": self.user.email,
-            "nickname": self.user.nickname,
-        })
+        data.update(
+            {
+                "id": self.user.id,
+                "email": self.user.email,
+                "nickname": self.user.nickname,
+            }
+        )
         return data
 
 
@@ -155,12 +160,11 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 
         if not re.match(r"\+7\d{10}$", contact_phone_number):
             raise serializers.ValidationError(
-                'Номер телефона обязан начинаться с +7 и должен содержать ровно 12 символов'
+                "Номер телефона обязан начинаться с +7 и должен содержать ровно 12 символов"
             )
 
         if imghdr.what(photo) not in settings.ALLOWED_UPLOAD_IMAGE_EXTENSIONS:
-            raise serializers.ValidationError(
-                'Неправильное расширение изображения')
+            raise serializers.ValidationError("Неправильное расширение изображения")
 
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
             raise serializers.ValidationError(
@@ -173,7 +177,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Неверное значение долготы")
 
         if announcement_type not in (1, 2):
-            raise serializers.ValidationError('Неверный тип объявления')
+            raise serializers.ValidationError("Неверный тип объявления")
 
         if animal_type not in (1, 2, 3):
             raise serializers.ValidationError("Неверный тип животного")

@@ -7,8 +7,7 @@ DEBUG = False
 
 SECRET_KEY = decouple.config("SECRET_KEY")
 
-ALLOWED_HOSTS = decouple.config("ALLOWED_HOSTS",
-                                cast=decouple.Csv(post_process=tuple))
+ALLOWED_HOSTS = decouple.config("ALLOWED_HOSTS", cast=decouple.Csv(post_process=tuple))
 
 DATABASES = {
     "default": {
@@ -21,12 +20,12 @@ DATABASES = {
     }
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST = decouple.config('EMAIL_HOST')
-EMAIL_HOST_USER = decouple.config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = decouple.config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST = decouple.config("EMAIL_HOST")
+EMAIL_HOST_USER = decouple.config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = decouple.config("EMAIL_HOST_PASSWORD")
 
 ADMIN_EMAIL = decouple.config("ADMIN_EMAIL")
 ADMIN_NICKNAME = decouple.config("ADMIN_NICKNAME")
