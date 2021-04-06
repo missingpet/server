@@ -147,3 +147,43 @@ class PasswordResetConfirmationCode(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.code}"
+
+
+class SettingsManager(models.Manager):
+
+    def get_actual(self):
+        try:
+            return self.get_queryset().get(settings_name=settings.SETTINGS_ACTUAL_NAME)
+        except models.ObjectDoesNotExist:
+            return
+
+
+class Settings(models.Model):
+    """Настройки приложения"""
+
+    settings_name = models.CharField(
+        'Уникальное название настроек',
+        max_length=200,
+        unique=True,
+    )
+    actual_app_version_ios = models.CharField(
+        'Актуальная версия приложения для ios',
+        max_length=200,
+        blank=True,
+        null=True,
+    )
+    min_app_version_ios = models.CharField(
+        'Минимальная версия приложения для ios',
+        max_length=200,
+        blank=True,
+        null=True,
+    )
+
+    objects = SettingsManager()
+
+    class Meta:
+        verbose_name = 'Настройки'
+        verbose_name_plural = 'Настройки'
+
+    def __str__(self):
+        return self.settings_name

@@ -55,9 +55,14 @@ map_urls = [
     path("", views.MapListView.as_view(), name="map"),
 ]
 
+settings_urls = [
+    path('', views.SettingsView.as_view(), name='settings'),
+]
+
 urlpatterns = [
     path("user/", include(user_urls)),
     path("announcement/", include(announcement_urls)),
     path("map/", include(map_urls)),
     path("auth/", include(auth_urls)),
+    path('settings/', include(settings_urls)),
 ]

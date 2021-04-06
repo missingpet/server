@@ -65,6 +65,18 @@ class PasswordResetRequestSerializer(serializers.Serializer):
         return attrs
 
 
+class SettingsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Settings
+        fields = (
+            'id',
+            'settings_name',
+            'actual_app_version_ios',
+            'min_app_version_ios',
+        )
+
+
 class UserCreateSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     nickname = serializers.CharField(min_length=3, max_length=64)

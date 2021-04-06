@@ -2,6 +2,8 @@
 import datetime
 import os
 
+import decouple
+
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -121,3 +123,5 @@ ALLOWED_UPLOAD_IMAGE_EXTENSIONS = ('jpeg', 'png')
 
 PASSWORD_RESET_CONFIRMATION_CODE_LIFE_TIME = 60 * 10
 PASSWORD_RESET_CONFIRMATION_CODE_LENGTH = 6
+
+SETTINGS_ACTUAL_NAME = 'По умолчанию'

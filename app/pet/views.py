@@ -76,6 +76,23 @@ class PasswordResetConfirmView(generics.GenericAPIView):
         )
 
 
+class SettingsView(generics.GenericAPIView):
+    """Получение актуальных настроек мобильного приложения"""
+    permission_classes = (AllowAny, )
+    serializer_class = serializers.SettingsSerializer
+
+    def get(self, request, *args, **kwargs):
+        actual_settings = models.Settings.objects.get_actual()
+        if not actual_settings:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'settings_not_set_error': 'Настройки не установлены'},
+            )
+        serializer = self.serializer_class(actual_settings)
+
+        return Response(serializer.data)
+
+
 class AuthView(TokenObtainSlidingView):
     """Авторизация пользователя"""
 

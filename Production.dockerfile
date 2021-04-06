@@ -38,7 +38,7 @@ RUN apk add --update --no-cache --virtual .build-deps \
 
 FROM python:3.8.6-alpine
 
-ENV APPLICATION_ENVIRONMENT production
+ENV DJANGO_ENV production
 
 ARG SECRET_KEY
 ARG ALLOWED_HOSTS
