@@ -7,5 +7,7 @@ from ...models import Settings
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        if not Settings.objects.filter(email=settings.SETTINGS_ACTUAL_NAME).exists():
-            Settings.objects.create(settings_name=settings.SETTINGS_ACTUAL_NAME)
+        if not Settings.objects.filter(
+                email=settings.SETTINGS_ACTUAL_NAME).exists():
+            Settings.objects.create(
+                settings_name=settings.SETTINGS_ACTUAL_NAME)

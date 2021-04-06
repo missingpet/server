@@ -13,7 +13,7 @@ def catch_email_message_exception_for_views(func):
         try:
             return func(*args, **kwargs)
         except EmailMessageException as ex:
-            message = {'email_send_error': str(ex)}
+            message = {"email_send_error": str(ex)}
             return Response(status=HTTP_400_BAD_REQUEST, data=message)
 
     return wrapper

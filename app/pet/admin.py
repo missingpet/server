@@ -6,8 +6,8 @@ from .forms import UserChangeCustomForm
 from .forms import UserCreationCustomForm
 from .models import Announcement
 from .models import PasswordResetConfirmationCode
-from .models import User
 from .models import Settings
+from .models import User
 
 
 @admin.register(User)

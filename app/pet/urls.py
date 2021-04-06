@@ -7,15 +7,15 @@ auth_urls = [
     path("register/", views.UserCreateView.as_view(), name="register"),
     path("login/", views.AuthView.as_view(), name="login"),
     path(
-        'password/reset/request/',
+        "password/reset/request/",
         views.PasswordResetRequestView.as_view(),
-        name='password-reset-request',
+        name="password-reset-request",
     ),
     path(
-        'password/reset/confirm/',
+        "password/reset/confirm/",
         views.PasswordResetConfirmView.as_view(),
-        name='password-reset-confirm',
-    )
+        name="password-reset-confirm",
+    ),
 ]
 
 user_urls = [
@@ -56,7 +56,7 @@ map_urls = [
 ]
 
 settings_urls = [
-    path('', views.SettingsView.as_view(), name='settings'),
+    path("", views.SettingsView.as_view(), name="settings"),
 ]
 
 urlpatterns = [
@@ -64,5 +64,5 @@ urlpatterns = [
     path("announcement/", include(announcement_urls)),
     path("map/", include(map_urls)),
     path("auth/", include(auth_urls)),
-    path('settings/', include(settings_urls)),
+    path("settings/", include(settings_urls)),
 ]

@@ -4,7 +4,7 @@ from django.core.exceptions import ImproperlyConfigured
 ENV_PRODUCTION = "production"
 ENV_DEVELOPMENT = "development"
 
-APPLICATION_ENVIRONMENT = decouple.config('DJANGO_ENV')
+APPLICATION_ENVIRONMENT = decouple.config("DJANGO_ENV")
 
 ENVIRONMENTS = (ENV_PRODUCTION, ENV_DEVELOPMENT)
 

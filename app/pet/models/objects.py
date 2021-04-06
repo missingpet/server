@@ -135,7 +135,7 @@ class PasswordResetConfirmationCode(models.Model):
         default=generate_password_reset_confirmation_code,
     )
     expired_in = models.BigIntegerField(
-        'Время устаревания кода',
+        "Время устаревания кода",
         default=get_expired_in_time,
     )
 
@@ -150,10 +150,10 @@ class PasswordResetConfirmationCode(models.Model):
 
 
 class SettingsManager(models.Manager):
-
     def get_actual(self):
         try:
-            return self.get_queryset().get(settings_name=settings.SETTINGS_ACTUAL_NAME)
+            return self.get_queryset().get(
+                settings_name=settings.SETTINGS_ACTUAL_NAME)
         except models.ObjectDoesNotExist:
             return
 
@@ -162,18 +162,18 @@ class Settings(models.Model):
     """Настройки приложения"""
 
     settings_name = models.CharField(
-        'Уникальное название настроек',
+        "Уникальное название настроек",
         max_length=200,
         unique=True,
     )
     actual_app_version_ios = models.CharField(
-        'Актуальная версия приложения для ios',
+        "Актуальная версия приложения для ios",
         max_length=200,
         blank=True,
         null=True,
     )
     min_app_version_ios = models.CharField(
-        'Минимальная версия приложения для ios',
+        "Минимальная версия приложения для ios",
         max_length=200,
         blank=True,
         null=True,
@@ -182,8 +182,8 @@ class Settings(models.Model):
     objects = SettingsManager()
 
     class Meta:
-        verbose_name = 'Настройки'
-        verbose_name_plural = 'Настройки'
+        verbose_name = "Настройки"
+        verbose_name_plural = "Настройки"
 
     def __str__(self):
         return self.settings_name

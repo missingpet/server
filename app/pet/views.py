@@ -1,17 +1,17 @@
 from rest_framework import generics
-from rest_framework import viewsets
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainSlidingView
 
+from . import const
 from . import models
 from . import serializers
-from .pagination import AnnouncementPagination
-from .permissions import AnnouncementPermission
-from . import const
 from .email_logic import send_email_message
 from .exceptions import catch_email_message_exception_for_views
+from .pagination import AnnouncementPagination
+from .permissions import AnnouncementPermission
 
 
 class PasswordResetRequestView(generics.GenericAPIView):
@@ -26,29 +26,31 @@ class PasswordResetRequestView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
 
         user = models.User.objects.get(
-            email=serializer.validated_data['email'],
-        )
+            email=serializer.validated_data["email"], )
 
         models.PasswordResetConfirmationCode.objects.filter(
-            user=user,
-        ).delete()
+            user=user, ).delete()
 
-        code = models.PasswordResetConfirmationCode.objects.create(
-            user=user,
-        )
+        code = models.PasswordResetConfirmationCode.objects.create(user=user, )
 
         email_message_data = {
-            'subject': const.PASSWORD_RESET_REQUEST_SUBJECT,
-            'body': const.PASSWORD_RESET_REQUEST_BODY.format(
+            "subject":
+            const.PASSWORD_RESET_REQUEST_SUBJECT,
+            "body":
+            const.PASSWORD_RESET_REQUEST_BODY.format(
                 user.nickname,
                 code.code,
             ),
-            'recipient': user.email,
+            "recipient":
+            user.email,
         }
         send_email_message(**email_message_data)
 
         return Response(
-            data={'detail': const.PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE.format(user.email)},
+            data={
+                "detail":
+                const.PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE.format(user.email)
+            },
             status=status.HTTP_201_CREATED,
         )
 
@@ -66,18 +68,19 @@ class PasswordResetConfirmView(generics.GenericAPIView):
 
         validated_data = serializer.validated_data
 
-        user = models.User.objects.get(email=validated_data['email'])
-        user.set_password(validated_data['new_password'])
+        user = models.User.objects.get(email=validated_data["email"])
+        user.set_password(validated_data["new_password"])
         user.save()
 
         return Response(
-            data={'detail': 'Пароль успешно сброшен'},
+            data={"detail": "Пароль успешно сброшен"},
             status=status.HTTP_204_NO_CONTENT,
         )
 
 
 class SettingsView(generics.GenericAPIView):
     """Получение актуальных настроек мобильного приложения"""
+
     permission_classes = (AllowAny, )
     serializer_class = serializers.SettingsSerializer
 
@@ -86,7 +89,7 @@ class SettingsView(generics.GenericAPIView):
         if not actual_settings:
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
-                data={'settings_not_set_error': 'Настройки не установлены'},
+                data={"settings_not_set_error": "Настройки не установлены"},
             )
         serializer = self.serializer_class(actual_settings)
 
