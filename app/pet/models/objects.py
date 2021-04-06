@@ -2,13 +2,12 @@ import time
 from random import randint
 
 from django.conf import settings
-from django.contrib.auth.models import AbstractBaseUser
-from django.contrib.auth.models import BaseUserManager
-from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+                                        PermissionsMixin)
 from django.db import models
 
-from . import enums
 from ..photo_service import upload_photo
+from . import enums
 
 
 class UserManager(BaseUserManager):

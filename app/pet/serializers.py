@@ -1,5 +1,5 @@
-import re
 import imghdr
+import re
 import time
 
 from django.conf import settings

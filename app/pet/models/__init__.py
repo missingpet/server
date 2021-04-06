@@ -1,7 +1,5 @@
-from .objects import Announcement
-from .objects import PasswordResetConfirmationCode
-from .objects import User
-from .objects import Settings
+from .objects import (Announcement, PasswordResetConfirmationCode, Settings,
+                      User)
 
 __all__ = (
     "Announcement",
