@@ -2,7 +2,7 @@
 from django import test
 
 from ..models import User
-from .test_data import *
+from .test_data import *  # NOQA
 
 
 class UserTestCases(test.TestCase):
@@ -18,7 +18,7 @@ class UserTestCases(test.TestCase):
             test_superuser_password,
         )
 
-    @test.tag('users-count')
+    @test.tag("users-count")
     def test_users_count(self):
         self.assertEqual(User.objects.count(), 2)
 

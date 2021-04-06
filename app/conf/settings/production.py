@@ -1,7 +1,7 @@
 """Production environment settings."""
 import decouple
 
-from .base import *
+from .base import *  # NOQA
 
 DEBUG = False
 
@@ -20,6 +20,13 @@ DATABASES = {
         "PORT": decouple.config("POSTGRES_PORT"),
     }
 }
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = decouple.config("EMAIL_HOST")
+EMAIL_HOST_USER = decouple.config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = decouple.config("EMAIL_HOST_PASSWORD")
 
 ADMIN_EMAIL = decouple.config("ADMIN_EMAIL")
 ADMIN_NICKNAME = decouple.config("ADMIN_NICKNAME")

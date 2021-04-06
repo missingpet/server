@@ -1,12 +1,99 @@
 from rest_framework import generics
+from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainSlidingView
 
+from . import const
 from . import models
 from . import serializers
+from .email_logic import send_email_message
+from .exceptions import catch_email_message_exception_for_views
 from .pagination import AnnouncementPagination
 from .permissions import AnnouncementPermission
+
+
+class PasswordResetRequestView(generics.GenericAPIView):
+    """Запрос на сброс пароля"""
+
+    serializer_class = serializers.PasswordResetRequestSerializer
+    permission_classes = (AllowAny, )
+
+    @catch_email_message_exception_for_views
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = models.User.objects.get(
+            email=serializer.validated_data["email"], )
+
+        models.PasswordResetConfirmationCode.objects.filter(
+            user=user, ).delete()
+
+        code = models.PasswordResetConfirmationCode.objects.create(user=user, )
+
+        email_message_data = {
+            "subject":
+            const.PASSWORD_RESET_REQUEST_SUBJECT,
+            "body":
+            const.PASSWORD_RESET_REQUEST_BODY.format(
+                user.nickname,
+                code.code,
+            ),
+            "recipient":
+            user.email,
+        }
+        send_email_message(**email_message_data)
+
+        return Response(
+            data={
+                "detail":
+                const.PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE.format(user.email)
+            },
+            status=status.HTTP_201_CREATED,
+        )
+
+
+class PasswordResetConfirmView(generics.GenericAPIView):
+    """Подтверждение сброса пароля"""
+
+    serializer_class = serializers.PasswordResetConfirmSerializer
+    permission_classes = (AllowAny, )
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        validated_data = serializer.validated_data
+
+        user = models.User.objects.get(email=validated_data["email"])
+        user.set_password(validated_data["new_password"])
+        user.save()
+
+        return Response(
+            data={"detail": "Пароль успешно сброшен"},
+            status=status.HTTP_204_NO_CONTENT,
+        )
+
+
+class SettingsView(generics.GenericAPIView):
+    """Получение актуальных настроек мобильного приложения"""
+
+    permission_classes = (AllowAny, )
+    serializer_class = serializers.SettingsSerializer
+
+    def get(self, request, *args, **kwargs):
+        actual_settings = models.Settings.objects.get_actual()
+        if not actual_settings:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={"settings_not_set_error": "Настройки не установлены"},
+            )
+        serializer = self.serializer_class(actual_settings)
+
+        return Response(serializer.data)
 
 
 class AuthView(TokenObtainSlidingView):
@@ -49,8 +136,6 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
 
 
 class BaseAnnouncementUserListView(generics.ListAPIView):
-    """Base announcement user view to extend in subclasses."""
-
     serializer_class = serializers.AnnouncementSerializer
     permission_classes = (AllowAny, )
     pagination_class = AnnouncementPagination
@@ -72,8 +157,6 @@ class FeedForUserListView(BaseAnnouncementUserListView):
 
 
 class BaseMapListView(generics.ListAPIView):
-    """Base announcements map view to extend in subclasses."""
-
     serializer_class = serializers.AnnouncementsMapSerializer
     permission_classes = (AllowAny, )
 

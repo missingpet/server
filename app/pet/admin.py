@@ -5,6 +5,8 @@ from django.utils.html import format_html
 from .forms import UserChangeCustomForm
 from .forms import UserCreationCustomForm
 from .models import Announcement
+from .models import PasswordResetConfirmationCode
+from .models import Settings
 from .models import User
 
 
@@ -22,7 +24,7 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ("is_staff", "is_superuser", "is_active")
     fieldsets = (
         (None, {
-            "fields": ("password", "email", "nickname", "is_active")
+            "fields": ("password", "email", "nickname", "is_active", "groups")
         }),
         ("Особые права", {
             "fields": ("is_superuser", "is_staff")
@@ -40,8 +42,14 @@ class CustomUserAdmin(UserAdmin):
             None,
             {
                 "classes": ("wide", ),
-                "fields":
-                ("email", "nickname", "password1", "password2", "is_active"),
+                "fields": (
+                    "email",
+                    "nickname",
+                    "password1",
+                    "password2",
+                    "is_active",
+                    "groups",
+                ),
             },
         ),
         (
@@ -74,3 +82,15 @@ class AnnouncementAdmin(admin.ModelAdmin):
     get_photo.short_description = "Миниатюра"
 
     save_on_top = True
+
+
+@admin.register(PasswordResetConfirmationCode)
+class PasswordResetConfirmationCodeAdmin(admin.ModelAdmin):
+    list_display = ("id", "user", "code", "expired_in")
+    list_display_links = ("id", "user", "code")
+    readonly_fields = ("code", "expired_in")
+
+
+@admin.register(Settings)
+class SettingsAdmin(admin.ModelAdmin):
+    pass

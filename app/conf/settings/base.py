@@ -2,7 +2,10 @@
 import datetime
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import decouple
+
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 INSTALLED_APPS = (
     "django.contrib.admin",
@@ -79,20 +82,19 @@ AUTHENTICATION_BACKENDS = ("pet.auth.EmailAuthBackend", )
 
 AUTH_USER_MODEL = "pet.User"
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 ANNOUNCEMENTS_PHOTO = "announcements/"
-
-MAX_PHOTO_UPLOAD_SIZE = 5242880
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+    "DEFAULT_VERSIONING_CLASS":
+    "rest_framework.versioning.URLPathVersioning",
 }
 
 SIMPLE_JWT = {
@@ -114,3 +116,12 @@ SWAGGER_SETTINGS = {
     "LOGIN_URL": "rest_framework:login",
     "LOGOUT_URL": "rest_framework:logout",
 }
+
+MAX_PHOTO_UPLOAD_SIZE = 1024 * 1024 * 5
+
+ALLOWED_UPLOAD_IMAGE_EXTENSIONS = ("jpeg", "png")
+
+PASSWORD_RESET_CONFIRMATION_CODE_LIFE_TIME = 60 * 10
+PASSWORD_RESET_CONFIRMATION_CODE_LENGTH = 6
+
+SETTINGS_ACTUAL_NAME = "По умолчанию"

@@ -6,6 +6,16 @@ from . import views
 auth_urls = [
     path("register/", views.UserCreateView.as_view(), name="register"),
     path("login/", views.AuthView.as_view(), name="login"),
+    path(
+        "password/reset/request/",
+        views.PasswordResetRequestView.as_view(),
+        name="password-reset-request",
+    ),
+    path(
+        "password/reset/confirm/",
+        views.PasswordResetConfirmView.as_view(),
+        name="password-reset-confirm",
+    ),
 ]
 
 user_urls = [
@@ -45,9 +55,14 @@ map_urls = [
     path("", views.MapListView.as_view(), name="map"),
 ]
 
+settings_urls = [
+    path("", views.SettingsView.as_view(), name="settings"),
+]
+
 urlpatterns = [
     path("user/", include(user_urls)),
     path("announcement/", include(announcement_urls)),
     path("map/", include(map_urls)),
     path("auth/", include(auth_urls)),
+    path("settings/", include(settings_urls)),
 ]
