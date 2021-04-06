@@ -11,6 +11,7 @@ from .pagination import AnnouncementPagination
 from .permissions import AnnouncementPermission
 from . import const
 from .email_logic import send_email_message
+from .exceptions import catch_email_message_exception_for_views
 
 
 class PasswordResetRequestView(generics.GenericAPIView):
@@ -19,6 +20,7 @@ class PasswordResetRequestView(generics.GenericAPIView):
     serializer_class = serializers.PasswordResetRequestSerializer
     permission_classes = (AllowAny, )
 
+    @catch_email_message_exception_for_views
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -26,6 +28,11 @@ class PasswordResetRequestView(generics.GenericAPIView):
         user = models.User.objects.get(
             email=serializer.validated_data['email'],
         )
+
+        models.PasswordResetConfirmationCode.objects.filter(
+            user=user,
+        ).delete()
+
         code = models.PasswordResetConfirmationCode.objects.create(
             user=user,
         )
