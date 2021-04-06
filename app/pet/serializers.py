@@ -33,9 +33,7 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
                     code=code,
                 )
             except ObjectDoesNotExist:
-                raise serializers.ValidationError(
-                    'Предоставленный код не привязан к пользователю с данным адресом электронной почты'
-                )
+                raise serializers.ValidationError('Неправильный код сброса пароля')
             else:
                 if round(time.time()) > password_reset_confirmation_code.expired_in:
                     raise serializers.ValidationError('Код подтверждения больше недействителен')
