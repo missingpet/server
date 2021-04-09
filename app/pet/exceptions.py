@@ -1,7 +1,7 @@
+from smtplib import SMTPException
+
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
-
-from .email_logic import EmailMessageException
 
 
 def catch_email_message_exception_for_views(func):
@@ -12,7 +12,7 @@ def catch_email_message_exception_for_views(func):
     def wrapper(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        except EmailMessageException as ex:
+        except SMTPException as ex:
             message = {"email_send_error": str(ex)}
             return Response(status=HTTP_400_BAD_REQUEST, data=message)
 
