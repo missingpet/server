@@ -14,6 +14,21 @@ from .pagination import AnnouncementPagination
 from .permissions import AnnouncementPermission
 
 
+class AuthView(TokenObtainSlidingView):
+    """Авторизация пользователя"""
+
+    serializer_class = serializers.AuthSerializer
+    permission_classes = (AllowAny, )
+
+
+class UserCreateView(generics.CreateAPIView):
+    """Регистрация пользователя"""
+
+    queryset = models.User
+    serializer_class = serializers.UserCreateSerializer
+    permission_classes = (AllowAny, )
+
+
 class PasswordResetRequestView(generics.GenericAPIView):
     """Запрос на сброс пароля"""
 
@@ -94,21 +109,6 @@ class SettingsView(generics.GenericAPIView):
         serializer = self.serializer_class(actual_settings)
 
         return Response(serializer.data)
-
-
-class AuthView(TokenObtainSlidingView):
-    """Авторизация пользователя"""
-
-    serializer_class = serializers.AuthSerializer
-    permission_classes = (AllowAny, )
-
-
-class UserCreateView(generics.CreateAPIView):
-    """Регистрация пользователя"""
-
-    queryset = models.User
-    serializer_class = serializers.UserCreateSerializer
-    permission_classes = (AllowAny, )
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):

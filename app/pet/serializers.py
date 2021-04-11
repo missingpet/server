@@ -10,6 +10,60 @@ from rest_framework_simplejwt.serializers import TokenObtainSlidingSerializer
 from . import models
 
 
+class UserCreateSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
+    nickname = serializers.CharField(min_length=3, max_length=64)
+    password = serializers.CharField(
+        min_length=6,
+        max_length=128,
+        write_only=True,
+    )
+
+    class Meta:
+        model = models.User
+        fields = ("email", "nickname", "password")
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        nickname = attrs.get("nickname")
+
+        if not nickname.isalnum():
+            raise serializers.ValidationError(
+                'Имя пользователя должно содержать только буквенно-цифровые символы'
+            )
+
+        try:
+            models.User.objects.get(email=email)
+        except ObjectDoesNotExist:
+            pass
+        else:
+            raise serializers.ValidationError(
+                'Пользователь с таким адресом электронной почты уже зарегистирован'
+            )
+
+        return attrs
+
+    def create(self, validated_data):
+        return models.User.objects.create_user(**validated_data)
+
+
+class AuthSerializer(TokenObtainSlidingSerializer):
+
+    default_error_messages = {
+        "no_active_account":
+        "Аккаунт с предоставленными учетными данными не найден"
+    }
+
+    def validate(self, attrs):
+        data = super(AuthSerializer, self).validate(attrs)
+        data.update({
+            "id": self.user.id,
+            "email": self.user.email,
+            "nickname": self.user.nickname,
+        })
+        return data
+
+
 class PasswordResetConfirmSerializer(serializers.Serializer):
     new_password = serializers.CharField(
         min_length=6,
@@ -80,60 +134,6 @@ class SettingsSerializer(serializers.ModelSerializer):
             "actual_app_version_ios",
             "min_app_version_ios",
         )
-
-
-class UserCreateSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField()
-    nickname = serializers.CharField(min_length=3, max_length=64)
-    password = serializers.CharField(
-        min_length=6,
-        max_length=128,
-        write_only=True,
-    )
-
-    class Meta:
-        model = models.User
-        fields = ("email", "nickname", "password")
-
-    def validate(self, attrs):
-        email = attrs.get("email")
-        nickname = attrs.get("nickname")
-
-        if not nickname.isalnum():
-            raise serializers.ValidationError(
-                "Имя пользователя должно содержать только буквенно-цифровые символы"
-            )
-
-        try:
-            models.User.objects.get(email=email)
-        except ObjectDoesNotExist:
-            pass
-        else:
-            raise serializers.ValidationError(
-                "Пользователь с таким адресом электронной почты уже зарегистирован"
-            )
-
-        return attrs
-
-    def create(self, validated_data):
-        return models.User.objects.create_user(**validated_data)
-
-
-class AuthSerializer(TokenObtainSlidingSerializer):
-
-    default_error_messages = {
-        "no_active_account":
-        "Аккаунт с предоставленными учетными данными не найден"
-    }
-
-    def validate(self, attrs):
-        data = super(AuthSerializer, self).validate(attrs)
-        data.update({
-            "id": self.user.id,
-            "email": self.user.email,
-            "nickname": self.user.nickname,
-        })
-        return data
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):
