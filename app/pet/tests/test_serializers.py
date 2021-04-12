@@ -28,6 +28,24 @@ class SerializerTestCase(test.TestCase):
         serializer = serializers.UserCreateSerializer(data=bad_email_data)
         self.assertFalse(serializer.is_valid(), serializer.errors)
 
+        bad_nickname_data = {
+            'email': 'test@email.com',
+            'nickname': '()*%$',
+            'password': 'Password123*',
+        }
+
+        serializer = serializers.UserCreateSerializer(data=bad_nickname_data)
+        self.assertFalse(serializer.is_valid(), serializer.errors)
+
+        bad_password_data = {
+            'email': 'test@email.com',
+            'nickname': 'nickname',
+            'password': 'abc',
+        }
+
+        serializer = serializers.UserCreateSerializer(data=bad_password_data)
+        self.assertFalse(serializer.is_valid(), serializer.errors)
+
     def test_password_reset_request_serializer(self):
         user = UserFactory(email='email@mail.ru')
 
