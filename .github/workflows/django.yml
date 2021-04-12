@@ -29,4 +29,4 @@ jobs:
       env:
         DJANGO_ENV: development
       run: |
-        python app/manage.py test pet
+        python app/manage.py test pet.tests
