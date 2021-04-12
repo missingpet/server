@@ -1,5 +1,4 @@
 """Data for unit-testing."""
-
 test_user_email = "user@email.com"
 test_user_nickname = "user"
 test_user_password = "User123*"

@@ -1,5 +1,5 @@
 run:
-	python manage.py runserver 0.0.0.0:8001
+	python manage.py runserver 0.0.0.0:8000
 migrate:
 	python manage.py makemigrations && python manage.py migrate
 static:
@@ -11,10 +11,8 @@ upgrade:
 superuser:
 	python manage.py createsuperuser
 test:
-	python manage.py test
+	python manage.py test pet.tests
 app:
 	python manage.py startapp $(name)
 show:
 	python manage.py showmigrations
-venv:
-	python3 -m venv venv

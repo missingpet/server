@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 
-from .forms import UserChangeCustomForm
-from .forms import UserCreationCustomForm
+from .forms import CustomUserChangeForm
+from .forms import CustomUserCreationForm
 from .models import Announcement
 from .models import PasswordResetConfirmationCode
 from .models import Settings
@@ -12,8 +12,8 @@ from .models import User
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    form = UserChangeCustomForm
-    add_form = UserCreationCustomForm
+    form = CustomUserChangeForm
+    add_form = CustomUserCreationForm
     readonly_fields = ("last_login", "created_at", "updated_at")
     list_display = ("id", "email", "nickname", "created_at", "updated_at")
     list_display_links = (

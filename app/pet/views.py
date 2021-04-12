@@ -9,9 +9,24 @@ from . import const
 from . import models
 from . import serializers
 from .email_logic import send_email_message
-from .exceptions import catch_email_message_exception_for_views
+from .exceptions import catch_smtp_exception_for_view
 from .pagination import AnnouncementPagination
 from .permissions import AnnouncementPermission
+
+
+class AuthView(TokenObtainSlidingView):
+    """Авторизация пользователя"""
+
+    serializer_class = serializers.AuthSerializer
+    permission_classes = (AllowAny, )
+
+
+class UserCreateView(generics.CreateAPIView):
+    """Регистрация пользователя"""
+
+    queryset = models.User
+    serializer_class = serializers.UserCreateSerializer
+    permission_classes = (AllowAny, )
 
 
 class PasswordResetRequestView(generics.GenericAPIView):
@@ -20,7 +35,7 @@ class PasswordResetRequestView(generics.GenericAPIView):
     serializer_class = serializers.PasswordResetRequestSerializer
     permission_classes = (AllowAny, )
 
-    @catch_email_message_exception_for_views
+    @catch_smtp_exception_for_view
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -48,7 +63,7 @@ class PasswordResetRequestView(generics.GenericAPIView):
 
         return Response(
             data={
-                "detail":
+                "success":
                 const.PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE.format(user.email)
             },
             status=status.HTTP_201_CREATED,
@@ -73,7 +88,7 @@ class PasswordResetConfirmView(generics.GenericAPIView):
         user.save()
 
         return Response(
-            data={"detail": "Пароль успешно сброшен"},
+            data={"success": "Пароль успешно сброшен"},
             status=status.HTTP_204_NO_CONTENT,
         )
 
@@ -94,21 +109,6 @@ class SettingsView(generics.GenericAPIView):
         serializer = self.serializer_class(actual_settings)
 
         return Response(serializer.data)
-
-
-class AuthView(TokenObtainSlidingView):
-    """Авторизация пользователя"""
-
-    serializer_class = serializers.AuthSerializer
-    permission_classes = (AllowAny, )
-
-
-class UserCreateView(generics.CreateAPIView):
-    """Регистрация пользователя"""
-
-    queryset = models.User
-    serializer_class = serializers.UserCreateSerializer
-    permission_classes = (AllowAny, )
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):
@@ -145,15 +145,17 @@ class BaseAnnouncementUserListView(generics.ListAPIView):
 class UserAnnouncementsListView(BaseAnnouncementUserListView):
     """Получение списка объявлений принадлежащих пользователю с указанным user_id"""
     def get_queryset(self):
-        return models.Announcement.objects.filter(
+        queryset = models.Announcement.objects.filter(
             user_id=self.kwargs.get(self.lookup_field))
+        return queryset
 
 
 class FeedForUserListView(BaseAnnouncementUserListView):
     """Получение ленты объявлений для пользователя с указанным user_id"""
     def get_queryset(self):
-        return models.Announcement.objects.exclude(
+        queryset = models.Announcement.objects.exclude(
             user_id=self.kwargs.get(self.lookup_field))
+        return queryset
 
 
 class BaseMapListView(generics.ListAPIView):
@@ -173,5 +175,6 @@ class MapForUserListView(BaseMapListView):
     lookup_field = "user_id"
 
     def get_queryset(self):
-        return models.Announcement.objects.exclude(
+        queryset = models.Announcement.objects.exclude(
             user_id=self.kwargs.get(self.lookup_field))
+        return queryset
