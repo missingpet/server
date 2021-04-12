@@ -10,21 +10,22 @@ class SerializerTestCase(test.TestCase):
         pass
 
     def test_user_create_serializer(self):
-        data = {
+        success_data = {
             'email': 'test@email.com',
             'nickname': 'nickname',
             'password': 'Password123*',
         }
 
-        serializer = serializers.UserCreateSerializer(data=data)
+        serializer = serializers.UserCreateSerializer(data=success_data)
         self.assertTrue(serializer.is_valid(), serializer.errors)
-        data2 = {
+
+        bad_email_data = {
             'email': 'abcde',
             'nickname': 'nickname',
             'password': 'Password123*',
         }
 
-        serializer = serializers.UserCreateSerializer(data=data2)
+        serializer = serializers.UserCreateSerializer(data=bad_email_data)
         self.assertFalse(serializer.is_valid(), serializer.errors)
 
     def test_password_reset_request_serializer(self):
