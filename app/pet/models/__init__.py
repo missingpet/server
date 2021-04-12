@@ -9,6 +9,6 @@ __all__ = (
     "PasswordResetConfirmationCode",
     "User",
     "Settings",
-    'AnimalTypeChoices',
-    'AnnouncementTypeChoices',
+    "AnimalTypeChoices",
+    "AnnouncementTypeChoices",
 )
