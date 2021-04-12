@@ -8,43 +8,43 @@ from .data_factories import UserFactory
 class SerializerTestCase(test.TestCase):
     def setUp(self):
         pass
-
+    
     def test_user_create_serializer(self):
-        success_data = {
+        valid_data = {
             "email": "test@email.com",
             "nickname": "nickname",
             "password": "Password123*",
         }
 
-        serializer = serializers.UserCreateSerializer(data=success_data)
+        serializer = serializers.UserCreateSerializer(data=valid_data)
         self.assertTrue(serializer.is_valid(), serializer.errors)
 
-        bad_email_data = {
-            "email": "abcde",
+        invalid_email_data = {
+            "email": "its not an email address",
             "nickname": "nickname",
             "password": "Password123*",
         }
 
-        serializer = serializers.UserCreateSerializer(data=bad_email_data)
-        self.assertFalse(serializer.is_valid(), serializer.errors)
+        serializer = serializers.UserCreateSerializer(data=invalid_email_data)
+        self.assertFalse(serializer.is_valid())
 
-        bad_nickname_data = {
+        invalid_nickname_data = {
             "email": "test@email.com",
             "nickname": "()*%$",
             "password": "Password123*",
         }
 
-        serializer = serializers.UserCreateSerializer(data=bad_nickname_data)
-        self.assertFalse(serializer.is_valid(), serializer.errors)
+        serializer = serializers.UserCreateSerializer(data=invalid_nickname_data)
+        self.assertFalse(serializer.is_valid())
 
-        bad_password_data = {
+        invalid_password_data = {
             "email": "test@email.com",
             "nickname": "nickname",
             "password": "abc",
         }
 
-        serializer = serializers.UserCreateSerializer(data=bad_password_data)
-        self.assertFalse(serializer.is_valid(), serializer.errors)
+        serializer = serializers.UserCreateSerializer(data=invalid_password_data)
+        self.assertFalse(serializer.is_valid())
 
     def test_password_reset_request_serializer(self):
         user = UserFactory(email="email@mail.ru")
