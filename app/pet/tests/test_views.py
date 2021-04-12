@@ -19,8 +19,7 @@ class ViewTestCase(test.APITestCase):
     def test_password_reset_request_view(self):
         query_dict = {"email": "email@email.com"}
         response = self.client.post(
-            reverse("password-reset-request", args=("v1",)), query_dict
-        )
+            reverse("password-reset-request", args=("v1", )), query_dict)
         self.assertEqual(response.status_code, HTTP_201_CREATED)
 
     def test_password_reset_confirm_view(self):

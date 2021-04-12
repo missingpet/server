@@ -18,7 +18,7 @@ class AuthView(TokenObtainSlidingView):
     """Авторизация пользователя"""
 
     serializer_class = serializers.AuthSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -26,14 +26,14 @@ class UserCreateView(generics.CreateAPIView):
 
     queryset = models.User
     serializer_class = serializers.UserCreateSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
 
 
 class PasswordResetRequestView(generics.GenericAPIView):
     """Запрос на сброс пароля"""
 
     serializer_class = serializers.PasswordResetRequestSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
 
     @catch_smtp_exception_for_view
     def post(self, request, *args, **kwargs):
@@ -41,32 +41,30 @@ class PasswordResetRequestView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
 
         user = models.User.objects.get(
-            email=serializer.validated_data["email"],
-        )
+            email=serializer.validated_data["email"], )
 
         models.PasswordResetConfirmationCode.objects.filter(
-            user=user,
-        ).delete()
+            user=user, ).delete()
 
-        code = models.PasswordResetConfirmationCode.objects.create(
-            user=user,
-        )
+        code = models.PasswordResetConfirmationCode.objects.create(user=user, )
 
         email_message_data = {
-            "subject": const.PASSWORD_RESET_REQUEST_SUBJECT,
-            "body": const.PASSWORD_RESET_REQUEST_BODY.format(
+            "subject":
+            const.PASSWORD_RESET_REQUEST_SUBJECT,
+            "body":
+            const.PASSWORD_RESET_REQUEST_BODY.format(
                 user.nickname,
                 code.code,
             ),
-            "recipient": user.email,
+            "recipient":
+            user.email,
         }
         send_email_message(**email_message_data)
 
         return Response(
             data={
-                "success": const.PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE.format(
-                    user.email
-                )
+                "success":
+                const.PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE.format(user.email)
             },
             status=status.HTTP_201_CREATED,
         )
@@ -76,7 +74,7 @@ class PasswordResetConfirmView(generics.GenericAPIView):
     """Подтверждение сброса пароля"""
 
     serializer_class = serializers.PasswordResetConfirmSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
@@ -98,7 +96,7 @@ class PasswordResetConfirmView(generics.GenericAPIView):
 class SettingsView(generics.GenericAPIView):
     """Получение актуальных настроек мобильного приложения"""
 
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
     serializer_class = serializers.SettingsSerializer
 
     def get(self, request, *args, **kwargs):
@@ -130,7 +128,7 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
 
     queryset = models.Announcement.objects.all()
     serializer_class = serializers.AnnouncementSerializer
-    permission_classes = (AnnouncementPermission,)
+    permission_classes = (AnnouncementPermission, )
     pagination_class = AnnouncementPagination
 
     def perform_create(self, serializer):
@@ -139,34 +137,30 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
 
 class BaseAnnouncementUserListView(generics.ListAPIView):
     serializer_class = serializers.AnnouncementSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
     pagination_class = AnnouncementPagination
     lookup_field = "user_id"
 
 
 class UserAnnouncementsListView(BaseAnnouncementUserListView):
     """Получение списка объявлений принадлежащих пользователю с указанным user_id"""
-
     def get_queryset(self):
         queryset = models.Announcement.objects.filter(
-            user_id=self.kwargs.get(self.lookup_field)
-        )
+            user_id=self.kwargs.get(self.lookup_field))
         return queryset
 
 
 class FeedForUserListView(BaseAnnouncementUserListView):
     """Получение ленты объявлений для пользователя с указанным user_id"""
-
     def get_queryset(self):
         queryset = models.Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_field)
-        )
+            user_id=self.kwargs.get(self.lookup_field))
         return queryset
 
 
 class BaseMapListView(generics.ListAPIView):
     serializer_class = serializers.AnnouncementsMapSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
 
 
 class MapListView(BaseMapListView):
@@ -182,6 +176,5 @@ class MapForUserListView(BaseMapListView):
 
     def get_queryset(self):
         queryset = models.Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_field)
-        )
+            user_id=self.kwargs.get(self.lookup_field))
         return queryset

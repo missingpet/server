@@ -10,7 +10,6 @@ def catch_smtp_exception_for_view(func):
     Декоратор для отлавливания ошибок при обращению к smtp сервису.
     Оборачивает исключение в 400 ответ во view.
     """
-
     @wraps(func)
     def wrapper(*args, **kwargs):
         try:
