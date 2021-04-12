@@ -63,7 +63,7 @@ class PasswordResetRequestView(generics.GenericAPIView):
 
         return Response(
             data={
-                'success':
+                "success":
                 const.PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE.format(user.email)
             },
             status=status.HTTP_201_CREATED,
@@ -88,7 +88,7 @@ class PasswordResetConfirmView(generics.GenericAPIView):
         user.save()
 
         return Response(
-            data={'success': 'Пароль успешно сброшен'},
+            data={"success": "Пароль успешно сброшен"},
             status=status.HTTP_204_NO_CONTENT,
         )
 

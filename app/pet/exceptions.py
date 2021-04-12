@@ -15,7 +15,7 @@ def catch_smtp_exception_for_view(func):
         try:
             return func(*args, **kwargs)
         except SMTPException as ex:
-            message = {'smtp_error': str(ex)}
+            message = {"smtp_error": str(ex)}
             return Response(status=HTTP_400_BAD_REQUEST, data=message)
 
     return wrapper

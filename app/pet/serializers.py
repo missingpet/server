@@ -29,7 +29,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
         if not nickname.isalnum():
             raise serializers.ValidationError(
-                'Имя пользователя должно содержать только буквенно-цифровые символы'
+                "Имя пользователя должно содержать только буквенно-цифровые символы"
             )
 
         try:
@@ -38,7 +38,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             pass
         else:
             raise serializers.ValidationError(
-                'Пользователь с таким адресом электронной почты уже зарегистирован'
+                "Пользователь с таким адресом электронной почты уже зарегистирован"
             )
 
         return attrs
