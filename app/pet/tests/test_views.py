@@ -1,6 +1,6 @@
 """Test cases for views."""
-from rest_framework import test
 from django.urls import reverse
+from rest_framework import test
 from rest_framework.status import HTTP_201_CREATED
 
 from ..models import User
