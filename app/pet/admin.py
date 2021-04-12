@@ -2,8 +2,12 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 
-from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import Announcement, PasswordResetConfirmationCode, Settings, User
+from .forms import CustomUserChangeForm
+from .forms import CustomUserCreationForm
+from .models import Announcement
+from .models import PasswordResetConfirmationCode
+from .models import Settings
+from .models import User
 
 
 @admin.register(User)

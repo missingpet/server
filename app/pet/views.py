@@ -1,9 +1,13 @@
-from rest_framework import generics, status, viewsets
+from rest_framework import generics
+from rest_framework import status
+from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainSlidingView
 
-from . import const, models, serializers
+from . import const
+from . import models
+from . import serializers
 from .email_logic import send_email_message
 from .exceptions import catch_smtp_exception_for_view
 from .pagination import AnnouncementPagination
