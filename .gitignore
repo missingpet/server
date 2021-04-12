@@ -10,5 +10,5 @@ media
 __pycache__
 *.crt
 *.key
-!dev-server.crt
-!dev-server.key
+!my-server.crt
+!my-server.key
