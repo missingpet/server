@@ -8,7 +8,7 @@ from .data_factories import UserFactory
 class SerializerTestCase(test.TestCase):
     def setUp(self):
         pass
-    
+
     def test_user_create_serializer(self):
         valid_data = {
             "email": "test@email.com",
@@ -34,7 +34,8 @@ class SerializerTestCase(test.TestCase):
             "password": "Password123*",
         }
 
-        serializer = serializers.UserCreateSerializer(data=invalid_nickname_data)
+        serializer = serializers.UserCreateSerializer(
+            data=invalid_nickname_data)
         self.assertFalse(serializer.is_valid())
 
         invalid_password_data = {
@@ -43,7 +44,8 @@ class SerializerTestCase(test.TestCase):
             "password": "abc",
         }
 
-        serializer = serializers.UserCreateSerializer(data=invalid_password_data)
+        serializer = serializers.UserCreateSerializer(
+            data=invalid_password_data)
         self.assertFalse(serializer.is_valid())
 
     def test_password_reset_request_serializer(self):
