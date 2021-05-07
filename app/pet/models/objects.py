@@ -50,19 +50,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     nickname = models.CharField("Никнейм", max_length=64)
     is_staff = models.BooleanField("Статус персонала", default=False)
-    is_superuser = models.BooleanField("Статус суперпользователя",
-                                       default=False)
+    is_superuser = models.BooleanField("Статус суперпользователя", default=False)
     is_active = models.BooleanField("Активирован", default=True)
     created_at = models.DateTimeField("Создан", auto_now_add=True)
     updated_at = models.DateTimeField("Обновлён", auto_now=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ("nickname", )
+    REQUIRED_FIELDS = ("nickname",)
 
     objects = UserManager()
 
     class Meta:
-        ordering = ("-created_at", )
+        ordering = ("-created_at",)
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
 
@@ -88,21 +87,21 @@ class Announcement(models.Model):
     )
     description = models.CharField("Описание", max_length=5000)
     photo = models.ImageField("Фотография животного", upload_to=upload_photo)
-    announcement_type = models.IntegerField("Тип объявления",
-                                            choices=ANNOUNCEMENT_TYPES)
+    announcement_type = models.IntegerField(
+        "Тип объявления", choices=ANNOUNCEMENT_TYPES
+    )
     animal_type = models.IntegerField("Тип животного", choices=ANIMAL_TYPES)
     address = models.CharField("Место пропажи или находки", max_length=1000)
     latitude = models.FloatField("Широта")
     longitude = models.FloatField("Долгота")
-    contact_phone_number = models.CharField("Контактный телефон",
-                                            max_length=12)
+    contact_phone_number = models.CharField("Контактный телефон", max_length=12)
     created_at = models.DateTimeField("Создано", auto_now_add=True)
     updated_at = models.DateTimeField("Обновлено", auto_now=True)
 
     objects = AnnouncementManager()
 
     class Meta:
-        ordering = ("-created_at", )
+        ordering = ("-created_at",)
         verbose_name = "Объявление"
         verbose_name_plural = "Объявления"
 
@@ -113,16 +112,15 @@ class Announcement(models.Model):
 def generate_password_reset_confirmation_code():
     """Возвращает случайный (заданной в настройках длины) код"""
     code = randint(
-        10**(settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH - 1),
-        (10**settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH) - 1,
+        10 ** (settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH - 1),
+        (10 ** settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH) - 1,
     )
     return code
 
 
 def get_expired_in_time():
     """Возвращает время устаревания кода в секундах"""
-    seconds = round(
-        time.time()) + settings.PASSWORD_RESET_CONFIRMATION_CODE_LIFE_TIME
+    seconds = round(time.time()) + settings.PASSWORD_RESET_CONFIRMATION_CODE_LIFE_TIME
     return seconds
 
 
@@ -152,17 +150,16 @@ class PasswordResetConfirmationCode(models.Model):
 
     class Meta:
         verbose_name = "Код подтверждения сброса пароля"
-        verbose_name_plural = 'Коды подтверждения сброса пароля'
+        verbose_name_plural = "Коды подтверждения сброса пароля"
 
     def __str__(self):
-        return '{}_{}'.format(self.user, self.code)
+        return "{}_{}".format(self.user, self.code)
 
 
 class SettingsManager(models.Manager):
     def get_actual(self):
         try:
-            return self.get_queryset().get(
-                settings_name=settings.SETTINGS_ACTUAL_NAME)
+            return self.get_queryset().get(settings_name=settings.SETTINGS_ACTUAL_NAME)
         except models.ObjectDoesNotExist:
             return None
 

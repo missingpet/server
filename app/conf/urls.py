@@ -13,12 +13,12 @@ schema_view = get_schema_view(
         settings.DEFAULT_API_TITLE,
         settings.DEFAULT_API_VERSION,
     ),
-    permission_classes=(AllowAny, ),
+    permission_classes=(AllowAny,),
     public=True,
 )
 
 api_versioned_urls = [
-    path('', include("pet.urls")),
+    path("", include("pet.urls")),
     path("swagger/", schema_view.with_ui("swagger", cache_timeout=0)),
 ]
 
