@@ -4,7 +4,6 @@
 db.sqlite3
 venv
 media
-static
 __pycache__
 .*ignore
 Dockerfile

@@ -27,7 +27,7 @@ INSTALLED_APPS += ("storages", )
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
+EMAIL_PORT = decouple.config("EMAIL_PORT")
 EMAIL_HOST = decouple.config("EMAIL_HOST")
 EMAIL_HOST_USER = decouple.config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = decouple.config("EMAIL_HOST_PASSWORD")
