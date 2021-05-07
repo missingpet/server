@@ -1,16 +1,13 @@
+"""Module which contains admin models description."""
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 
-from .forms import CustomUserChangeForm
-from .forms import CustomUserCreationForm
-from .models import Announcement
-from .models import PasswordResetConfirmationCode
-from .models import Settings
-from .models import User
+from .forms import CustomUserChangeForm, CustomUserCreationForm
+from . import models
 
 
-@admin.register(User)
+@admin.register(models.User)
 class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
@@ -65,7 +62,7 @@ class CustomUserAdmin(UserAdmin):
     save_on_top = True
 
 
-@admin.register(Announcement)
+@admin.register(models.Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "announcement_type", "animal_type",
                     "created_at")
@@ -84,13 +81,13 @@ class AnnouncementAdmin(admin.ModelAdmin):
     save_on_top = True
 
 
-@admin.register(PasswordResetConfirmationCode)
+@admin.register(models.PasswordResetConfirmationCode)
 class PasswordResetConfirmationCodeAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "code", "expired_in")
     list_display_links = ("id", "user", "code")
-    readonly_fields = ("code", "expired_in")
+    readonly_fields = ('code', "expired_in")
 
 
-@admin.register(Settings)
+@admin.register(models.Settings)
 class SettingsAdmin(admin.ModelAdmin):
     pass

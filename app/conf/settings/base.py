@@ -80,12 +80,6 @@ AUTHENTICATION_BACKENDS = ("pet.auth.EmailAuthBackend", )
 
 AUTH_USER_MODEL = "pet.User"
 
-MEDIA_URL = "/media/"
-
-STATIC_URL = "/static/"
-
-ANNOUNCEMENTS_PHOTO = "announcements/"
-
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
@@ -115,7 +109,9 @@ SWAGGER_SETTINGS = {
     "LOGOUT_URL": "rest_framework:logout",
 }
 
-MAX_PHOTO_UPLOAD_SIZE = 1024 * 1024 * 5
+ANNOUNCEMENTS_PHOTO = 'announcements/'
+
+MAX_PHOTO_UPLOAD_SIZE = 5 * 1024 * 1024
 
 ALLOWED_UPLOAD_IMAGE_EXTENSIONS = ("jpeg", "png")
 
@@ -123,3 +119,11 @@ PASSWORD_RESET_CONFIRMATION_CODE_LIFE_TIME = 60 * 10
 PASSWORD_RESET_CONFIRMATION_CODE_LENGTH = 6
 
 SETTINGS_ACTUAL_NAME = "По умолчанию"
+
+ADMIN_SITE_TITLE = 'Администрирование'
+ADMIN_SITE_HEADER = 'Администрирование'
+
+DEFAULT_API_TITLE = 'MissingPet API'
+DEFAULT_API_VERSION = 'v1'
+
+SEND_EMAIL_RATE_LIMIT = '5/h'

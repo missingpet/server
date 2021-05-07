@@ -3,19 +3,22 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.admin import sites
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import include
-from django.urls import path
-from django.urls import re_path
+from django.urls import include, path, re_path
 from drf_yasg.openapi import Info
 from drf_yasg.views import get_schema_view
 from rest_framework.permissions import AllowAny
 
-schema_view = get_schema_view(Info("MissingPet API", "v1"),
-                              permission_classes=(AllowAny, ),
-                              public=True)
+schema_view = get_schema_view(
+    Info(
+        settings.DEFAULT_API_TITLE,
+        settings.DEFAULT_API_VERSION,
+    ),
+    permission_classes=(AllowAny, ),
+    public=True,
+)
 
 api_versioned_urls = [
-    path("", include("pet.urls")),
+    path('', include("pet.urls")),
     path("swagger/", schema_view.with_ui("swagger", cache_timeout=0)),
 ]
 
@@ -30,5 +33,5 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += staticfiles_urlpatterns()
 
-sites.AdminSite.site_title = "Администрирование"
-sites.AdminSite.site_header = "Администрирование"
+sites.AdminSite.site_title = settings.ADMIN_SITE_TITLE
+sites.AdminSite.site_header = settings.ADMIN_SITE_HEADER

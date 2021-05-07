@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-python manage.py migrate --no-input
-python manage.py collectstatic --no-input
-python manage.py init_superuser
-python manage.py init_settings
-exec gunicorn -c "gunicorn_config.py" conf.wsgi

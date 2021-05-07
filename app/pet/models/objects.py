@@ -2,9 +2,11 @@ import time
 from random import randint
 
 from django.conf import settings
-from django.contrib.auth.models import AbstractBaseUser
-from django.contrib.auth.models import BaseUserManager
-from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from django.db import models
 
 from . import enums
@@ -67,11 +69,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
+class AnnouncementManager(models.Manager):
+    pass
+
+
 class Announcement(models.Model):
     """Объявление о пропавшем или найденном питомце"""
 
-    ANNOUNCEMENT_TYPES = enums.AnnouncementTypeChoices.choices
-    ANIMAL_TYPES = enums.AnimalTypeChoices.choices
+    ANNOUNCEMENT_TYPES = enums.AnnouncementType.choices
+    ANIMAL_TYPES = enums.AnimalType.choices
 
     user = models.ForeignKey(
         User,
@@ -91,6 +97,8 @@ class Announcement(models.Model):
                                             max_length=12)
     created_at = models.DateTimeField("Создано", auto_now_add=True)
     updated_at = models.DateTimeField("Обновлено", auto_now=True)
+
+    objects = AnnouncementManager()
 
     class Meta:
         ordering = ("-created_at", )
@@ -143,10 +151,10 @@ class PasswordResetConfirmationCode(models.Model):
 
     class Meta:
         verbose_name = "Код подтверждения сброса пароля"
-        verbose_name_plural = "Коды подтверждения сброса паролей"
+        verbose_name_plural = 'Коды подтверждения сброса пароля'
 
     def __str__(self):
-        return f"{self.user} - {self.code}"
+        return '{}_{}'.format(self.user, self.code)
 
 
 class SettingsManager(models.Manager):
@@ -155,7 +163,7 @@ class SettingsManager(models.Manager):
             return self.get_queryset().get(
                 settings_name=settings.SETTINGS_ACTUAL_NAME)
         except models.ObjectDoesNotExist:
-            return
+            return None
 
 
 class Settings(models.Model):
