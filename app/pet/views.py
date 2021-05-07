@@ -8,10 +8,8 @@ from rest_framework_simplejwt.views import TokenObtainSlidingView
 
 from . import const, models, serializers
 from .email_logic import send_message
-from .exceptions import (
-    catch_smtp_exception_for_view,
-    catch_rate_limit_exceeded_exception_for_view,
-)
+from .exceptions import (catch_rate_limit_exceeded_exception_for_view,
+                         catch_smtp_exception_for_view)
 from .pagination import AnnouncementPagination
 from .permissions import AnnouncementPermission
 
