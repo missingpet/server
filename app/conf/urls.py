@@ -15,7 +15,7 @@ schema_view = get_schema_view(
         settings.DEFAULT_API_TITLE,
         settings.DEFAULT_API_VERSION,
     ),
-    permission_classes=(AllowAny,),
+    permission_classes=(AllowAny, ),
     public=True,
 )
 
