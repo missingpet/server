@@ -1,3 +1,4 @@
+"""Module which contains api urls."""
 from django.urls import include
 from django.urls import path
 
@@ -30,6 +31,11 @@ user_urls = [
     path("<int:user_id>/map/",
          views.MapForUserListView.as_view(),
          name="map-for-user"),
+    path(
+        "nickname/change/",
+        views.UserNicknameChangeView.as_view(),
+        name="change-user-nickname",
+    ),
 ]
 
 announcement_urls = [

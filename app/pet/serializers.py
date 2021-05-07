@@ -10,6 +10,23 @@ from rest_framework_simplejwt.serializers import TokenObtainSlidingSerializer
 from . import models
 
 
+def validate_nickname(nickname: str) -> str:
+    if not nickname.isalnum():
+        raise serializers.ValidationError(
+            "Имя пользователя должно содержать только буквенно-цифровые символы"
+        )
+    return nickname
+
+
+class UserNicknameChangeSerializer(serializers.Serializer):
+    nickname = serializers.CharField(min_length=3, max_length=64)
+
+    def validate(self, attrs):
+        nickname = attrs.get("nickname")
+        validate_nickname(nickname)
+        return attrs
+
+
 class UserCreateSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     nickname = serializers.CharField(min_length=3, max_length=64)
@@ -27,10 +44,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         email = attrs.get("email")
         nickname = attrs.get("nickname")
 
-        if not nickname.isalnum():
-            raise serializers.ValidationError(
-                "Имя пользователя должно содержать только буквенно-цифровые символы"
-            )
+        validate_nickname(nickname)
 
         try:
             models.User.objects.get(email=email)
@@ -99,16 +113,6 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
 
         return attrs
 
-    def save(self):
-        email = self.validated_data["email"]
-        code = self.validated_data["code"]
-
-        code_object = models.PasswordResetConfirmationCode.objects.get(
-            user=models.User.objects.get(email=email),
-            code=code,
-        )
-        code_object.delete()
-
 
 class PasswordResetRequestSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -163,22 +167,21 @@ class AnnouncementSerializer(serializers.ModelSerializer):
         if imghdr.what(photo) not in settings.ALLOWED_UPLOAD_IMAGE_EXTENSIONS:
             raise serializers.ValidationError(
                 "Неправильное расширение изображения")
-
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
             raise serializers.ValidationError(
-                f"Размер изображения не должен превышать {settings.MAX_PHOTO_UPLOAD_SIZE} байт"
-            )
+                "Размер изображения не должен превышать {} байт".format(
+                    settings.MAX_PHOTO_UPLOAD_SIZE))
 
-        if latitude < -90.0 or latitude > 90.0:
-            raise serializers.ValidationError("Неверное значение широты")
-        if longitude < -180.0 or longitude > 180.0:
-            raise serializers.ValidationError("Неверное значение долготы")
+        if not (-90.0 <= latitude <= 90.0):
+            raise serializers.ValidationError("Неправильное значение широты")
+        if not (-180.0 <= longitude <= 180.0):
+            raise serializers.ValidationError("Неправильное значение долготы")
 
-        if announcement_type not in (1, 2):
-            raise serializers.ValidationError("Неверный тип объявления")
+        if announcement_type not in models.AnnouncementType.values:
+            raise serializers.ValidationError("Неправильный тип объявления")
 
-        if animal_type not in (1, 2, 3):
-            raise serializers.ValidationError("Неверный тип животного")
+        if animal_type not in models.AnimalType.values:
+            raise serializers.ValidationError("Неправильный тип животного")
 
         return attrs
 

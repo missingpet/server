@@ -1,10 +1,15 @@
-version: "3.8"
+version: "3"
 
 services:
-  app_dev:
-    build: .
-    restart: always
-    ports:
-      - 8001:8000
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    hostname: app
     volumes:
       - ./app:/app
+      - ./app/static:/app/static
+      - ./app/media:/app/media
+    ports:
+      - "8000:8000"

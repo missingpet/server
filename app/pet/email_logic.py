@@ -1,7 +1,7 @@
 from django.core.mail import EmailMessage
 
 
-def send_email_message(subject: str, body: str, recipient: str) -> None:
+def send_message(subject: str, body: str, recipient: str) -> None:
     """Функция для отправки писем"""
     email_message = EmailMessage(
         subject=subject,

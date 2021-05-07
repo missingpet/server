@@ -1,14 +1,14 @@
 from django.db.models import IntegerChoices
 
 
-class AnnouncementTypeChoices(IntegerChoices):
+class AnnouncementType(IntegerChoices):
     """Тип объявления"""
 
     LOST = (1, "Потеряно")
     FOUND = (2, "Найдено")
 
 
-class AnimalTypeChoices(IntegerChoices):
+class AnimalType(IntegerChoices):
     """Тип животного"""
 
     DOGS = (1, "Собаки")

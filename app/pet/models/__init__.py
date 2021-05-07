@@ -1,5 +1,5 @@
-from .enums import AnimalTypeChoices
-from .enums import AnnouncementTypeChoices
+from .enums import AnimalType
+from .enums import AnnouncementType
 from .objects import Announcement
 from .objects import PasswordResetConfirmationCode
 from .objects import Settings
@@ -10,6 +10,6 @@ __all__ = (
     "PasswordResetConfirmationCode",
     "User",
     "Settings",
-    "AnimalTypeChoices",
-    "AnnouncementTypeChoices",
+    "AnimalType",
+    "AnnouncementType",
 )
