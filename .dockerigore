@@ -6,4 +6,8 @@ venv
 media
 static
 __pycache__
-*.env
+.*ignore
+Dockerfile
+*.md
+.git
+*.template

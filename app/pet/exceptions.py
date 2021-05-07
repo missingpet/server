@@ -30,7 +30,9 @@ def catch_rate_limit_exceeded_exception_for_view(func):
         try:
             return func(*args, **kwargs)
         except Ratelimited:
-            message = {'rate_limit_exceeded_error': const.RATE_LIMIT_EXCEEDED_ERROR_MESSAGE}
+            message = {
+                'rate_limit_exceeded_error': 'Превышен лимит запросов к серверу. Повторите попытку позднее.'
+            }
             return Response(status=HTTP_400_BAD_REQUEST, data=message)
 
     return wrapper
