@@ -13,7 +13,7 @@ from . import models
 def validate_nickname(nickname: str) -> str:
     if not nickname.isalnum():
         raise serializers.ValidationError(
-            'Имя пользователя должно содержать только буквенно-цифровые символы'
+            "Имя пользователя должно содержать только буквенно-цифровые символы"
         )
     return nickname
 
@@ -22,7 +22,7 @@ class UserNicknameChangeSerializer(serializers.Serializer):
     nickname = serializers.CharField(min_length=3, max_length=64)
 
     def validate(self, attrs):
-        nickname = attrs.get('nickname')
+        nickname = attrs.get("nickname")
         validate_nickname(nickname)
         return attrs
 
@@ -169,19 +169,19 @@ class AnnouncementSerializer(serializers.ModelSerializer):
                 "Неправильное расширение изображения")
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
             raise serializers.ValidationError(
-                'Размер изображения не должен превышать {} байт'.format(settings.MAX_PHOTO_UPLOAD_SIZE)
-            )
+                "Размер изображения не должен превышать {} байт".format(
+                    settings.MAX_PHOTO_UPLOAD_SIZE))
 
         if not (-90.0 <= latitude <= 90.0):
-            raise serializers.ValidationError('Неправильное значение широты')
+            raise serializers.ValidationError("Неправильное значение широты")
         if not (-180.0 <= longitude <= 180.0):
-            raise serializers.ValidationError('Неправильное значение долготы')
+            raise serializers.ValidationError("Неправильное значение долготы")
 
         if announcement_type not in models.AnnouncementType.values:
-            raise serializers.ValidationError('Неправильный тип объявления')
+            raise serializers.ValidationError("Неправильный тип объявления")
 
         if animal_type not in models.AnimalType.values:
-            raise serializers.ValidationError('Неправильный тип животного')
+            raise serializers.ValidationError("Неправильный тип животного")
 
         return attrs
 

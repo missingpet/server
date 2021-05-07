@@ -2,11 +2,9 @@ import time
 from random import randint
 
 from django.conf import settings
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    BaseUserManager,
-    PermissionsMixin,
-)
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
 from . import enums
@@ -151,10 +149,10 @@ class PasswordResetConfirmationCode(models.Model):
 
     class Meta:
         verbose_name = "Код подтверждения сброса пароля"
-        verbose_name_plural = 'Коды подтверждения сброса пароля'
+        verbose_name_plural = "Коды подтверждения сброса пароля"
 
     def __str__(self):
-        return '{}_{}'.format(self.user, self.code)
+        return "{}_{}".format(self.user, self.code)
 
 
 class SettingsManager(models.Manager):

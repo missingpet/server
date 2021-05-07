@@ -109,7 +109,7 @@ SWAGGER_SETTINGS = {
     "LOGOUT_URL": "rest_framework:logout",
 }
 
-ANNOUNCEMENTS_PHOTO = 'announcements/'
+ANNOUNCEMENTS_PHOTO = "announcements/"
 
 MAX_PHOTO_UPLOAD_SIZE = 5 * 1024 * 1024
 
@@ -120,10 +120,10 @@ PASSWORD_RESET_CONFIRMATION_CODE_LENGTH = 6
 
 SETTINGS_ACTUAL_NAME = "По умолчанию"
 
-ADMIN_SITE_TITLE = 'Администрирование'
-ADMIN_SITE_HEADER = 'Администрирование'
+ADMIN_SITE_TITLE = "Администрирование"
+ADMIN_SITE_HEADER = "Администрирование"
 
-DEFAULT_API_TITLE = 'MissingPet API'
-DEFAULT_API_VERSION = 'v1'
+DEFAULT_API_TITLE = "MissingPet API"
+DEFAULT_API_VERSION = "v1"
 
-SEND_EMAIL_RATE_LIMIT = '5/h'
+SEND_EMAIL_RATE_LIMIT = "5/h"

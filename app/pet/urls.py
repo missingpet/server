@@ -31,9 +31,11 @@ user_urls = [
     path("<int:user_id>/map/",
          views.MapForUserListView.as_view(),
          name="map-for-user"),
-    path('nickname/change/',
-         views.UserNicknameChangeView.as_view(),
-         name='change-user-nickname'),
+    path(
+        "nickname/change/",
+        views.UserNicknameChangeView.as_view(),
+        name="change-user-nickname",
+    ),
 ]
 
 announcement_urls = [

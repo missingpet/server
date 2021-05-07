@@ -3,8 +3,9 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 
-from .forms import CustomUserChangeForm, CustomUserCreationForm
 from . import models
+from .forms import CustomUserChangeForm
+from .forms import CustomUserCreationForm
 
 
 @admin.register(models.User)
@@ -85,7 +86,7 @@ class AnnouncementAdmin(admin.ModelAdmin):
 class PasswordResetConfirmationCodeAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "code", "expired_in")
     list_display_links = ("id", "user", "code")
-    readonly_fields = ('code', "expired_in")
+    readonly_fields = ("code", "expired_in")
 
 
 @admin.register(models.Settings)
