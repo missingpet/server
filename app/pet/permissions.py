@@ -6,4 +6,4 @@ class AnnouncementPermission(IsAuthenticatedOrReadOnly):
         if request.method == 'DELETE':
             return obj.user == request.user
         else:
-            return super(AnnouncementPermission,self).has_object_permission(request, view, obj)
+            return super(AnnouncementPermission, self).has_object_permission(request, view, obj)

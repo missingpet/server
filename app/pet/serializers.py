@@ -169,7 +169,8 @@ class AnnouncementSerializer(serializers.ModelSerializer):
                 "Неправильное расширение изображения")
         if photo.size > settings.MAX_PHOTO_UPLOAD_SIZE:
             raise serializers.ValidationError(
-                'Размер изображения не должен превышать {} байт'.format(settings.MAX_PHOTO_UPLOAD_SIZE)
+                'Размер изображения не должен превышать {} байт'.format(
+                    settings.MAX_PHOTO_UPLOAD_SIZE)
             )
 
         if not (-90.0 <= latitude <= 90.0):
