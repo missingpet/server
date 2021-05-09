@@ -59,15 +59,13 @@ class SerializerTestCase(test.TestCase):
         serializer = serializers.PasswordResetRequestSerializer(data=data)
         self.assertTrue(serializer.is_valid(), serializer.errors)
 
-    def test_invalid_data_change_nickname_serializer(self):
+    def test_change_nickname_serializer(self):
         invalid_data = {
             "nickname": "new_nickname",
         }
         serializer = serializers.UserNicknameChangeSerializer(
             data=invalid_data)
         self.assertFalse(serializer.is_valid())
-
-    def test_valid_data_change_nickname_serializer(self):
 
         valid_data = {
             "nickname": "NewNickname",
