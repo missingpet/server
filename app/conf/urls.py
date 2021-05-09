@@ -1,4 +1,6 @@
-"""URL configuration module."""
+"""
+URL configuration module.
+"""
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.admin import sites
@@ -11,10 +13,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework.permissions import AllowAny
 
 schema_view = get_schema_view(
-    Info(
-        settings.DEFAULT_API_TITLE,
-        settings.DEFAULT_API_VERSION,
-    ),
+    Info('MissingPet API', 'v1'),
     permission_classes=(AllowAny, ),
     public=True,
 )
@@ -34,6 +33,3 @@ urlpatterns = [path("", sites.site.urls), path("api/", include(api_urls))]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += staticfiles_urlpatterns()
-
-sites.AdminSite.site_title = settings.ADMIN_SITE_TITLE
-sites.AdminSite.site_header = settings.ADMIN_SITE_HEADER

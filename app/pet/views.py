@@ -1,3 +1,6 @@
+"""
+Module which contains controllers implementation.
+"""
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from ratelimit.decorators import ratelimit

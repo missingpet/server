@@ -1,4 +1,6 @@
-"""Django model data factories."""
+"""
+Django model data factories.
+"""
 import factory
 
 from .. import models

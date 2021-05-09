@@ -5,8 +5,6 @@ from ratelimit.exceptions import Ratelimited
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
 
-from . import const
-
 
 def catch_smtp_exception_for_view(func):
     """

@@ -1,3 +1,6 @@
+"""
+Serializers module.
+"""
 import imghdr
 import re
 import time
