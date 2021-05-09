@@ -9,7 +9,7 @@ DEBUG = True
 # Production key is stored in environment variable and it differs from this one.
 SECRET_KEY = "q!%*q6__xj96xzhdm8i7()3cd1z2@_j0%_!-(r94w2i!2uj++%"
 
-ALLOWED_HOSTS = ("*",)
+ALLOWED_HOSTS = ("*", )
 
 DATABASES = {
     "default": {

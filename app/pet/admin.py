@@ -23,18 +23,25 @@ class CustomUserAdmin(UserAdmin):
     )
     list_filter = ("is_staff", "is_superuser", "is_active")
     fieldsets = (
-        (None, {"fields": ("password", "email", "nickname", "is_active", "groups")}),
-        ("Особые права", {"fields": ("is_superuser", "is_staff")}),
+        (None, {
+            "fields": ("password", "email", "nickname", "is_active", "groups")
+        }),
+        ("Особые права", {
+            "fields": ("is_superuser", "is_staff")
+        }),
         (
             "Дополнительно",
-            {"classes": ("collapse",), "fields": ("created_at", "updated_at")},
+            {
+                "classes": ("collapse", ),
+                "fields": ("created_at", "updated_at")
+            },
         ),
     )
     add_fieldsets = (
         (
             None,
             {
-                "classes": ("wide",),
+                "classes": ("wide", ),
                 "fields": (
                     "email",
                     "nickname",
@@ -47,17 +54,21 @@ class CustomUserAdmin(UserAdmin):
         ),
         (
             "Особые права",
-            {"classes": ("collapse",), "fields": ("is_superuser", "is_staff")},
+            {
+                "classes": ("collapse", ),
+                "fields": ("is_superuser", "is_staff")
+            },
         ),
     )
     search_fields = ("email", "nickname")
-    ordering = ("email",)
+    ordering = ("email", )
     save_on_top = True
 
 
 @admin.register(models.Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
-    list_display = ("id", "user", "announcement_type", "animal_type", "created_at")
+    list_display = ("id", "user", "announcement_type", "animal_type",
+                    "created_at")
     list_display_links = ("id", "user")
     list_filter = ("announcement_type", "animal_type")
     readonly_fields = ("get_photo", "created_at", "updated_at")

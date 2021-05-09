@@ -23,8 +23,7 @@ class ViewTestCase(test.APITestCase):
             "email": "email@email.com",
         }
         response = self.client.post(
-            reverse("password-reset-request", args=("v1",)), query_dict
-        )
+            reverse("password-reset-request", args=("v1", )), query_dict)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def tearDown(self):

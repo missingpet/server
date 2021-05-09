@@ -25,7 +25,7 @@ DATABASES = {
     }
 }
 
-INSTALLED_APPS += ("storages",)
+INSTALLED_APPS += ("storages", )
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True

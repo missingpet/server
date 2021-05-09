@@ -27,12 +27,13 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("password", models.CharField(max_length=128, verbose_name="password")),
+                ("password",
+                 models.CharField(max_length=128, verbose_name="password")),
                 (
                     "last_login",
-                    models.DateTimeField(
-                        blank=True, null=True, verbose_name="last login"
-                    ),
+                    models.DateTimeField(blank=True,
+                                         null=True,
+                                         verbose_name="last login"),
                 ),
                 (
                     "email",
@@ -43,34 +44,40 @@ class Migration(migrations.Migration):
                         verbose_name="Адрес электронной почты",
                     ),
                 ),
-                ("nickname", models.CharField(max_length=64, verbose_name="Никнейм")),
+                ("nickname",
+                 models.CharField(max_length=64, verbose_name="Никнейм")),
                 (
                     "is_staff",
-                    models.BooleanField(default=False, verbose_name="Статус персонала"),
+                    models.BooleanField(default=False,
+                                        verbose_name="Статус персонала"),
                 ),
                 (
                     "is_superuser",
                     models.BooleanField(
-                        default=False, verbose_name="Статус суперпользователя"
-                    ),
+                        default=False,
+                        verbose_name="Статус суперпользователя"),
                 ),
                 (
                     "is_active",
-                    models.BooleanField(default=True, verbose_name="Активирован"),
+                    models.BooleanField(default=True,
+                                        verbose_name="Активирован"),
                 ),
                 (
                     "created_at",
-                    models.DateTimeField(auto_now_add=True, verbose_name="Создан"),
+                    models.DateTimeField(auto_now_add=True,
+                                         verbose_name="Создан"),
                 ),
                 (
                     "updated_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Обновлён"),
+                    models.DateTimeField(auto_now=True,
+                                         verbose_name="Обновлён"),
                 ),
                 (
                     "groups",
                     models.ManyToManyField(
                         blank=True,
-                        help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                        help_text=
+                        "The groups this user belongs to. A user will get all permissions granted to each of their groups.",
                         related_name="user_set",
                         related_query_name="user",
                         to="auth.Group",
@@ -92,7 +99,7 @@ class Migration(migrations.Migration):
             options={
                 "verbose_name": "Пользователь",
                 "verbose_name_plural": "Пользователи",
-                "ordering": ("-created_at",),
+                "ordering": ("-created_at", ),
             },
         ),
         migrations.CreateModel(
@@ -154,7 +161,8 @@ class Migration(migrations.Migration):
                 (
                     "code",
                     models.IntegerField(
-                        default=pet.models.objects.generate_password_reset_confirmation_code,
+                        default=pet.models.objects.
+                        generate_password_reset_confirmation_code,
                         verbose_name="Код подтвержения",
                     ),
                 ),
@@ -171,7 +179,8 @@ class Migration(migrations.Migration):
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="password_reset_codes",
                         to=settings.AUTH_USER_MODEL,
-                        verbose_name="Пользователь, которому принадлежит этот код",
+                        verbose_name=
+                        "Пользователь, которому принадлежит этот код",
                     ),
                 ),
             ],
@@ -219,23 +228,25 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "address",
-                    models.CharField(
-                        max_length=1000, verbose_name="Место пропажи или находки"
-                    ),
+                    models.CharField(max_length=1000,
+                                     verbose_name="Место пропажи или находки"),
                 ),
                 ("latitude", models.FloatField(verbose_name="Широта")),
                 ("longitude", models.FloatField(verbose_name="Долгота")),
                 (
                     "contact_phone_number",
-                    models.CharField(max_length=12, verbose_name="Контактный телефон"),
+                    models.CharField(max_length=12,
+                                     verbose_name="Контактный телефон"),
                 ),
                 (
                     "created_at",
-                    models.DateTimeField(auto_now_add=True, verbose_name="Создано"),
+                    models.DateTimeField(auto_now_add=True,
+                                         verbose_name="Создано"),
                 ),
                 (
                     "updated_at",
-                    models.DateTimeField(auto_now=True, verbose_name="Обновлено"),
+                    models.DateTimeField(auto_now=True,
+                                         verbose_name="Обновлено"),
                 ),
                 (
                     "user",
@@ -250,7 +261,7 @@ class Migration(migrations.Migration):
             options={
                 "verbose_name": "Объявление",
                 "verbose_name_plural": "Объявления",
-                "ordering": ("-created_at",),
+                "ordering": ("-created_at", ),
             },
         ),
     ]

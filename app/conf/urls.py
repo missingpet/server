@@ -14,7 +14,7 @@ from rest_framework.permissions import AllowAny
 
 schema_view = get_schema_view(
     Info("MissingPet API", "v1"),
-    permission_classes=(AllowAny,),
+    permission_classes=(AllowAny, ),
     public=True,
 )
 
