@@ -1,4 +1,6 @@
-"""Data for unit-testing."""
+"""
+Module which contains data for unit-testing.
+"""
 test_user_email = "user@email.com"
 test_user_nickname = "user"
 test_user_password = "User123*"

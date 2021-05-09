@@ -1,4 +1,6 @@
-"""Module which contains api urls."""
+"""
+Module which contains api urls.
+"""
 from django.urls import include
 from django.urls import path
 
@@ -25,12 +27,16 @@ user_urls = [
         views.UserAnnouncementsListView.as_view(),
         name="user-announcements",
     ),
-    path("<int:user_id>/feed/",
-         views.FeedForUserListView.as_view(),
-         name="feed-for-user"),
-    path("<int:user_id>/map/",
-         views.MapForUserListView.as_view(),
-         name="map-for-user"),
+    path(
+        "<int:user_id>/feed/",
+        views.FeedForUserListView.as_view(),
+        name="feed-for-user",
+    ),
+    path(
+        "<int:user_id>/map/",
+        views.MapForUserListView.as_view(),
+        name="map-for-user",
+    ),
     path(
         "nickname/change/",
         views.UserNicknameChangeView.as_view(),

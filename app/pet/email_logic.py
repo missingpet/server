@@ -1,3 +1,6 @@
+"""
+Module which contains functions and classes to work with email messages.
+"""
 from django.core.mail import EmailMessage
 
 

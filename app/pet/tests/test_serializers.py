@@ -1,4 +1,6 @@
-"""Test cases for serializers."""
+"""
+Test cases for serializers.
+"""
 from django import test
 
 from .. import serializers
@@ -55,6 +57,20 @@ class SerializerTestCase(test.TestCase):
             "email": user.email,
         }
         serializer = serializers.PasswordResetRequestSerializer(data=data)
+        self.assertTrue(serializer.is_valid(), serializer.errors)
+
+    def test_change_nickname_serializer(self):
+        invalid_data = {
+            "nickname": "new_nickname",
+        }
+        serializer = serializers.UserNicknameChangeSerializer(
+            data=invalid_data)
+        self.assertFalse(serializer.is_valid())
+
+        valid_data = {
+            "nickname": "NewNickname",
+        }
+        serializer = serializers.UserNicknameChangeSerializer(data=valid_data)
         self.assertTrue(serializer.is_valid(), serializer.errors)
 
     def tearDown(self):

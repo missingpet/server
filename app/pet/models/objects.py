@@ -1,5 +1,7 @@
+import os
 import time
 from random import randint
+from uuid import uuid4
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser
@@ -8,7 +10,6 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
 from . import enums
-from ..photo_service import upload_photo
 
 
 class UserManager(BaseUserManager):
@@ -38,7 +39,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """Пользователь с email вместо username"""
+    """Custom user model with email as a username"""
 
     email = models.EmailField(
         "Адрес электронной почты",
@@ -65,6 +66,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+def upload_photo(instance, filename):
+    extension = os.path.splitext(filename)[1]
+    filename = uuid4().hex
+    path = os.path.join(settings.ANNOUNCEMENTS_PHOTOS,
+                        "{}{}".format(filename, extension))
+    return path
 
 
 class AnnouncementManager(models.Manager):
