@@ -6,8 +6,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 
 from . import models
-from .forms import CustomUserChangeForm
-from .forms import CustomUserCreationForm
+from .forms import CustomUserChangeForm, CustomUserCreationForm
 
 
 @admin.register(models.User)
