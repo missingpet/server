@@ -8,22 +8,20 @@ BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 APP = (
-    'rest_framework',
-    'rest_framework_simplejwt',
-    'drf_yasg',
-
-    'django_cleanup.apps.CleanupConfig',
-
-    'pet.apps.PetConfig',
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "drf_yasg",
+    "django_cleanup.apps.CleanupConfig",
+    "pet.apps.PetConfig",
 )
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
 ) + APP
 
 MIDDLEWARE = (
@@ -38,25 +36,21 @@ MIDDLEWARE = (
 
 ROOT_URLCONF = "conf.urls"
 
-TEMPLATES = (
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates/')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
+TEMPLATES = ({
+    "BACKEND": "django.template.backends.django.DjangoTemplates",
+    "DIRS": [os.path.join(BASE_DIR, "templates/")],
+    "APP_DIRS": True,
+    "OPTIONS": {
+        "context_processors": [
+            "django.template.context_processors.debug",
+            "django.template.context_processors.request",
+            "django.contrib.auth.context_processors.auth",
+            "django.contrib.messages.context_processors.messages",
+        ],
     },
-)
+}, )
 
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
-)
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, "templates"), )
 
 WSGI_APPLICATION = "conf.wsgi.application"
 
@@ -123,18 +117,16 @@ SWAGGER_SETTINGS = {
 }
 
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 )
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'staticfiles/'),
-)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "staticfiles/"), )
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
-ANNOUNCEMENTS_PHOTOS = 'announcements/'
+ANNOUNCEMENTS_PHOTOS = "announcements/"
 
 MAX_PHOTO_UPLOAD_SIZE = 5 * 1024 * 1024
 
@@ -145,4 +137,4 @@ PASSWORD_RESET_CONFIRMATION_CODE_LENGTH = 6
 
 SETTINGS_ACTUAL_NAME = "По умолчанию"
 
-SEND_EMAIL_RATE_LIMIT = '2/10m'
+SEND_EMAIL_RATE_LIMIT = "2/10m"

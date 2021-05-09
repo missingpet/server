@@ -28,19 +28,19 @@ user_urls = [
         name="user-announcements",
     ),
     path(
-        '<int:user_id>/feed/',
-         views.FeedForUserListView.as_view(),
-         name='feed-for-user',
+        "<int:user_id>/feed/",
+        views.FeedForUserListView.as_view(),
+        name="feed-for-user",
     ),
     path(
-        '<int:user_id>/map/',
-         views.MapForUserListView.as_view(),
-         name='map-for-user',
-         ),
+        "<int:user_id>/map/",
+        views.MapForUserListView.as_view(),
+        name="map-for-user",
+    ),
     path(
-        'nickname/change/',
+        "nickname/change/",
         views.UserNicknameChangeView.as_view(),
-        name='change-user-nickname',
+        name="change-user-nickname",
     ),
 ]
 

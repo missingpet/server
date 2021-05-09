@@ -13,7 +13,7 @@ class SerializerTestCase(test.TestCase):
 
     def test_user_create_serializer(self):
         valid_data = {
-            'email': "test@email.com",
+            "email": "test@email.com",
             "nickname": "nickname",
             "password": "Password123*",
         }
@@ -61,15 +61,16 @@ class SerializerTestCase(test.TestCase):
 
     def test_invalid_data_change_nickname_serializer(self):
         invalid_data = {
-            'nickname': 'new_nickname',
+            "nickname": "new_nickname",
         }
-        serializer = serializers.UserNicknameChangeSerializer(data=invalid_data)
+        serializer = serializers.UserNicknameChangeSerializer(
+            data=invalid_data)
         self.assertFalse(serializer.is_valid())
 
     def test_valid_data_change_nickname_serializer(self):
 
         valid_data = {
-            'nickname': 'NewNickname',
+            "nickname": "NewNickname",
         }
         serializer = serializers.UserNicknameChangeSerializer(data=valid_data)
         self.assertTrue(serializer.is_valid(), serializer.errors)

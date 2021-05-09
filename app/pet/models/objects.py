@@ -1,7 +1,7 @@
 import os
-from uuid import uuid4
 import time
 from random import randint
+from uuid import uuid4
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser
@@ -72,7 +72,7 @@ def upload_photo(instance, filename):
     extension = os.path.splitext(filename)[1]
     filename = uuid4().hex
     path = os.path.join(settings.ANNOUNCEMENTS_PHOTOS,
-                        '{}{}'.format(filename, extension))
+                        "{}{}".format(filename, extension))
     return path
 
 
