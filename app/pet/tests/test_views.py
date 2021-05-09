@@ -2,7 +2,8 @@
 Test cases for views.
 """
 from django.urls import reverse
-from rest_framework import status, test
+from rest_framework import status
+from rest_framework import test
 
 from ..models import User
 
