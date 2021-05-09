@@ -33,7 +33,7 @@ class UserNicknameChangeView(ValidateAPIView):
     """Изменение имени пользователя"""
 
     serializer_class = serializers.UserNicknameChangeSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         data = self.validate(request)
@@ -48,7 +48,7 @@ class AuthView(TokenObtainSlidingView):
     """Авторизация пользователя"""
 
     serializer_class = serializers.AuthSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -56,19 +56,20 @@ class UserCreateView(generics.CreateAPIView):
 
     queryset = models.User
     serializer_class = serializers.UserCreateSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
 
 class PasswordResetRequestView(ValidateAPIView):
     """Запрос на сброс пароля"""
 
     serializer_class = serializers.PasswordResetRequestSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
     @catch_smtp_exception_for_view
     @catch_rate_limit_exceeded_exception_for_view
     @method_decorator(
-        ratelimit(key="ip", rate=settings.SEND_EMAIL_RATE_LIMIT, block=True))
+        ratelimit(key="ip", rate=settings.SEND_EMAIL_RATE_LIMIT, block=True)
+    )
     def post(self, request, *args, **kwargs):
         data = self.validate(request)
 
@@ -84,8 +85,9 @@ class PasswordResetRequestView(ValidateAPIView):
 
         return Response(
             data={
-                "success":
-                const.PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE.format(user.email)
+                "success": const.PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE.format(
+                    user.email
+                )
             },
             status=status.HTTP_201_CREATED,
         )
@@ -95,7 +97,7 @@ class PasswordResetConfirmView(ValidateAPIView):
     """Подтверждение сброса пароля"""
 
     serializer_class = serializers.PasswordResetConfirmSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
         data = self.validate(request)
@@ -119,7 +121,7 @@ class PasswordResetConfirmView(ValidateAPIView):
 class SettingsView(generics.GenericAPIView):
     """Получение актуальных настроек мобильного приложения"""
 
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
     serializer_class = serializers.SettingsSerializer
 
     def get(self, request, *args, **kwargs):
@@ -151,7 +153,7 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
 
     queryset = models.Announcement.objects.all()
     serializer_class = serializers.AnnouncementSerializer
-    permission_classes = (AnnouncementPermission, )
+    permission_classes = (AnnouncementPermission,)
     pagination_class = AnnouncementPagination
 
     def perform_create(self, serializer):
@@ -160,7 +162,7 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
 
 class BaseAnnouncementUserListView(generics.ListAPIView):
     serializer_class = serializers.AnnouncementSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
     pagination_class = AnnouncementPagination
     lookup_field = "user_id"
 
@@ -170,7 +172,8 @@ class UserAnnouncementsListView(BaseAnnouncementUserListView):
 
     def get_queryset(self):
         queryset = models.Announcement.objects.filter(
-            user_id=self.kwargs.get(self.lookup_field))
+            user_id=self.kwargs.get(self.lookup_field)
+        )
         return queryset
 
 
@@ -179,13 +182,14 @@ class FeedForUserListView(BaseAnnouncementUserListView):
 
     def get_queryset(self):
         queryset = models.Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_field))
+            user_id=self.kwargs.get(self.lookup_field)
+        )
         return queryset
 
 
 class BaseMapListView(generics.ListAPIView):
     serializer_class = serializers.AnnouncementsMapSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
 
 class MapListView(BaseMapListView):
@@ -201,5 +205,6 @@ class MapForUserListView(BaseMapListView):
 
     def get_queryset(self):
         queryset = models.Announcement.objects.exclude(
-            user_id=self.kwargs.get(self.lookup_field))
+            user_id=self.kwargs.get(self.lookup_field)
+        )
         return queryset

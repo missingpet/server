@@ -10,16 +10,16 @@ from .test_data import *  # NOQA
 class UserTestCase(TestCase):
     def setUp(self):
         test_user_data = {
-            'email': test_user_email,
-            'nickname': test_user_nickname,
-            'password': test_user_password,
+            "email": test_user_email,
+            "nickname": test_user_nickname,
+            "password": test_user_password,
         }
         self.user = User.objects.create_user(**test_user_data)
 
         test_superuser_data = {
-            'email': test_superuser_email,
-            'nickname': test_superuser_nickname,
-            'password': test_superuser_password,
+            "email": test_superuser_email,
+            "nickname": test_superuser_nickname,
+            "password": test_superuser_password,
         }
         self.superuser = User.objects.create_superuser(**test_superuser_data)
 

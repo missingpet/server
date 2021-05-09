@@ -13,8 +13,8 @@ from drf_yasg.views import get_schema_view
 from rest_framework.permissions import AllowAny
 
 schema_view = get_schema_view(
-    Info('MissingPet API', 'v1'),
-    permission_classes=(AllowAny, ),
+    Info("MissingPet API", "v1"),
+    permission_classes=(AllowAny,),
     public=True,
 )
 

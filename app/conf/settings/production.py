@@ -16,7 +16,7 @@ ALLOWED_HOSTS = decouple.config(
 
 DATABASES = {
     "default": {
-        "ENGINE": 'django.db.backends.postgresql',
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": decouple.config("RDS_DB_NAME"),
         "USER": decouple.config("RDS_USERNAME"),
         "PASSWORD": decouple.config("RDS_PASSWORD"),
@@ -25,7 +25,7 @@ DATABASES = {
     }
 }
 
-INSTALLED_APPS += ("storages", )
+INSTALLED_APPS += ("storages",)
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
@@ -55,8 +55,8 @@ AWS_S3_CUSTOM_DOMAIN = "{}.s3.{}.amazonaws.com".format(
     AWS_STORAGE_BUCKET_NAME,
     AWS_S3_REGION_NAME,
 )
-DEFAULT_FILE_STORAGE = 'pet.s3utils.MediaStorage'
+DEFAULT_FILE_STORAGE = "pet.s3utils.MediaStorage"
 
-MEDIA_FOLDER = 'media/'
+MEDIA_FOLDER = "media/"
 MEDIA_ROOT = os.path.join(AWS_S3_CUSTOM_DOMAIN, MEDIA_FOLDER)
 MEDIA_URL = MEDIA_ROOT
