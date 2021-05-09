@@ -1,16 +1,13 @@
-"""Test cases for models."""
-from django import test
+"""
+Module which contains test cases for custom Django models.
+"""
+from django.test import TestCase
 
 from ..models import User
-from .test_data import test_superuser_email
-from .test_data import test_superuser_nickname
-from .test_data import test_superuser_password
-from .test_data import test_user_email
-from .test_data import test_user_nickname
-from .test_data import test_user_password
+from .test_data import *  # NOQA
 
 
-class UserTestCase(test.TestCase):
+class UserTestCase(TestCase):
     def setUp(self):
         test_user_data = {
             "email": test_user_email,
@@ -26,32 +23,26 @@ class UserTestCase(test.TestCase):
         }
         self.superuser = User.objects.create_superuser(**test_superuser_data)
 
-    @test.tag("users-count")
     def test_users_count(self):
         self.assertEqual(User.objects.count(), 2)
 
-    @test.tag("nickname")
-    def test_nickname(self):
+    def test_nickname_set_on_model_create(self):
         self.assertEqual(self.user.nickname, test_user_nickname)
         self.assertEqual(self.superuser.nickname, test_superuser_nickname)
 
-    @test.tag("email")
-    def test_email(self):
+    def test_email_set_on_model_create(self):
         self.assertEqual(self.user.email, test_user_email)
         self.assertEqual(self.superuser.email, test_superuser_email)
 
-    @test.tag("password")
-    def test_password(self):
+    def test_password_set_on_model_create(self):
         self.assertTrue(self.user.check_password(test_user_password))
         self.assertTrue(self.superuser.check_password(test_superuser_password))
 
-    @test.tag("is-active")
-    def test_is_active(self):
+    def test_is_active_set_on_model_create(self):
         self.assertTrue(self.user.is_active)
         self.assertTrue(self.superuser.is_active)
 
-    @test.tag("user-rights")
-    def test_user_rights(self):
+    def test_user_rights_are_correct_on_model_create(self):
         self.assertTrue(self.superuser.is_superuser)
         self.assertFalse(self.user.is_superuser)
         self.assertTrue(self.superuser.is_staff)
