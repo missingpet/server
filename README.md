@@ -9,7 +9,7 @@ Backend for MissingPet project
 2. Clone the repository
 3. Inside the project directory call `docker-compose up --build`
 
-# Deployment
+## Deployment
 
 You can find the Docker image of this application at [packages][pkg] section.
 
