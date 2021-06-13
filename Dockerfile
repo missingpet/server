@@ -5,7 +5,7 @@ ENV PYTHONUNBUFFERED 1 \
 
 WORKDIR /app
 
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python - && \ 
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python - && \
     poetry config virtualenvs.create false
 
 COPY app/poetry.lock app/pyproject.toml /app/
