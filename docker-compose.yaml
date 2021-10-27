@@ -1,9 +1,9 @@
-version: "3"
+version: '3'
 
 services:
   app:
     build:
-      context: .
+      context: ./app
       dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
     hostname: app
