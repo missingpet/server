@@ -80,17 +80,6 @@ class AuthSerializer(TokenObtainSlidingSerializer):
         return data
 
 
-class SettingsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Settings
-        fields = (
-            "id",
-            "settings_name",
-            "actual_app_version_ios",
-            "min_app_version_ios",
-        )
-
-
 class AnnouncementSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
 
