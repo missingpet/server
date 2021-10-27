@@ -18,13 +18,5 @@ class ViewTestCase(test.APITestCase):
         self.user = User.objects.create_user(**data)
         self.client = test.APIClient()
 
-    def test_password_reset_request_view(self):
-        query_dict = {
-            "email": "email@email.com",
-        }
-        response = self.client.post(
-            reverse("password-reset-request", args=("v1", )), query_dict)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
     def tearDown(self):
         pass

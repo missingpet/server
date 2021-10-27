@@ -1,9 +1,6 @@
 """
 Module which contains controllers implementation.
 """
-from django.conf import settings
-from django.utils.decorators import method_decorator
-from ratelimit.decorators import ratelimit
 from rest_framework import generics
 from rest_framework import status
 from rest_framework import viewsets
@@ -12,12 +9,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainSlidingView
 
-from . import const
 from . import models
 from . import serializers
-from .email_logic import send_message
-from .exceptions import catch_rate_limit_exceeded_exception_for_view
-from .exceptions import catch_smtp_exception_for_view
 from .pagination import AnnouncementPagination
 from .permissions import AnnouncementPermission
 
@@ -57,63 +50,6 @@ class UserCreateView(generics.CreateAPIView):
     queryset = models.User
     serializer_class = serializers.UserCreateSerializer
     permission_classes = (AllowAny, )
-
-
-class PasswordResetRequestView(ValidateAPIView):
-    """Запрос на сброс пароля"""
-
-    serializer_class = serializers.PasswordResetRequestSerializer
-    permission_classes = (AllowAny, )
-
-    @catch_smtp_exception_for_view
-    @catch_rate_limit_exceeded_exception_for_view
-    @method_decorator(
-        ratelimit(key="ip", rate=settings.SEND_EMAIL_RATE_LIMIT, block=True))
-    def post(self, request, *args, **kwargs):
-        data = self.validate(request)
-
-        user = models.User.objects.get(email=data["email"])
-
-        code = models.PasswordResetConfirmationCode.objects.create(user=user)
-
-        send_message(
-            const.PASSWORD_RESET_REQUEST_SUBJECT,
-            const.PASSWORD_RESET_REQUEST_BODY.format(user.nickname, code.code),
-            user.email,
-        )
-
-        return Response(
-            data={
-                "success":
-                const.PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE.format(user.email)
-            },
-            status=status.HTTP_201_CREATED,
-        )
-
-
-class PasswordResetConfirmView(ValidateAPIView):
-    """Подтверждение сброса пароля"""
-
-    serializer_class = serializers.PasswordResetConfirmSerializer
-    permission_classes = (AllowAny, )
-
-    def post(self, request, *args, **kwargs):
-        data = self.validate(request)
-
-        user = models.User.objects.get(email=data["email"])
-
-        models.PasswordResetConfirmationCode.objects.get(
-            user=user,
-            code=data["code"],
-        ).delete()
-
-        user.set_password(data["new_password"])
-        user.save()
-
-        return Response(
-            data={"success": "Пароль успешно сброшен"},
-            status=status.HTTP_204_NO_CONTENT,
-        )
 
 
 class SettingsView(generics.GenericAPIView):
