@@ -11,13 +11,6 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = models.User
 
 
-class PasswordResetConfirmationCodeFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = models.PasswordResetConfirmationCode
-
-    user = factory.SubFactory(UserFactory)
-
-
 class AnnouncementFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Announcement

@@ -4,7 +4,6 @@ Test cases for serializers.
 from django import test
 
 from .. import serializers
-from .data_factories import UserFactory
 
 
 class SerializerTestCase(test.TestCase):
@@ -49,15 +48,6 @@ class SerializerTestCase(test.TestCase):
         serializer = serializers.UserCreateSerializer(
             data=invalid_password_data)
         self.assertFalse(serializer.is_valid())
-
-    def test_password_reset_request_serializer(self):
-        user = UserFactory(email="email@mail.ru")
-
-        data = {
-            "email": user.email,
-        }
-        serializer = serializers.PasswordResetRequestSerializer(data=data)
-        self.assertTrue(serializer.is_valid(), serializer.errors)
 
     def test_change_nickname_serializer(self):
         invalid_data = {

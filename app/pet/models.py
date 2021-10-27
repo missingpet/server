@@ -1,6 +1,4 @@
 import os
-import time
-from random import randint
 from uuid import uuid4
 
 from django.conf import settings
@@ -9,7 +7,7 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
-from . import enums
+from . import choices
 
 
 class UserManager(BaseUserManager):
@@ -83,8 +81,8 @@ class AnnouncementManager(models.Manager):
 class Announcement(models.Model):
     """Объявление о пропавшем или найденном питомце"""
 
-    ANNOUNCEMENT_TYPES = enums.AnnouncementType.choices
-    ANIMAL_TYPES = enums.AnimalType.choices
+    ANNOUNCEMENT_TYPES = choices.AnnouncementType.choices
+    ANIMAL_TYPES = choices.AnimalType.choices
 
     user = models.ForeignKey(
         User,
@@ -114,91 +112,3 @@ class Announcement(models.Model):
 
     def __str__(self):
         return str(self.user)
-
-
-def generate_password_reset_confirmation_code():
-    """Возвращает случайный (заданной в настройках длины) код"""
-    code = randint(
-        10**(settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH - 1),
-        (10**settings.PASSWORD_RESET_CONFIRMATION_CODE_LENGTH) - 1,
-    )
-    return code
-
-
-def get_expired_in_time():
-    """Возвращает время устаревания кода в секундах"""
-    seconds = round(
-        time.time()) + settings.PASSWORD_RESET_CONFIRMATION_CODE_LIFE_TIME
-    return seconds
-
-
-class PasswordResetConfirmationCodeManager(models.Manager):
-    pass
-
-
-class PasswordResetConfirmationCode(models.Model):
-    """Код подтверждения сброса пароля"""
-
-    user = models.ForeignKey(
-        User,
-        models.CASCADE,
-        "password_reset_codes",
-        verbose_name="Пользователь, которому принадлежит этот код",
-    )
-    code = models.IntegerField(
-        "Код подтвержения",
-        default=generate_password_reset_confirmation_code,
-    )
-    expired_in = models.BigIntegerField(
-        "Время устаревания кода",
-        default=get_expired_in_time,
-    )
-
-    objects = PasswordResetConfirmationCodeManager()
-
-    class Meta:
-        verbose_name = "Код подтверждения сброса пароля"
-        verbose_name_plural = "Коды подтверждения сброса пароля"
-
-    def __str__(self):
-        return "{}_{}".format(self.user, self.code)
-
-
-class SettingsManager(models.Manager):
-    def get_actual(self):
-        try:
-            return self.get_queryset().get(
-                settings_name=settings.SETTINGS_ACTUAL_NAME)
-        except models.ObjectDoesNotExist:
-            return None
-
-
-class Settings(models.Model):
-    """Настройки приложения"""
-
-    settings_name = models.CharField(
-        "Уникальное название настроек",
-        max_length=200,
-        unique=True,
-    )
-    actual_app_version_ios = models.CharField(
-        "Актуальная версия приложения для ios",
-        max_length=200,
-        blank=True,
-        null=True,
-    )
-    min_app_version_ios = models.CharField(
-        "Минимальная версия приложения для ios",
-        max_length=200,
-        blank=True,
-        null=True,
-    )
-
-    objects = SettingsManager()
-
-    class Meta:
-        verbose_name = "Настройки"
-        verbose_name_plural = "Настройки"
-
-    def __str__(self):
-        return self.settings_name

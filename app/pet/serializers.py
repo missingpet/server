@@ -3,7 +3,6 @@ Serializers module.
 """
 import imghdr
 import re
-import time
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -79,68 +78,6 @@ class AuthSerializer(TokenObtainSlidingSerializer):
             "nickname": self.user.nickname,
         })
         return data
-
-
-class PasswordResetConfirmSerializer(serializers.Serializer):
-    new_password = serializers.CharField(
-        min_length=6,
-        max_length=128,
-    )
-    email = serializers.EmailField()
-    code = serializers.IntegerField()
-
-    def validate(self, attrs):
-        code = attrs.get("code")
-        email = attrs.get("email")
-
-        try:
-            user = models.User.objects.get(email=email)
-        except ObjectDoesNotExist:
-            raise serializers.ValidationError(
-                "Пользователь с таким адресом электронной почты не найден")
-        else:
-            try:
-                password_reset_confirmation_code = (
-                    models.PasswordResetConfirmationCode.objects.get(
-                        user=user,
-                        code=code,
-                    ))
-            except ObjectDoesNotExist:
-                raise serializers.ValidationError(
-                    "Неправильный код сброса пароля")
-            else:
-                if round(time.time()
-                         ) > password_reset_confirmation_code.expired_in:
-                    raise serializers.ValidationError(
-                        "Код подтверждения больше недействителен")
-
-        return attrs
-
-
-class PasswordResetRequestSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-
-    def validate(self, attrs):
-        email = attrs.get("email")
-
-        try:
-            models.User.objects.get(email=email)
-        except ObjectDoesNotExist:
-            raise serializers.ValidationError(
-                "Пользователь с таким адресом электронной почты не найден")
-
-        return attrs
-
-
-class SettingsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Settings
-        fields = (
-            "id",
-            "settings_name",
-            "actual_app_version_ios",
-            "min_app_version_ios",
-        )
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):

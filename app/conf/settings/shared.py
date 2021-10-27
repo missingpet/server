@@ -4,6 +4,8 @@ Shared project settings.
 import datetime
 import os
 
+from .local import *  # NOQA
+
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -126,15 +128,11 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "staticfiles/"), )
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 ANNOUNCEMENTS_PHOTOS = "announcements/"
 
 MAX_PHOTO_UPLOAD_SIZE = 5 * 1024 * 1024
 
-ALLOWED_UPLOAD_IMAGE_EXTENSIONS = ("jpeg", "png")
-
-PASSWORD_RESET_CONFIRMATION_CODE_LIFE_TIME = 60 * 10
-PASSWORD_RESET_CONFIRMATION_CODE_LENGTH = 6
-
-SETTINGS_ACTUAL_NAME = "По умолчанию"
-
-SEND_EMAIL_RATE_LIMIT = "2/10m"
+ALLOWED_UPLOAD_IMAGE_EXTENSIONS = ('jpeg', 'png')
