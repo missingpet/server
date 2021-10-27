@@ -1,15 +1,46 @@
 version: '3'
 
 services:
+  reverse-proxy:
+    build:
+      context: ./reverse-proxy
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    volumes:
+      - media:/app/media
+      - static:/app/static
   app:
     build:
       context: ./app
       dockerfile: Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
+    restart: on-failure
     hostname: app
     volumes:
-      - ./app:/app
-      - ./app/static:/app/static
-      - ./app/media:/app/media
+      - media:/app/media
+      - static:/app/static
     ports:
       - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+  db:
+    image: postgres:12-alpine
+    restart: on-failure
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  media:
+  static:
+  pgdata:
