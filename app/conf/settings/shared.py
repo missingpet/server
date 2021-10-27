@@ -4,6 +4,8 @@ Shared project settings.
 import datetime
 import os
 
+from .local import *  # NOQA
+
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -133,9 +135,4 @@ ANNOUNCEMENTS_PHOTOS = "announcements/"
 
 MAX_PHOTO_UPLOAD_SIZE = 5 * 1024 * 1024
 
-ALLOWED_UPLOAD_IMAGE_EXTENSIONS = ("jpeg", "png")
-
-PASSWORD_RESET_CONFIRMATION_CODE_LIFE_TIME = 60 * 10
-PASSWORD_RESET_CONFIRMATION_CODE_LENGTH = 6
-
-SETTINGS_ACTUAL_NAME = "По умолчанию"
+ALLOWED_UPLOAD_IMAGE_EXTENSIONS = ('jpeg', 'png')
