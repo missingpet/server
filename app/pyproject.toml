@@ -2,7 +2,7 @@
 name = "app"
 version = "1.0.0"
 description = ""
-authors = ["robsta7 <meremeev2001@gmail.com>"]
+authors = ["tediore-wf <meremeev@sfedu.ru>"]
 license = "GNU GPLv3"
 
 [tool.poetry.dependencies]
