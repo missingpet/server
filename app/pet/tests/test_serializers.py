@@ -4,7 +4,6 @@ Test cases for serializers.
 from django import test
 
 from .. import serializers
-from .data_factories import UserFactory
 
 
 class SerializerTestCase(test.TestCase):
