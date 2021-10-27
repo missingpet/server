@@ -1,6 +1,4 @@
 import os
-import time
-from random import randint
 from uuid import uuid4
 
 from django.conf import settings
@@ -9,7 +7,7 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
-from . import enums
+from . import choices
 
 
 class UserManager(BaseUserManager):
@@ -83,8 +81,8 @@ class AnnouncementManager(models.Manager):
 class Announcement(models.Model):
     """Объявление о пропавшем или найденном питомце"""
 
-    ANNOUNCEMENT_TYPES = enums.AnnouncementType.choices
-    ANIMAL_TYPES = enums.AnimalType.choices
+    ANNOUNCEMENT_TYPES = choices.AnnouncementType.choices
+    ANIMAL_TYPES = choices.AnimalType.choices
 
     user = models.ForeignKey(
         User,
