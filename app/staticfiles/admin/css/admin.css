@@ -1,23 +1,23 @@
 #header {
-		background:#295A75;
-		color:#FBFBFB;
+	background: #295A75;
+	color: #FBFBFB;
 }
 
 div.breadcrumbs {
-		background:#F58F00;
-		color:#FBFBFB
+	background: #F58F00;
+	color: #FBFBFB
 }
 
 div.breadcrumbs a:focus, div.breadcrumbs a:hover {
-		color:#295A75;
+	color:#295A75;
 }
 
 .button, input[type="submit"], input[type="button"], .submit-row input, a.button {
-		background:#295A75;
-		color:#FBFBFB;
+	background:#295A75;
+	color:#FBFBFB;
 }
 
 .module h2, .module caption, .inline-group h2 {
-		background:#F58F00;
-		color:#FBFBFB;
+	background:#F58F00;
+	color:#FBFBFB;
 }
